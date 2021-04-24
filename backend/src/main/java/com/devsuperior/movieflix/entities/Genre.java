@@ -7,20 +7,17 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
 
 @Entity
-@Table(name = "tb_user")
-public class User implements Serializable {
+@Table(name = "tb_genre")
+public class Genre implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,20 +25,11 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "NAME",  length = 40)
+	@Column(name = "NAME",  length = 30)
 	private String name;
 
-	@Column(name = "EMAIL",  length = 50, unique = true)
-	private String email;
-
-	@Column(name = "PASSWORD", columnDefinition = "TEXT")
-	private String password;
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "tb_user_role",
-	   joinColumns = @JoinColumn(name = "user_id"),
-	   inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<Role>();
+	@OneToMany(mappedBy = "genre")
+	private Set<Movie> movies = new HashSet<Movie>();
 
 	@Column(name = "CREATED_AT", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant createdAt;
@@ -49,15 +37,13 @@ public class User implements Serializable {
 	@Column(name ="UPDATED_AT", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
 
-	public User() {
+	public Genre() {
 
 	}
 
-	public User(Long id, String name, String email, String password) {
+	public Genre(Long id, String name) {
 		this.id = id;
 		this.name = name;
-		this.email = email;
-		this.password = password;
 	}
 
 	public Long getId() {
@@ -76,25 +62,9 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
+	public Set<Movie> getMovies() {
+		return movies;
+	}	
 
 	public Instant getCreatedAt() {
 		return createdAt;
@@ -130,7 +100,7 @@ public class User implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Genre other = (Genre) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

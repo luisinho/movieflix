@@ -2,25 +2,21 @@ package com.devsuperior.movieflix.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
 
 @Entity
-@Table(name = "tb_user")
-public class User implements Serializable {
+@Table(name = "tb_movie")
+public class Movie implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,20 +24,24 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "NAME",  length = 40)
-	private String name;
+	@Column(name = "TITLE",  length = 30)
+	private String title;
 
-	@Column(name = "EMAIL",  length = 50, unique = true)
-	private String email;
+	@Column(name = "SUB_TITLE",  length = 150)
+	private String subTitle;
 
-	@Column(name = "PASSWORD", columnDefinition = "TEXT")
-	private String password;
+	@Column(name = "YEAR",  length = 4)
+	private Integer year;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "tb_user_role",
-	   joinColumns = @JoinColumn(name = "user_id"),
-	   inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<Role>();
+	@Column(name = "IMG_URL",  length = 100)
+	private String imgUrl;
+
+	@Column(name = "SYNOPSIS",  columnDefinition = "TEXT")
+	private String synopsis;
+
+	@ManyToOne
+	@JoinColumn(name = "GENRE_ID")
+	private Genre genre;
 
 	@Column(name = "CREATED_AT", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant createdAt;
@@ -49,15 +49,18 @@ public class User implements Serializable {
 	@Column(name ="UPDATED_AT", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
 
-	public User() {
+	public Movie() {
 
 	}
 
-	public User(Long id, String name, String email, String password) {
+	public Movie(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis, Genre genre) {		
 		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
+		this.title = title;
+		this.subTitle = subTitle;
+		this.year = year;
+		this.imgUrl = imgUrl;
+		this.synopsis = synopsis;
+		this.genre = genre;
 	}
 
 	public Long getId() {
@@ -68,33 +71,53 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getSubTitle() {
+		return subTitle;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setSubTitle(String subTitle) {
+		this.subTitle = subTitle;
 	}
 
-	public String getPassword() {
-		return password;
+	public Integer getYear() {
+		return year;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
+	public String getImgUrl() {
+		return imgUrl;
 	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
+	public String getSynopsis() {
+		return synopsis;
+	}
+
+	public void setSynopsis(String synopsis) {
+		this.synopsis = synopsis;
+	}
+
+	public Genre getGenre() {
+		return genre;
+	}
+
+	public void setGenre(Genre genre) {
+		this.genre = genre;
+	}	
 
 	public Instant getCreatedAt() {
 		return createdAt;
@@ -130,7 +153,7 @@ public class User implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Movie other = (Movie) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
