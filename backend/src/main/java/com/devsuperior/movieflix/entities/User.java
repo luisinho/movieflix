@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -42,6 +43,9 @@ public class User implements Serializable {
 	   joinColumns = @JoinColumn(name = "user_id"),
 	   inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<Role>();
+
+	@OneToMany(mappedBy = "movie")
+	private Set<Review> reviews = new HashSet<Review>();
 
 	@Column(name = "CREATED_AT", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant createdAt;
@@ -94,6 +98,10 @@ public class User implements Serializable {
 
 	public Set<Role> getRoles() {
 		return roles;
+	}
+
+	public Set<Review> getReviews() {
+		return reviews;
 	}
 
 	public Instant getCreatedAt() {

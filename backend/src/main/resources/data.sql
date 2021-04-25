@@ -73,6 +73,11 @@ INSERT INTO tb_movie (TITLE, SUB_TITLE, YEAR, IMG_URL, SYNOPSIS, GENRE_ID, CREAT
 INSERT INTO tb_movie (TITLE, SUB_TITLE, YEAR, IMG_URL, SYNOPSIS, GENRE_ID, CREATED_AT, UPDATED_AT) VALUES ('Segunda-feira.','Chloe (Denise Gough) e Mickey (Sebastian Stan) se conhecem em uma sexta-feira.',2020,'https://images.app.goo.gl/ZK3cLBuXK2VMjWc38','Chloe (Denise Gough) e Mickey (Sebastian Stan) se conhecem em uma sexta-feira e logo estabelecem uma forte conexão. A faísca da nova relação os leva a uma aventura frenética de fim de semana. <br> No entanto, o que acontecerá quando chegar a inevitável segunda-feira e suas vidas voltarem ao cotidiano de sempre? Agora Chloe e Mickey precisam descobrir como continuar sua aventura romântica.', 9, CURRENT_TIMESTAMP(0)::TIMESTAMP WITHOUT TIME ZONE, null);
 INSERT INTO tb_movie (TITLE, SUB_TITLE, YEAR, IMG_URL, SYNOPSIS, GENRE_ID, CREATED_AT, UPDATED_AT) VALUES ('Chuva que Cai do Céu.','Kevin (Jefri Nichol) não soube como se declarar para a melhor amiga.', 2020 , 'https://images.app.goo.gl/zcRB7dVbLsbtzGiXA', 'Kevin (Jefri Nichol) não soube como se declarar para a melhor amiga Nara (Aurora Ribero) e agora ela está apaixonada por outro cara. Sem esperança de conquistá-la, o jovem sente que é melhor desistir desse romance. No entanto, o destino ainda surpreenderá os dois com o inesperado.' , 9 , CURRENT_TIMESTAMP(0)::TIMESTAMP WITHOUT TIME ZONE, null);
 
+INSERT INTO tb_review (TEXT, USER_ID, MOVIE_ID, CREATED_AT, UPDATED_AT) VALUES ('Filme muito bom', 2, 1, CURRENT_TIMESTAMP(0)::TIMESTAMP WITHOUT TIME ZONE, null);
+INSERT INTO tb_review (TEXT, USER_ID, MOVIE_ID, CREATED_AT, UPDATED_AT) VALUES ('Filme excelente', 2, 8, CURRENT_TIMESTAMP(0)::TIMESTAMP WITHOUT TIME ZONE, null);
+INSERT INTO tb_review (TEXT, USER_ID, MOVIE_ID, CREATED_AT, UPDATED_AT) VALUES ('Filme sensacional', 2, 12, CURRENT_TIMESTAMP(0)::TIMESTAMP WITHOUT TIME ZONE, null);
+INSERT INTO tb_review (TEXT, USER_ID, MOVIE_ID, CREATED_AT, UPDATED_AT) VALUES ('Filme muito bom', 2, 16, CURRENT_TIMESTAMP(0)::TIMESTAMP WITHOUT TIME ZONE, null);
+
 
 
 
