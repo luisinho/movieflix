@@ -20,13 +20,15 @@ public class ReviewService {
 	@Autowired
 	private ReviewRepository reviewRepository;
 
+	@Autowired
+	private MovieService movieService;
+
 	@Transactional(readOnly = true)
-	public List<ReviewDTO> findByMovie(Long idMovie) {
+	public List<ReviewDTO> findByMovie(Long movieId) {
 
 		List<ReviewDTO> listDto = new ArrayList<ReviewDTO>();
 
-		Movie movie = new Movie();
-		movie.setId(idMovie);
+		Movie movie = this.movieService.findById(movieId);
 
 		List<Review> list = this.reviewRepository.findByMovie(movie);
 

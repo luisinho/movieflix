@@ -40,8 +40,8 @@ public class User implements Serializable {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_user_role",
-	   joinColumns = @JoinColumn(name = "user_id"),
-	   inverseJoinColumns = @JoinColumn(name = "role_id"))
+	   joinColumns = @JoinColumn(name = "USER_ID"),
+	   inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private Set<Role> roles = new HashSet<Role>();
 
 	@OneToMany(mappedBy = "movie")

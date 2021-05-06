@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class Genre implements Serializable {
 	@Column(name = "NAME",  length = 30)
 	private String name;
 
-	@OneToMany(mappedBy = "genre")
+	@OneToMany(mappedBy = "genre", fetch = FetchType.LAZY)
 	private Set<Movie> movies = new HashSet<Movie>();
 
 	@Column(name = "CREATED_AT", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")

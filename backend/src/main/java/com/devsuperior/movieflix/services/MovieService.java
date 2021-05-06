@@ -5,12 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import com.devsuperior.movieflix.dto.MovieDTO;
 import com.devsuperior.movieflix.entities.Genre;
 import com.devsuperior.movieflix.entities.Movie;
 import com.devsuperior.movieflix.repositories.MovieRepository;
+
 
 @Service
 public class MovieService {
@@ -18,19 +18,27 @@ public class MovieService {
 	@Autowired
 	private MovieRepository movieRepository;
 
+	@Autowired
+	private GenreService genreService;
+
 	@Transactional(readOnly = true)
-	public Page<MovieDTO> findAll(Long idGenre, PageRequest pageRequest) {
+	public Page<MovieDTO> findAll(Long genreId, PageRequest pageRequest) {
 
 		Page<MovieDTO> listDto = null;
 
-		Genre genre = new Genre(idGenre, null);
+		Genre genre = genreId == 0 ? null : this.genreService.findEntityGenreById(genreId);
 
 		Page<Movie> list = this.movieRepository.find(genre, pageRequest);
 
-		if (list != null && CollectionUtils.isEmpty(list.getContent())) {
+		if (list != null && list.getContent() != null) {
 			listDto = list.map(entity -> new MovieDTO(entity));
 		}
 
-		return listDto;		
+		return listDto;
+	}
+
+	@Transactional(readOnly = true)
+	public Movie findById(Long id) {
+		return this.movieRepository.getOne(id);
 	}
 }

@@ -2,7 +2,6 @@ package com.devsuperior.movieflix.dto;
 
 import java.io.Serializable;
 
-import com.devsuperior.movieflix.entities.Movie;
 import com.devsuperior.movieflix.entities.Review;
 
 public class ReviewDTO implements Serializable {
@@ -11,7 +10,7 @@ public class ReviewDTO implements Serializable {
 
 	private Long id;
 	private String text;
-	private Movie movie;
+	private MovieDTO movieDto;
 
 	public ReviewDTO() {
 
@@ -20,13 +19,13 @@ public class ReviewDTO implements Serializable {
 	public ReviewDTO(Review entity) {
 		this.id = entity.getId();
 		this.text = entity.getText();
-		this.movie = entity.getMovie();
+		this.movieDto = new MovieDTO(entity.getMovie());
 	}
 
-	public ReviewDTO(Long id, String text, Movie movie) {
+	public ReviewDTO(Long id, String text, MovieDTO movieDto) {
 		this.id = id;
 		this.text = text;
-		this.movie = movie;
+		this.movieDto = movieDto;
 	}
 
 	public Long getId() {
@@ -45,12 +44,12 @@ public class ReviewDTO implements Serializable {
 		this.text = text;
 	}
 
-	public Movie getMovie() {
-		return movie;
+	public MovieDTO getMovieDto() {
+		return movieDto;
 	}
 
-	public void setMovie(Movie movie) {
-		this.movie = movie;
+	public void setMovieDto(MovieDTO movieDto) {
+		this.movieDto = movieDto;
 	}
 
 	@Override

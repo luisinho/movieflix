@@ -32,4 +32,9 @@ public class GenreService {
 
 		return listDto;
 	}
+
+	@Transactional(readOnly = true)
+	public Genre findEntityGenreById(Long id) {
+		return this.genreRepository.getOne(id);
+	}
 }
