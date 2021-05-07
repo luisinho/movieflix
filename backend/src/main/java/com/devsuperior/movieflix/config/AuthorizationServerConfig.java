@@ -1,6 +1,7 @@
 package com.devsuperior.movieflix.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +25,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	private static final String GRANT_TYPES [] = {"password"};
 
+	@Value("${security.oauth2.client.client-id}")
+	private String clientId;
+
+	@Value("${security.oauth2.client.client-secret}")
+	private String clientSecret;
+
+	@Value("${jwt.duration}")
+	private Integer jwtDuration;
+
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -44,11 +54,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()
-		.withClient("movieflix")
-		.secret(this.passwordEncoder.encode("movieflix123"))
+		.withClient(clientId)
+		.secret(this.passwordEncoder.encode(clientSecret))
 		.scopes(SCOPES)
 		.authorizedGrantTypes(GRANT_TYPES)
-		.accessTokenValiditySeconds(86400);
+		.accessTokenValiditySeconds(jwtDuration);
 	}
 
 	@Override
