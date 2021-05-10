@@ -3,8 +3,12 @@ package com.devsuperior.movieflix.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -12,6 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import com.devsuperior.movieflix.resources.exceptions.CustomOauthException;
 
 @Configuration
 @EnableAuthorizationServer
@@ -66,5 +71,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		endpoints.authenticationManager(this.authenticationManager)
 		.tokenStore(this.tokenStore)
 		.accessTokenConverter(this.accessTokenConverter);
+
+		endpoints.exceptionTranslator(exception -> {
+
+			if (exception instanceof UsernameNotFoundException 
+					||  exception instanceof InvalidGrantException) {
+				
+				return ResponseEntity
+						.status(HttpStatus.BAD_REQUEST)
+						.body(new CustomOauthException("Credenciais do usuario nao encontrada."));
+			}
+
+			return ResponseEntity
+			          .status(HttpStatus.OK)
+			          .body(new CustomOauthException(""));			
+		});
 	}
 }

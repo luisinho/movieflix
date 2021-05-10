@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,15 +23,15 @@ public class UserService implements UserDetailsService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, OAuth2Exception {
 
 		LOG.info("INICIO METODO loadUserByUsername() - Param {}: " + username);
 
 		User user = this.userRepository.findByEmail(username);
 
 		if (user == null) {
-			LOG.error("User not found: " + username);
-			throw new UsernameNotFoundException("Email not found");
+			LOG.error("Credenciais do usuario nao encontrada: " + username);
+			throw new UsernameNotFoundException("Credenciais do usuario nao encontrada.");
 		}
 
 		LOG.info("FIM METODO loadUserByUsername()");
