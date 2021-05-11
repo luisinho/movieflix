@@ -1,5 +1,7 @@
 package com.devsuperior.movieflix.services;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +39,17 @@ public class UserService implements UserDetailsService {
 		LOG.info("FIM METODO loadUserByUsername()");
 
 		return user;
+	}
+
+	@Transactional(readOnly = true)
+	public User findById(Long id) {
+
+		Optional<User> user = this.userRepository.findById(id);
+
+		if (user.isPresent()) {
+			return user.get();
+		}
+
+		return null;
 	}
 }
