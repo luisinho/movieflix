@@ -14,9 +14,12 @@ import com.devsuperior.movieflix.entities.Movie;
 import com.devsuperior.movieflix.entities.Review;
 import com.devsuperior.movieflix.entities.User;
 import com.devsuperior.movieflix.repositories.ReviewRepository;
+import com.devsuperior.movieflix.services.exceptions.ForbiddenException;
 
 @Service
 public class ReviewService {
+
+	public static final  String ROLES_MEMBER = "ROLE_MEMBER";
 
 	@Autowired
 	private ReviewRepository reviewRepository;
@@ -25,14 +28,14 @@ public class ReviewService {
 	private MovieService movieService;
 
 	@Autowired
-	private UserService userService;
+	private AuthService authService;
 
 	@Transactional(readOnly = true)
 	public List<ReviewDTO> findByMovie(Long movieId) {
 
 		List<ReviewDTO> listDto = new ArrayList<ReviewDTO>();
 
-		Movie movie = this.movieService.findById(movieId);
+		Movie movie = this.movieService.findByIdForReview(movieId);
 
 		List<Review> list = this.reviewRepository.findByMovie(movie);
 
@@ -55,9 +58,13 @@ public class ReviewService {
 
 	private Review getParseDtoToEntity(ReviewDTO dto) {
 
-		Movie movie = this.movieService.findById(dto.getMovieDto().getId());
+		User user = this.authService.authenticated();
 
-		User user = this.userService.findById(dto.getUserDto().getId());
+		if(!user.hasHole(ROLES_MEMBER)) {
+			throw new ForbiddenException("The user does not have permission");
+		}
+
+		Movie movie = this.movieService.findByIdForReview(dto.getMovieDto().getId());
 
 		Review entity = new Review();
 		entity.setText(dto.getText());
