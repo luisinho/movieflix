@@ -20,11 +20,11 @@ Um usuário possui nome, email e senha, sendo que o email é seu nome de usuári
 ![Mobile 1] Falta desenvolver Link ![Mobile 2] Falta desenvolver Link
 
 ## Layout web
-(https://github.com/luisinho/assets-projects/blob/main/movieflix/login.png?raw=true)
+https://github.com/luisinho/assets-projects/blob/main/movieflix/login.png?raw=true
 
-(https://github.com/luisinho/assets-projects/blob/main/movieflix/list-movie.png?raw=true)
+https://github.com/luisinho/assets-projects/blob/main/movieflix/list-movie.png?raw=true
 
-(https://github.com/luisinho/assets-projects/blob/main/movieflix/detail-movie.png?raw=true)
+https://github.com/luisinho/assets-projects/blob/main/movieflix/detail-movie.png?raw=true
 
 ## Modelo conceitual
 ![Modelo Conceitual](https://github.com/luisinho/assets-projects/blob/main/movieflix/modelo_conceitual.png?raw=true)
