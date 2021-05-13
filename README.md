@@ -4,7 +4,7 @@
 
 # Sobre o projeto
 
-Link a ser desenvolvido
+Link front-end em desenvolvimento
 
 MovieFlix é uma aplicação full stack web e mobile construída durante o **Bootcamp DevSuperior** (#BDS2), evento organizado pela [DevSuperior](https://devsuperior.com "Site da DevSuperior").
 
@@ -20,9 +20,11 @@ Um usuário possui nome, email e senha, sendo que o email é seu nome de usuári
 ![Mobile 1] Falta desenvolver Link ![Mobile 2] Falta desenvolver Link
 
 ## Layout web
-![Web 1] Falta desenvolver Link
+(https://github.com/luisinho/assets-projects/blob/main/movieflix/login.png?raw=true)
 
-![Web 2] Falta desenvolver Link
+(https://github.com/luisinho/assets-projects/blob/main/movieflix/list-movie.png?raw=true)
+
+(https://github.com/luisinho/assets-projects/blob/main/movieflix/detail-movie.png?raw=true)
 
 ## Modelo conceitual
 ![Modelo Conceitual](https://github.com/luisinho/assets-projects/blob/main/movieflix/modelo_conceitual.png?raw=true)
