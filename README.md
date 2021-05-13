@@ -25,7 +25,7 @@ Um usuário possui nome, email e senha, sendo que o email é seu nome de usuári
 ![Web 2] Falta desenvolver Link
 
 ## Modelo conceitual
-![Modelo Conceitual] Falta desenvolver Link
+![Modelo Conceitual] (https://github.com/luisinho/assets-projects/blob/main/movieflix/modelo_conceitual.png)
 
 # Tecnologias utilizadas
 ## Back end
