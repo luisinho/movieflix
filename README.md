@@ -17,7 +17,9 @@ Ao selecionar um filme da listagem, é mostrada uma página de detalhes, onde é
 Um usuário possui nome, email e senha, sendo que o email é seu nome de usuário. Cada filme possui um título, subtítulo, uma imagem, ano de lançamento, sinopse, e um gênero. Os usuários membros podem registrar avaliações para os filmes. Um mesmo usuário membro pode deixar mais de uma avaliação para o mesmo filme.
 
 ## Layout mobile
-![Mobile 1] Falta desenvolver Link ![Mobile 2] Falta desenvolver Link
+![Enter Login](https://github.com/luisinho/assets-projects/blob/main/movieflix/enter-login.png?raw=true)![Mobile Login](https://github.com/luisinho/assets-projects/blob/main/movieflix/mobile-login.png?raw=true)
+
+![List Movie](https://github.com/luisinho/assets-projects/blob/main/movieflix/mobile-list-movie.png?raw=true)![Detail Movie](https://github.com/luisinho/assets-projects/blob/main/movieflix/mobile-detail-movie.png?raw=true)
 
 ## Layout web
 ![Login](https://github.com/luisinho/assets-projects/blob/main/movieflix/login.png?raw=true)
@@ -36,7 +38,7 @@ Um usuário possui nome, email e senha, sendo que o email é seu nome de usuári
 - JPA / Hibernate
 - Maven
 ## Front end
-- HTML / CSS / JS / TypeScript
+- HTML / CSS / Bootstrap-4.6.0 / TypeScript
 - ReactJS
 - React Native
 ## Implantação em produção
