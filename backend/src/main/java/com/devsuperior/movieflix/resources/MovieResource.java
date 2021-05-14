@@ -1,5 +1,7 @@
 package com.devsuperior.movieflix.resources;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +20,8 @@ import com.devsuperior.movieflix.services.MovieService;
 @RequestMapping(value = "/movies")
 public class MovieResource {
 
+	private static Logger LOG = LoggerFactory.getLogger(MovieResource.class);
+
 	@Autowired
 	private MovieService movieService;
 
@@ -29,17 +33,49 @@ public class MovieResource {
 			  @RequestParam(value = "direction", defaultValue = "ASC") String direction,
 			  @RequestParam(value = "orderBy", defaultValue = "title") String orderBy ) {
 
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),  orderBy);
+		StringBuffer log = new StringBuffer();
+		log.append("genreId: ").append(genreId).append("\n");
+		log.append("page: ").append(page).append("\n");
+		log.append("linesPerPage: ").append(linesPerPage).append("\n");
+		log.append("direction: ").append(direction).append("\n");
+		log.append("orderBy: ").append(orderBy).append("\n");
 
-		Page<MovieDTO> listDto = this.movieService.findAll(genreId, pageRequest);
+		LOG.info("START METHOD MovieResource.findAll() - Params {} {} {} " + log.toString());
+
+		Page<MovieDTO> listDto = null;
+
+		try {
+
+			PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),  orderBy);
+
+			listDto = this.movieService.findAll(genreId, pageRequest);
+
+		} catch (Exception e) {
+			LOG.error("An error has occurred " + e);
+		}
+
+		LOG.info("END METHOD MovieResource.findAll()");
 
 		return ResponseEntity.ok(listDto);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<MovieDTO> findById(@PathVariable Long id) {
+	public ResponseEntity<MovieDTO> findById(@PathVariable Long id) throws Exception {
 
-		MovieDTO dto = this.movieService.findById(id);
+		LOG.info("START METHOD MovieResource.findById() - Param {} " + id);
+
+		MovieDTO dto = new MovieDTO();
+
+		try {
+
+			dto = this.movieService.findById(id);
+
+		} catch (Exception e) {
+			LOG.error("An error has occurred " + e);
+			throw new Exception(e);
+		}
+
+		LOG.info("END METHOD MovieResource.findById()");
 
 		return ResponseEntity.ok().body(dto);
 	}
