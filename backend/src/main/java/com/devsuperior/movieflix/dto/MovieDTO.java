@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.util.CollectionUtils;
+
 import com.devsuperior.movieflix.entities.Movie;
+import com.devsuperior.movieflix.entities.Review;
 
 public class MovieDTO implements Serializable {
 
@@ -33,9 +36,24 @@ public class MovieDTO implements Serializable {
 		this.synopsis = entity.getSynopsis();
 
 		this.genre = new GenreDTO(entity.getGenre());
-		/*if (entity.getReviews() != null) {			
-			entity.getReviews().forEach(review -> this.reviews.add(new ReviewDTO(review)));
-		}*/
+	}
+
+	public MovieDTO(Movie entity, Set<Review> reviews) {
+
+		this.id = entity.getId();
+		this.title = entity.getTitle();
+		this.subTitle = entity.getSubTitle();
+		this.year = entity.getYear();
+		this.imgUrl = entity.getImgUrl();
+		this.synopsis = entity.getSynopsis();
+		this.genre = new GenreDTO(entity.getGenre());
+
+		if (!CollectionUtils.isEmpty(entity.getReviews())) {
+			reviews.forEach(review -> {
+				review.setMovie(null);
+				this.reviews.add(new ReviewDTO(review));
+			});
+		}
 	}
 
 	public MovieDTO(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis,GenreDTO genreDto) {

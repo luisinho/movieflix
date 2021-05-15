@@ -6,7 +6,7 @@ public class CustomOauthException extends OAuth2Exception {
 
 	private static final long serialVersionUID = 1L;	
 
-	public CustomOauthException(String msg) {
+	public CustomOauthException(String msg) {		
 		super(msg);
 	}
 	

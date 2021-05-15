@@ -1,15 +1,13 @@
 package com.devsuperior.movieflix.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import com.devsuperior.movieflix.dto.ReviewDTO;
 import com.devsuperior.movieflix.entities.Movie;
@@ -33,26 +31,9 @@ public class ReviewService {
 
 	@Autowired
 	private AuthService authService;
-
-	@Transactional(readOnly = true)
-	public List<ReviewDTO> findByMovie(Long movieId) throws Exception  {
-
-		LOG.info("START METHOD ReviewService.findByMovie() - Param {} " + movieId);
-
-		List<ReviewDTO> listDto = new ArrayList<ReviewDTO>();
-
-		Movie movie = this.movieService.findByIdForReview(movieId);
-
-		List<Review> list = this.reviewRepository.findByMovie(movie);
-
-		if (!CollectionUtils.isEmpty(list)) {
-			listDto = list.stream().map(entity -> new ReviewDTO(entity)).collect(Collectors.toList());
-		}
-
-		LOG.info("END METHOD ReviewService.findByMovie()");
-
-		return listDto;
-	}
+	
+	@Autowired
+	private MessageSource messageSource;
 
 	@Transactional
 	public ReviewDTO insert(ReviewDTO dto) throws Exception {
@@ -75,7 +56,9 @@ public class ReviewService {
 		User user = this.authService.authenticated();
 
 		if(!user.hasHole(ROLES_MEMBER)) {
-			throw new ForbiddenException("O seu perfil não tem permissão.");
+			Locale locale = new Locale("pt","BR");
+			String message = this.messageSource.getMessage("review.user.not.permission", null, locale);
+			throw new ForbiddenException(message);
 		}
 
 		Movie movie = this.movieService.findByIdForReview(dto.getMovieDto().getId());

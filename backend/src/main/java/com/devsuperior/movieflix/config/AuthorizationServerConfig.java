@@ -1,7 +1,10 @@
 package com.devsuperior.movieflix.config;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
 import com.devsuperior.movieflix.resources.exceptions.CustomOauthException;
 
 @Configuration
@@ -51,6 +55,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
+	@Autowired
+	private MessageSource messageSource;
+
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.tokenKeyAccess(METHOD_PERMIT_ALL).checkTokenAccess(METHOD_IS_AUTHENTICATED);
@@ -74,17 +81,21 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 		endpoints.exceptionTranslator(exception -> {
 
-			if (exception instanceof UsernameNotFoundException 
+			Locale locale = new Locale("pt","BR");
+
+			String message = this.messageSource.getMessage("user.name.not.found", null, locale);
+
+			if (exception instanceof UsernameNotFoundException
 					||  exception instanceof InvalidGrantException) {
-				
+
 				return ResponseEntity
 						.status(HttpStatus.BAD_REQUEST)
-						.body(new CustomOauthException("Credenciais do usuario nao encontrada."));
+						.body(new CustomOauthException(message));
 			}
 
 			return ResponseEntity
 			          .status(HttpStatus.OK)
-			          .body(new CustomOauthException(""));			
+			          .body(new CustomOauthException(""));
 		});
 	}
 }

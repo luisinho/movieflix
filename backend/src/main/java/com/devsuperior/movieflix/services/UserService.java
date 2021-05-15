@@ -1,8 +1,11 @@
 package com.devsuperior.movieflix.services;
 
+import java.util.Locale;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +23,10 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private MessageSource messageSource;
+
+	// UsernameNotFoundException
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -29,12 +36,18 @@ public class UserService implements UserDetailsService {
 		User user = this.userRepository.findByEmail(username);
 
 		if (user == null) {
-			LOG.error("Credenciais do usuario nao encontrada: " + username);
-			throw new UsernameNotFoundException("Credenciais do usuario nao encontrada.");
+
+			Locale locale = new Locale("pt","BR");
+
+			String message = this.messageSource.getMessage("user.name.not.found", null, locale);
+
+			LOG.error(message + " : " + username);
+
+			throw new UsernameNotFoundException(message);
 		}
 
 		LOG.info("END METHOD UserService.loadUserByUsername()");
 
 		return user;
-	}	
+	}
 }

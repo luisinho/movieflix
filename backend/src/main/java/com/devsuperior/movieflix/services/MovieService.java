@@ -70,8 +70,10 @@ public class MovieService {
 
 		Movie entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found."));
 
+		MovieDTO dto = new MovieDTO(entity, entity.getReviews());
+
 		LOG.info("END METHOD MovieService.findById()");
 
-		return new MovieDTO(entity);
+		return dto;
 	}
 }
