@@ -1,8 +1,11 @@
+import GenreComboBox from '../Genre/components/ComboBox';
 import './styles.scss';
 
 const Catalog = () => {
     return (
-        <h1>Catalog</h1>
+        <div className="card-combo-box">
+            <GenreComboBox />
+        </div>
     );
 }
 
