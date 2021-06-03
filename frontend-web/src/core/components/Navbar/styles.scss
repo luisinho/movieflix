@@ -1,19 +1,19 @@
-body {
-    background-color: #FFF;
-}
-
 .main-nav {
     height: 70px;
     align-items: center;
     padding-left: 40px;
     padding-right: 110px;
     margin-left: 0px;
-    margin-right: 0px;    
+    margin-right: 0px;
+    background-color: #FFC700;
 }
 
 .nav-logo-text {
+    font-style: normal;
+    font-size: 24px;
+    line-height: 33px;
+    letter-spacing: -0.015em;
     color: #000000;
-    font-style: normal;    
 }
 
 .nav-link-sair {

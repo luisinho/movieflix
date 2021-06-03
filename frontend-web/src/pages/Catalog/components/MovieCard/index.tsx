@@ -5,7 +5,8 @@ const MovieCard = () => (
     <div className="movie-card">
         <ImageCar className="movie-card-image" />
         <div className="movie-card-title">
-            O Retorno do Rei 2103
+            O Retorno do Rei
+            <h6 className="movie-card-title-year">2103</h6>
         </div>
         <div className="movie-card-sub-title">
             O olho do inimigo está se movendo.

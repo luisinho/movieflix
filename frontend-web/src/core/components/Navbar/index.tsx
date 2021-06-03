@@ -1,7 +1,7 @@
 import './styles.scss';
 
 const Navbar = () => (
-    <nav className="row bg-primary main-nav">
+    <nav className="row main-nav">
         <div className="row">
             <div className="col-md-11">
                 <a href="link" className="nav-logo-text">

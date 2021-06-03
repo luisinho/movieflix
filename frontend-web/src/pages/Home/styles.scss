@@ -1,0 +1,46 @@
+.home-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 40px 40px 100px 160px;
+}
+
+.home-title {
+    margin-top: 75px;
+    width: 650px;
+    height: 75px;
+    font-style: normal;
+    font-size: 55px;
+    line-height: 75px;
+    letter-spacing: -0.015em;
+    color: #FFFFFF;
+}
+
+.home-sub-title {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 33px;
+    letter-spacing: -0.015em;
+    color: #F2F2F2;
+}
+
+.home-image {
+    width: 520px;
+    height: 385px;
+}
+
+.home-content {
+    margin-left: 80px;
+}
+
+@media only screen and (max-width: 768px) {
+    .home-container {
+        padding: 40px 140px 100px 100px;
+        flex-direction: column;
+    }
+
+    .home-content {
+        margin-left: 10px;
+    }
+}
