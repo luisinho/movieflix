@@ -1,4 +1,6 @@
 import axios, { Method } from 'axios';
+import qs from 'qs';
+import { CLIENT_ID, CLIENT_SECRET, URL_LOGIN } from './auth';
 
 type RequestParams = {
     method?: Method,
@@ -6,6 +8,11 @@ type RequestParams = {
     data?: object | string,
     params?: object,
     headers?: object
+}
+
+type LoginData = {
+    username: string;
+    password: string;
 }
 
 const BASE_URL = 'http://localhost:8080';
@@ -18,4 +25,18 @@ export const makeRequest = ({ method = 'GET', url, data, params, headers }: Requ
         params: params,
         headers: headers
     });
+}
+
+export const makeLogin = (loginData: LoginData) => {
+
+    const token = `${CLIENT_ID}:${CLIENT_SECRET}`;
+
+    const headers = {
+        Authorization: `Basic ${window.btoa(token)}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+
+    const payload = qs.stringify({ ...loginData, grant_type: 'password' });
+
+    return makeRequest({ method: 'POST', url: URL_LOGIN, data: payload, headers: headers });
 }

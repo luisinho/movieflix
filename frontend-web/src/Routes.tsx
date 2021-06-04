@@ -8,8 +8,8 @@ const Routes = () => (
     <BrowserRouter>
         <Navbar />
         <Switch>
-            <Redirect from="/" to="/auth/login" exact />
-            <Route path="/">
+            <Redirect from="/" to="/home/login" exact />
+            <Route path="/home/login" exact>
                 <Home />
             </Route>
             <Route path="/movies" exact>

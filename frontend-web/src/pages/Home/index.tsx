@@ -15,11 +15,7 @@ const Home = () => (
             <HomeAuthImage className="home-image" />
         </div>
         <div className="col-md-4 home-content">
-            <Switch>
-                <Route path="/auth/login">
-                    <Login />
-                </Route>
-            </Switch>
+            <Login />
         </div>
     </div>
 );
