@@ -1,13 +1,14 @@
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Router, Switch, Route, Redirect } from 'react-router-dom';
 
-import Navbar from './core/components/Navbar';
+import Navbar from 'core/components/Navbar';
+import history from 'core/utils/history';
 import Home from 'pages/Home';
 import Catalog from './pages/Catalog';
 import { URL_ROOT, URL_HOME_LOGIN, URL_MOVIES } from 'core/utils/ApiUrl';
 
 const Routes = () => (
 
-    <BrowserRouter>
+    <Router history={history}>
         <Navbar />
         <Switch>
             <Redirect from={URL_ROOT} to={URL_HOME_LOGIN} exact />
@@ -18,7 +19,7 @@ const Routes = () => (
                 <Catalog />
             </Route>
         </Switch>
-    </BrowserRouter>
+    </Router>
 );
 
 export default Routes;
