@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { AxiosError } from 'axios';
 import { useHistory, useLocation } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
-import ButtonIcon from 'core/components/Buttonicon';
-import { saveSessionData } from 'core/utils/auth';
 import { makeLogin } from 'core/utils/request';
+import { saveSessionData } from 'core/utils/auth';
+import { URL_MOVIES } from 'core/utils/ApiUrl';
+import ButtonIcon from 'core/components/Buttonicon';
 import './styles.scss';
 
 type FormData = {
@@ -29,22 +30,21 @@ const Login = () => {
 
     const location = useLocation<LocationState>();
 
-    const { from } = location.state || { from: { pathname: "/movies" } };
+    const { from } = location.state || { from: { pathname: URL_MOVIES } };
 
+    const onSubmit = (formData: FormData) => {
 
-    const onSubmit = (data: FormData) => {
-
-        makeLogin(data).then(response => {
+        makeLogin(formData).then(response => {
 
             setHasError(false);
             setMsgError('');
             saveSessionData(response.data);
             history.replace(from);
-            // history.push(from);
 
         }).catch((err: AxiosError) => {
             setHasError(true);
             setMsgError(err.response?.data.error_description);
+        }).finally(() => {
         });
     }
 

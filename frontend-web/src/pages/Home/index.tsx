@@ -1,5 +1,5 @@
-import { Route, Switch } from 'react-router';
 import { ReactComponent as HomeAuthImage } from 'core/assets/images/Home-Auth.svg';
+
 import Login from './components/Login';
 import './styles.scss';
 
