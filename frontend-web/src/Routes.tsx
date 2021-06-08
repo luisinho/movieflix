@@ -5,6 +5,7 @@ import history from 'core/utils/history';
 import Home from 'pages/Home';
 import Catalog from './pages/Catalog';
 import { URL_ROOT, URL_HOME_LOGIN, URL_MOVIES } from 'core/utils/ApiUrl';
+import PrivateRoute from 'core/assets/Routes/PrivateRoute';
 
 const Routes = () => (
 
@@ -15,9 +16,9 @@ const Routes = () => (
             <Route path={URL_HOME_LOGIN} exact>
                 <Home />
             </Route>
-            <Route path={URL_MOVIES} exact>
+            <PrivateRoute path={URL_MOVIES}>
                 <Catalog />
-            </Route>
+            </PrivateRoute>
         </Switch>
     </Router>
 );
