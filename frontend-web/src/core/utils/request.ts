@@ -1,8 +1,8 @@
 import axios, { AxiosError, Method } from 'axios';
 import qs from 'qs';
-import history from 'core/utils/history';
-import { URL_HOME_LOGIN, URL_LOGIN } from './ApiUrl';
-import { CLIENT_ID, CLIENT_SECRET, getSessionData } from './auth';
+
+import { URL_LOGIN } from './ApiUrl';
+import { CLIENT_ID, CLIENT_SECRET, getSessionData, logout } from './auth';
 
 type RequestParams = {
     method?: Method,
@@ -26,7 +26,7 @@ axios.interceptors.response.use(function (response) {
 }, function (error: AxiosError) {
 
     if (error.response?.status === 401) {
-        history.push(URL_HOME_LOGIN);
+        logout();
     }
 
     return Promise.reject(error);

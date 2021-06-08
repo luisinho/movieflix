@@ -1,5 +1,6 @@
-import jwDecode from 'jwt-decode';
-import { type } from 'os';
+import jwtDecode from 'jwt-decode';
+import { URL_HOME_LOGIN } from './ApiUrl';
+import history from './history';
 
 export const CLIENT_ID = 'movieflix';
 export const CLIENT_SECRET = 'movieflix9091';
@@ -37,9 +38,12 @@ export const getAccessTokenDecoded = () => {
 
     const sessionData = getSessionData();
 
-    const tokenDecoded = jwDecode(sessionData.access_token);
-
-    return tokenDecoded as AccessToken;
+    try {
+        const tokenDecoded = jwtDecode(sessionData.access_token);
+        return tokenDecoded as AccessToken;
+    } catch (error) {
+        return {} as AccessToken;
+    }
 }
 
 export const isTokenValid = () => {
@@ -58,4 +62,9 @@ export const isAuthenticated = () => {
 
 export const isAllowedByRole = (routeRoles: Role[] = []) => {
 
+}
+
+export const logout = () => {
+    localStorage.removeItem('authData');
+    history.replace(URL_HOME_LOGIN);
 }
