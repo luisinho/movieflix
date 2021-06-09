@@ -1,17 +1,23 @@
-import { ReactComponent as ImageCar } from 'core/assets/images/image-card.svg';
+import { Movie } from 'core/types/Movie';
 import './styles.scss';
 
-const MovieCard = () => (
-    <div className="movie-card">
-        <ImageCar className="movie-card-image" />
-        <div className="movie-card-title">
-            O Retorno do Rei
-            <h6 className="movie-card-title-year">2103</h6>
+type Props = {
+    movie: Movie;
+}
+
+const MovieCard = ({ movie }: Props) => {
+    return (
+        <div className="movie-card">
+            <img src={movie.imgUrl} alt={movie.title} className="movie-card-image" />
+            <div className="movie-card-title">
+                {movie.title}
+                <h6 className="movie-card-title-year">{movie.year}</h6>
+            </div>
+            <div className="movie-card-sub-title">
+                {movie.subTitle}
+            </div>
         </div>
-        <div className="movie-card-sub-title">
-            O olho do inimigo está se movendo.
-        </div>
-    </div>
-);
+    );
+}
 
 export default MovieCard;

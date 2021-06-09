@@ -16,12 +16,19 @@
     color: #000000;
 }
 
+.nav-current-user {
+    text-align: end;
+    align-self: center;
+    font-weight: bold;
+    color: #000000;
+}
+
 .nav-link-sair {
     height: 30px;
     text-align: center;
     border: 1px solid #000000;
     box-sizing: border-box;
-    border-radius: 10px;    
+    border-radius: 10px;
 }
 
 .nav-link-text {

@@ -25,7 +25,7 @@ const GenreComboBox = () => {
         <select name="genre" className="combo-box-genre">
             {
                 genresResponse?.content.map(genre =>
-                    <option key={genre.id} value={genre.id}>
+                    <option key={genre.id} value={genre.id} className="option-genre">
                         {genre.name}
                     </option>
                 )

@@ -6,7 +6,7 @@ import './styles.scss';
 
 const Navbar = () => {
 
-    const [currentUser, setCurrentUser] = useState('');
+    const [currentUser, setCurrentUser] = useState<string>('');
 
     const location = useLocation();
 
@@ -26,13 +26,13 @@ const Navbar = () => {
     return (
         <nav className="row main-nav">
             <div className="row">
-                <div className="col-md-10">
+                <div className="col-md-9">
                     <a href="link" className="nav-logo-text">
                         <h4>MovieFlix</h4>
                     </a>
                 </div>
 
-                <div className="col-md-1">
+                <div className="col-md-2 nav-current-user">
                     {currentUser}
                 </div>
 
@@ -49,7 +49,6 @@ const Navbar = () => {
 
                     </div>
                 )}
-
             </div>
         </nav>
     );
