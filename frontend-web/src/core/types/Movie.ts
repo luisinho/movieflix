@@ -2,6 +2,7 @@ import { Genre } from "./Genre"
 
 export type MoviesResponse = {
     content: Movie[];
+    totalPages: number;
 }
 
 export type Movie = {

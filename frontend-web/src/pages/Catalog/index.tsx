@@ -7,6 +7,7 @@ import './styles.scss';
 import { makePrivateRequest } from 'core/utils/request';
 import { URL_MOVIES } from 'core/utils/ApiUrl';
 import { AxiosError } from 'axios';
+import Pagination from 'core/components/Pagination';
 
 const Catalog = () => {
 
@@ -29,7 +30,7 @@ const Catalog = () => {
             }).finally(() => {
             });
 
-    }, []);
+    }, [activePage]);
 
     return (
         <div>
@@ -43,6 +44,11 @@ const Catalog = () => {
                     )
                 }
             </div>
+            { moviesResponse && (
+                <Pagination
+                    totalPages={moviesResponse.totalPages}
+                    onChange={page => setActivePage(page)} />
+            )}
         </div>
     );
 }
