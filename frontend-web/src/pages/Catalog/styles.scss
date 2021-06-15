@@ -1,10 +1,35 @@
 .card-combo-box {
-    width: 1440px;
+    display: flex;
+    width: 1535px;
     height: 60px;    
     margin: 50px 100px 0px 95px;
     background: #6C6C6C;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
+}
+
+@media only screen and (max-width: 1620px) {
+    .card-combo-box {        
+        width: 1440px;
+    }
+}
+
+@media only screen and (max-width: 1305px) {
+    .card-combo-box {        
+        width: 1120px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .card-combo-box {        
+        width: 565px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .card-combo-box {        
+        width: 270px;
+    }
 }
 
 .catalog-movie {    
@@ -14,3 +39,5 @@
     grid-gap: 33px 20px;
     justify-content: space-between;
 }
+
+
