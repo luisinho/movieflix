@@ -15,11 +15,14 @@ const Catalog = () => {
 
     const [activePage, setActivePage] = useState(0);
 
+    const [selectedGenreId, setSelectedGenreId] = useState<number>(0);
+
     useEffect(() => {
 
         const params = {
             page: activePage,
-            linesPerPage: 10
+            linesPerPage: 10,
+            genreId: selectedGenreId
         }
 
         makePrivateRequest({ url: URL_MOVIES, params: params })
@@ -30,12 +33,17 @@ const Catalog = () => {
             }).finally(() => {
             });
 
-    }, [activePage]);
+    }, [activePage, selectedGenreId]);
 
     return (
         <div>
             <div className="card-combo-box">
-                <GenreComboBox />
+                <GenreComboBox
+                    onChange={genre => {
+                        setSelectedGenreId(Number(genre?.target.value.toString()));
+                        setActivePage(0);
+                    }}
+                />
             </div>
             <div className="catalog-movie">
                 {
