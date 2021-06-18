@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
+import { AxiosError } from 'axios';
 
 import GenreComboBox from '../Genre/components/ComboBox';
 import { MoviesResponse } from 'core/types/Movie';
 import MovieCard from './components/MovieCard';
-import './styles.scss';
 import { makePrivateRequest } from 'core/utils/request';
 import { URL_MOVIES } from 'core/utils/ApiUrl';
-import { AxiosError } from 'axios';
 import Pagination from 'core/components/Pagination';
+import './styles.scss';
+import { Link } from 'react-router-dom';
 
 const Catalog = () => {
 
@@ -15,14 +16,14 @@ const Catalog = () => {
 
     const [activePage, setActivePage] = useState(0);
 
-    const [selectedGenreId, setSelectedGenreId] = useState<number>(0);
+    const [selectedGenreId, setSelectedGenreId] = useState('0');
 
     useEffect(() => {
 
         const params = {
             page: activePage,
             linesPerPage: 10,
-            genreId: selectedGenreId
+            genreId: Number(selectedGenreId)
         }
 
         makePrivateRequest({ url: URL_MOVIES, params: params })
@@ -40,22 +41,25 @@ const Catalog = () => {
             <div className="card-combo-box">
                 <GenreComboBox
                     onChange={genre => {
-                        setSelectedGenreId(Number(genre?.target.value.toString()));
                         setActivePage(0);
+                        setSelectedGenreId(genre?.target.value);
                     }}
                 />
             </div>
             <div className="catalog-movie">
                 {
                     moviesResponse?.content.map(movie =>
-                        <MovieCard key={movie.id} movie={movie} />
+                        <Link to={`${URL_MOVIES}/${movie.id}`} key={movie.id}>
+                            <MovieCard movie={movie} />
+                        </Link>
                     )
                 }
             </div>
             { moviesResponse && (
                 <Pagination
                     totalPages={moviesResponse.totalPages}
-                    onChange={page => setActivePage(page)} />
+                    onChange={page => setActivePage(page)}
+                />
             )}
         </div>
     );

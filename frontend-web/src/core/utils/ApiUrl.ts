@@ -6,5 +6,7 @@ export const URL_LOGIN = '/oauth/token';
 
 export const URL_MOVIES = '/movies';
 
+export const URL_MOVIE_DETAILS = '/movies/:movieId';
+
 export const URL_GENRES = '/genres';
 

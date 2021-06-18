@@ -4,8 +4,9 @@ import Navbar from 'core/components/Navbar';
 import history from 'core/utils/history';
 import Home from 'pages/Home';
 import Catalog from './pages/Catalog';
-import { URL_ROOT, URL_HOME_LOGIN, URL_MOVIES } from 'core/utils/ApiUrl';
+import { URL_ROOT, URL_HOME_LOGIN, URL_MOVIES, URL_MOVIE_DETAILS } from 'core/utils/ApiUrl';
 import PrivateRoute from 'core/assets/Routes/PrivateRoute';
+import MovieDetails from 'pages/Catalog/components/MovieDetails';
 
 const Routes = () => (
 
@@ -16,8 +17,11 @@ const Routes = () => (
             <Route path={URL_HOME_LOGIN} exact>
                 <Home />
             </Route>
-            <PrivateRoute path={URL_MOVIES}>
+            <PrivateRoute path={URL_MOVIES} exact={true}>
                 <Catalog />
+            </PrivateRoute>
+            <PrivateRoute path={URL_MOVIE_DETAILS} exact={false}>
+                <MovieDetails />
             </PrivateRoute>
         </Switch>
     </Router>

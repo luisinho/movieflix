@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 import { getAccessTokenDecoded, logout } from 'core/utils/auth';
+import { URL_MOVIES } from 'core/utils/ApiUrl';
 import './styles.scss';
 
 const Navbar = () => {
@@ -27,9 +28,9 @@ const Navbar = () => {
         <nav className="row main-nav">
             <div className="row">
                 <div className="col-md-9">
-                    <a href="link" className="nav-logo-text">
+                    <Link to={URL_MOVIES} className="nav-logo-text">
                         <h4>MovieFlix</h4>
-                    </a>
+                    </Link>
                 </div>
 
                 <div className="col-md-2 nav-current-user">

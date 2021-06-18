@@ -5,16 +5,18 @@ import { URL_HOME_LOGIN } from "core/utils/ApiUrl";
 
 type Props = {
     children: React.ReactNode;
-    path: string
+    path: string;
+    exact: boolean;
 }
 
-const PrivateRoute = ({ children, path }: Props) => {
+const PrivateRoute = ({ children, path, exact }: Props) => {
 
     return (
         <Route
             path={path}
             render={({ location }) =>
                 isAuthenticated() ? (
+                    console.log('children', path),
                     children
                 ) : (
                     <Redirect
@@ -25,6 +27,7 @@ const PrivateRoute = ({ children, path }: Props) => {
                     />
                 )
             }
+            exact={exact}
         />
     );
 }
