@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { makePrivateRequest } from 'core/utils/request';
 import { URL_MOVIES } from 'core/utils/ApiUrl';
 import { AxiosError } from 'axios';
+import FormAvaliacao from './components/FormAvaliacao';
 
 type ParamsType = {
     movieId: string;
@@ -33,7 +34,9 @@ const MovieDetails = () => {
     return (
         <div>
             { movie && (<Sinopse movie={movie} />)}
+            <FormAvaliacao />
         </div>
+
     );
 }
 
