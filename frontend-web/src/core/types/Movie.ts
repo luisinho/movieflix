@@ -12,6 +12,22 @@ export type Movie = {
     year: number;
     synopsis: string;
     imgUrl: string;
-    genre: Genre;
+    genre?: Genre;
     reviews: [];
+}
+
+export const getNewMovie = () => {
+
+    const movie = {
+        id: 0,
+        title: '',
+        subTitle: '',
+        year: 0,
+        synopsis: '',
+        imgUrl: '',
+        genre: undefined,
+        reviews: []
+    };
+
+    return movie as Movie;
 }

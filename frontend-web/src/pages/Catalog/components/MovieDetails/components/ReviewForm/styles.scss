@@ -1,0 +1,46 @@
+.main-review-form {
+    width: 1280px;
+    height: 180px;
+    margin: 15px auto 0px auto;
+    background: #6C6C6C;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.review-form {    
+    padding: 15px 15px 0px 20px;
+}
+
+.review-text-area {
+    width: 1230px;
+    height: 75px;
+    padding: 10px 0px 0px 15px;
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    box-sizing: border-box;
+    border-radius: 10px;
+    resize: none;
+
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: -0.015em;
+    color: #9E9E9E;
+}
+
+.review-btn-save {
+    width: 335px;
+    height: 50px;
+    margin: 10px 415px 10px 415px;
+    background: #FFC700;
+    border-radius: 10px;
+
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: -0.015em;
+    color: #000000;
+}

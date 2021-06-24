@@ -8,6 +8,7 @@ export const CLIENT_SECRET = 'movieflix9091';
 type LoginResponse = {
     access_token: string;
     token_type: string;
+    userId: number;
     expires_in: number;
     scope: string;
     jti: string;
@@ -46,6 +47,15 @@ export const getAccessTokenDecoded = () => {
     }
 }
 
+export const getLoggedUser = () => {
+
+    const sessionData = getSessionData();
+
+    const userId = sessionData.userId;
+
+    return userId;
+}
+
 export const isTokenValid = () => {
 
     const { exp } = getAccessTokenDecoded();
@@ -62,6 +72,7 @@ export const isAuthenticated = () => {
 
 export const isAllowedByRole = (routeRoles: Role[] = []) => {
 
+    return routeRoles.some(role => role === 'ROLE_MEMBER');
 }
 
 export const logout = () => {
