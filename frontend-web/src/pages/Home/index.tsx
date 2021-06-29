@@ -1,4 +1,4 @@
-import { ReactComponent as HomeAuthImage } from 'core/assets/images/Home-Auth.svg';
+import { ReactComponent as HomeAuthImage } from 'core/assets/images/home-auth.svg';
 import { useEffect } from 'react';
 
 import { logout } from 'core/utils/auth';

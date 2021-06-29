@@ -1,14 +1,13 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AxiosError } from 'axios';
 
 import { getLoggedUser } from 'core/utils/auth';
-import { Review } from 'core/types/Review';
-
-import { getNewMovie } from 'core/types/Movie';
-import { getNewUser } from 'core/types/User';
+import { getNewReview, Review } from 'core/types/Review';
 
 import { makePrivateRequest } from 'core/utils/request';
 import { URL_REVIEWS } from 'core/utils/ApiUrl';
+import ReviewList from '../ReviewList';
 import './styles.scss';
 
 type Props = {
@@ -16,27 +15,32 @@ type Props = {
 }
 
 type FormData = {
-    review: Review;
+    text: string;
 }
 
 const ReviewForm = ({ moveId }: Props) => {
 
     const userId = getLoggedUser();
 
+    const reviewMoveId = moveId;
+
+    const [newQuantityReview, setNewQuantityReview] = useState<number>(0);
+
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
 
     const onSubmit = (formData: FormData) => {
 
-        formData.review.movie = getNewMovie();
-        formData.review.user = getNewUser();
+        const review: Review = getNewReview();
 
-        formData.review.movie.id = moveId;
-        formData.review.user.id = userId;
+        review.text = formData.text;
+        review.movie.id = moveId;
+        review.user.id = userId;
 
-        makePrivateRequest({ method: 'POST', url: URL_REVIEWS, data: formData.review })
+        makePrivateRequest({ method: 'POST', url: URL_REVIEWS, data: review })
             .then(response => {
                 if (response.status === 201) {
                     console.log('Avalição criada com sucesso.');
+                    setNewQuantityReview(newQuantityReview + 1);
                 }
             }).catch((err: AxiosError) => {
                 console.log('Ocorreu um erro: ', err);
@@ -50,13 +54,13 @@ const ReviewForm = ({ moveId }: Props) => {
 
             <form className="review-form" onSubmit={handleSubmit(onSubmit)}>
                 <textarea
-                    className={`form-control review-text-area ${errors.review?.text ? 'is-invalid' : ''}`}
+                    className={`form-control review-text-area ${errors.text ? 'is-invalid' : ''}`}
                     placeholder="Deixe sua avaliação aqui"
-                    {...register("review.text", { required: "Campo avaliação obrigatório." })}
+                    {...register("text", { required: "Campo avaliação obrigatório." })}
                 />
-                {errors.review?.text && (
+                {errors.text && (
                     <div className="invalid-feedback d-block text-center mt-2">
-                        {errors.review?.text.message}
+                        {errors.text.message}
                     </div>
                 )}
 
@@ -64,6 +68,8 @@ const ReviewForm = ({ moveId }: Props) => {
                     Salvar Avaliação
                 </button>
             </form>
+
+            <ReviewList reviewMoveId={reviewMoveId} newQuantityReview={newQuantityReview} />
 
         </div>
     );

@@ -3,8 +3,10 @@ import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 
 import Sinopse from './components/Sinopse';
-import ReviewForm from './components/ReviewForm';
 import { Movie } from 'core/types/Movie';
+
+import ReviewForm from './components/ReviewForm';
+import ReviewList from './components/ReviewList';
 
 import { getAccessTokenDecoded, isAllowedByRole } from 'core/utils/auth';
 import { makePrivateRequest } from 'core/utils/request';
@@ -26,18 +28,19 @@ const MovieDetails = () => {
     useEffect(() => {
 
         makePrivateRequest({ url: `${URL_MOVIES}/${movieId}` })
-            .then(response => setMovie(response.data))
+            .then(response => { setMovie(response.data); console.log(response.data) })
             .catch((err: AxiosError) => {
                 console.log('Ocorreu um erro: ', err);
             }).finally(() => {
             });
 
-    }, [movieId])
+    }, [movieId]);
 
     return (
         <div>
             { movie && (<Sinopse movie={movie} />)}
             { movie && isAllowedByRole(authorities) && (<ReviewForm moveId={movie.id} />)}
+            { movie && !isAllowedByRole(authorities) && (<ReviewList reviewMoveId={movie.id} newQuantityReview={0} />)}
         </div>
     );
 }

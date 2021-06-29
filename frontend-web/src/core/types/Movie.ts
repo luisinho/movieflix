@@ -1,4 +1,5 @@
 import { Genre } from "./Genre"
+import { Review } from "./Review";
 
 export type MoviesResponse = {
     content: Movie[];
@@ -13,7 +14,7 @@ export type Movie = {
     synopsis: string;
     imgUrl: string;
     genre?: Genre;
-    reviews: [];
+    reviews: Review[];
 }
 
 export const getNewMovie = () => {
