@@ -1,18 +1,22 @@
 package com.devsuperior.movieflix.dto;
 
 import java.io.Serializable;
+import java.time.Instant;
+
 import javax.validation.constraints.NotBlank;
+
 import com.devsuperior.movieflix.entities.Review;
 
-public class ReviewDTO implements Serializable {
+public class ReviewDTO implements Serializable, Comparable<ReviewDTO> {
 
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	@NotBlank(message = "Campo avaliação requerido!")
 	private String text;
-	private MovieDTO movieDto;
-	private UserDTO user;
+	private Instant createdAt;
+	private MovieDTO movie;
+	private UserDTO user;	
 
 	public ReviewDTO() {
 
@@ -21,9 +25,10 @@ public class ReviewDTO implements Serializable {
 	public ReviewDTO(Review entity) {
 		this.id = entity.getId();
 		this.text = entity.getText();
+		this.createdAt = entity.getCreatedAt();
 
 		if (entity.getMovie() != null) {
-			this.movieDto = new MovieDTO(entity.getMovie());
+			this.movie = new MovieDTO(entity.getMovie());
 		}
 
 		this.user = new UserDTO(entity.getUser());
@@ -32,7 +37,7 @@ public class ReviewDTO implements Serializable {
 	public ReviewDTO(Long id, String text, MovieDTO movieDto) {
 		this.id = id;
 		this.text = text;
-		this.movieDto = movieDto;
+		this.movie = movieDto;
 	}
 
 	public Long getId() {
@@ -43,20 +48,28 @@ public class ReviewDTO implements Serializable {
 		this.id = id;
 	}
 
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Instant createdAt) {
+		this.createdAt = createdAt;
+	}
+
 	public String getText() {
 		return text;
 	}
 
 	public void setText(String text) {
 		this.text = text;
+	}	
+
+	public MovieDTO getMovie() {
+		return movie;
 	}
 
-	public MovieDTO getMovieDto() {
-		return movieDto;
-	}
-
-	public void setMovieDto(MovieDTO movieDto) {
-		this.movieDto = movieDto;
+	public void setMovie(MovieDTO movie) {
+		this.movie = movie;
 	}
 
 	public UserDTO getUser() {
@@ -66,6 +79,14 @@ public class ReviewDTO implements Serializable {
 	public void setUser(UserDTO user) {
 		this.user = user;
 	}
+
+	@Override
+	public int compareTo(ReviewDTO obj) {
+	   if (getCreatedAt() == null || obj.getCreatedAt() == null) {
+		   return 0;
+	   }
+	   return getCreatedAt().compareTo(obj.getCreatedAt());
+   }
 
 	@Override
 	public int hashCode() {
@@ -90,10 +111,10 @@ public class ReviewDTO implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
+	}	
 
 	@Override
 	public String toString() {
-		return "ReviewDTO [text=" + text + ", movieId=" + movieDto.getId() + "]";
+		return "ReviewDTO [text=" + text + ", movieId=" + movie.getId() + "]";
 	}
 }

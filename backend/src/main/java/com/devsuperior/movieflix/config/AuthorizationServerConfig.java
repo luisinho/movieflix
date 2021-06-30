@@ -1,5 +1,6 @@
 package com.devsuperior.movieflix.config;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import com.devsuperior.movieflix.components.JwtTokenEnhancer;
 import com.devsuperior.movieflix.resources.exceptions.CustomOauthException;
 
 @Configuration
@@ -58,6 +61,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private MessageSource messageSource;
 
+	@Autowired
+	private JwtTokenEnhancer tokenEnhancer;
+
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.tokenKeyAccess(METHOD_PERMIT_ALL).checkTokenAccess(METHOD_IS_AUTHENTICATED);
@@ -75,9 +81,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+
+		TokenEnhancerChain chain = new TokenEnhancerChain();
+		chain.setTokenEnhancers(Arrays.asList(this.accessTokenConverter, this.tokenEnhancer));
+
 		endpoints.authenticationManager(this.authenticationManager)
 		.tokenStore(this.tokenStore)
-		.accessTokenConverter(this.accessTokenConverter);
+		.accessTokenConverter(this.accessTokenConverter)
+		.tokenEnhancer(chain);
 
 		endpoints.exceptionTranslator(exception -> {
 

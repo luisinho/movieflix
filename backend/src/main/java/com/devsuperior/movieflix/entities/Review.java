@@ -84,6 +84,10 @@ public class Review implements Serializable {
 
 	public void setMovie(Movie movie) {
 		this.movie = movie;
+	}	
+
+	public Instant getCreatedAt() {
+		return createdAt;
 	}
 
 	@PrePersist

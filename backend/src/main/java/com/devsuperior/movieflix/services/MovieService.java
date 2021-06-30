@@ -72,6 +72,8 @@ public class MovieService {
 
 		MovieDTO dto = new MovieDTO(entity, entity.getReviews());
 
+		dto.orderReviewMovie(dto.getReviews());
+
 		LOG.info("END METHOD MovieService.findById()");
 
 		return dto;

@@ -66,7 +66,7 @@ public class ReviewResourceIT {
 		MovieDTO movieDto = new MovieDTO();
 		movieDto.setId(1L);
 
-		newReviewDTO.setMovieDto(movieDto);
+		newReviewDTO.setMovie(movieDto);
 	}
 
 	@Test

@@ -61,7 +61,7 @@ public class ReviewService {
 			throw new ForbiddenException(message);
 		}
 
-		Movie movie = this.movieService.findByIdForReview(dto.getMovieDto().getId());
+		Movie movie = this.movieService.findByIdForReview(dto.getMovie().getId());
 
 		Review entity = new Review();
 		entity.setText(dto.getText());

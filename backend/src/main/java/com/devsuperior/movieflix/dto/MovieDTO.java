@@ -1,7 +1,9 @@
 package com.devsuperior.movieflix.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.util.CollectionUtils;
@@ -20,7 +22,7 @@ public class MovieDTO implements Serializable {
 	private String imgUrl;	
 	private String synopsis;
 	private GenreDTO genre;
-	private Set<ReviewDTO> reviews = new HashSet<ReviewDTO>();
+	private List<ReviewDTO> reviews = new ArrayList<ReviewDTO>();
 
 	public MovieDTO() {
 
@@ -50,7 +52,7 @@ public class MovieDTO implements Serializable {
 
 		if (!CollectionUtils.isEmpty(entity.getReviews())) {
 			reviews.forEach(review -> {
-				review.setMovie(null);
+				review.setMovie(review.getMovie());
 				this.reviews.add(new ReviewDTO(review));
 			});
 		}
@@ -122,8 +124,17 @@ public class MovieDTO implements Serializable {
 		this.genre = genre;
 	}
 
-	public Set<ReviewDTO> getReviews() {
+	public List<ReviewDTO> getReviews() {
 		return reviews;
+	}
+
+	public void orderReviewMovie(List<ReviewDTO> reviewsOrder) {
+
+		if (!CollectionUtils.isEmpty(reviewsOrder)) {
+
+			 Collections.sort(reviewsOrder);
+			 Collections.reverse(reviewsOrder);
+		}
 	}
 
 	@Override
