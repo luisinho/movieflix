@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
+import { Link } from 'react-router-dom';
 
 import GenreComboBox from '../Genre/components/ComboBox';
 import { MoviesResponse } from 'core/types/Movie';
@@ -8,7 +9,6 @@ import { makePrivateRequest } from 'core/utils/request';
 import { URL_MOVIES } from 'core/utils/ApiUrl';
 import Pagination from 'core/components/Pagination';
 import './styles.scss';
-import { Link } from 'react-router-dom';
 
 const Catalog = () => {
 
@@ -18,7 +18,7 @@ const Catalog = () => {
 
     const [selectedGenreId, setSelectedGenreId] = useState('0');
 
-    useEffect(() => {
+    const getMovies = useCallback(() => {
 
         const params = {
             page: activePage,
@@ -36,14 +36,21 @@ const Catalog = () => {
 
     }, [activePage, selectedGenreId]);
 
+    useEffect(() => {
+        getMovies();
+    }, [getMovies]);
+
+    const handleChangeId = (genreId: string) => {
+        setActivePage(0);
+        setSelectedGenreId(genreId);
+    }
+
     return (
         <div>
             <div className="card-combo-box">
                 <GenreComboBox
-                    onChange={genre => {
-                        setActivePage(0);
-                        setSelectedGenreId(genre?.target.value);
-                    }}
+                    genreId={selectedGenreId}
+                    handleChangeId={handleChangeId}
                 />
             </div>
             <div className="catalog-movie">
@@ -58,6 +65,7 @@ const Catalog = () => {
             { moviesResponse && (
                 <Pagination
                     totalPages={moviesResponse.totalPages}
+                    activePage={activePage}
                     onChange={page => setActivePage(page)}
                 />
             )}

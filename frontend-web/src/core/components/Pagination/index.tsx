@@ -5,10 +5,11 @@ import './styles.scss';
 
 type Props = {
     totalPages: number;
+    activePage: number;
     onChange: (item: number) => void;
 }
 
-const Pagination = ({ totalPages, onChange }: Props) => {
+const Pagination = ({ totalPages, activePage, onChange }: Props) => {
 
     const renderIcon = (type: 'previous' | 'next') => (
         <ArrowIcon
@@ -34,6 +35,7 @@ const Pagination = ({ totalPages, onChange }: Props) => {
                 previousClassName="page-active"
                 nextClassName="page-active"
                 disabledClassName="page-inactive"
+                forcePage={activePage}
             />
 
         </div>

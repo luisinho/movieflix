@@ -7,10 +7,11 @@ import { URL_GENRES } from 'core/utils/ApiUrl';
 import './styles.scss';
 
 type Props = {
-    onChange(event: React.ChangeEvent<HTMLSelectElement>): void;
+    genreId: string;
+    handleChangeId: (genreId: string) => void;
 }
 
-const GenreComboBox = ({ onChange }: Props) => {
+const GenreComboBox = ({ genreId, handleChangeId }: Props) => {
 
     const [genresResponse, setGenresResponse] = useState<GenresResponse>();
 
@@ -26,7 +27,7 @@ const GenreComboBox = ({ onChange }: Props) => {
     }, []);
 
     return (
-        <select name="genre" className="combo-box-genre" onChange={event => onChange(event)}>
+        <select value={genreId} name="genre" className="combo-box-genre" onChange={event => handleChangeId(event.target.value)}>
             <option value="0" className="option-genre">Selecione o genero</option>
             {
                 genresResponse?.content.map(genre =>

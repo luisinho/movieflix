@@ -1,8 +1,8 @@
-import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
+import { AxiosError } from 'axios';
 import Moment from 'react-moment';
-import { ReactComponent as ReviewStarImage } from 'core/assets/images/review-star.svg';
 
+import { ReactComponent as ReviewStarImage } from 'core/assets/images/review-star.svg';
 import { Movie } from 'core/types/Movie';
 import { URL_MOVIES } from 'core/utils/ApiUrl';
 import { makePrivateRequest } from 'core/utils/request';

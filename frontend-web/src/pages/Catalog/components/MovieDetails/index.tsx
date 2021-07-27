@@ -1,5 +1,5 @@
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
 
 import Sinopse from './components/Sinopse';
@@ -28,7 +28,9 @@ const MovieDetails = () => {
     useEffect(() => {
 
         makePrivateRequest({ url: `${URL_MOVIES}/${movieId}` })
-            .then(response => { setMovie(response.data); console.log(response.data) })
+            .then(response => {
+                setMovie(response.data);
+            })
             .catch((err: AxiosError) => {
                 console.log('Ocorreu um erro: ', err);
             }).finally(() => {
