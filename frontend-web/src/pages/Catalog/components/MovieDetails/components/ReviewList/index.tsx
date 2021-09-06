@@ -31,17 +31,28 @@ const ReviewList = ({ reviewMoveId, newQuantityReview }: Props) => {
 
     return (
         <div className="main-review-list">
+
             {movie?.reviews.map(review =>
                 <>
-                    <div key={review.id} className="row">
-                        <div className="col-md-6 review-user-name">
-                            <ReviewStarImage className="review-img-star" />
-                            {review.user.name}
+                    <div key={review.id} className="d-flex flex-column">
+
+                        <div className="d-flex flex-row">
+
+                            <div className="d-flex flex-row flex-fill">
+                                <ReviewStarImage className="review-img-star" />
+                                <div className="review-user-name">
+                                    {review.user.name}
+                                </div>
+                            </div>
+
+                            <div className="review-user-dt-create flex-fill">
+                                Criado:<Moment className="p-1" format="DD/MM/YYYY HH:mm:ss">{review?.createdAt}</Moment>
+                            </div>
+
                         </div>
-                        <div className="col-md-3 text-right review-user-dt-create">
-                            Criado:<Moment className="p-1" format="DD/MM/YYYY HH:mm:ss">{review?.createdAt}</Moment>
-                        </div>
+
                     </div>
+
                     <div className="review-list">
                         {review.text}
                     </div>

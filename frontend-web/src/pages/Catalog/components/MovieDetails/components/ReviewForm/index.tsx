@@ -50,27 +50,32 @@ const ReviewForm = ({ moveId }: Props) => {
     }
 
     return (
-        <div className="main-review-form">
+        <div className="d-flex flex-column">
 
-            <form className="review-form" onSubmit={handleSubmit(onSubmit)}>
-                <textarea
-                    className={`form-control review-text-area ${errors.text ? 'is-invalid' : ''}`}
-                    placeholder="Deixe sua avaliação aqui"
-                    {...register("text", { required: "Campo avaliação obrigatório." })}
-                />
-                {errors.text && (
-                    <div className="invalid-feedback d-block text-center mt-2">
-                        {errors.text.message}
-                    </div>
-                )}
+            <div className="main-review-form">
 
-                <button className="review-btn-save">
-                    Salvar Avaliação
-                </button>
-            </form>
+                <form className="review-form" onSubmit={handleSubmit(onSubmit)}>
+                    <textarea
+                        className={`form-control review-text-area ${errors.text ? 'is-invalid' : ''}`}
+                        placeholder="Deixe sua avaliação aqui"
+                        {...register("text", { required: "Campo avaliação obrigatório." })}
+                    />
+                    {errors.text && (
+                        <div className="invalid-feedback d-block text-center mt-2">
+                            {errors.text.message}
+                        </div>
+                    )}
 
-            <ReviewList reviewMoveId={reviewMoveId} newQuantityReview={newQuantityReview} />
+                    <button className="review-btn-save">
+                        Salvar Avaliação
+                    </button>
+                </form>
 
+            </div>
+
+            <div>
+                <ReviewList reviewMoveId={reviewMoveId} newQuantityReview={newQuantityReview} />
+            </div>
         </div>
     );
 }

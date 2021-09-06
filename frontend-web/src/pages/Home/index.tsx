@@ -12,17 +12,17 @@ const Home = () => {
     }, []);
 
     return (
-        <div className="row home-container">
-            <div className="col-md-7">
+        <div className="home-container">
+            <div>
                 <h1 className="home-title">
                     Avalie Filmes
-            </h1>
+                </h1>
                 <p className="home-sub-title">
-                    Diga o que você achou do seu filme favorito
-            </p>
+                    Diga o que você achou do seu <br /> filme favorito
+                </p>
                 <HomeAuthImage className="home-image" />
             </div>
-            <div className="col-md-4 home-content">
+            <div className="home-content">
                 <Login />
             </div>
         </div>
