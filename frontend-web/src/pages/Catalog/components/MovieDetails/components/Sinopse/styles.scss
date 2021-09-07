@@ -8,8 +8,10 @@
 }
 
 .sinopse-image {
-    width: 525px;
-    height: 315px;
+    width: auto;
+    height: auto;
+    min-width: 50%;
+    min-height: 50%;
     margin: 30px 65px 30px 20px;
 }
 

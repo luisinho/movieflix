@@ -4,6 +4,7 @@ import history from './history';
 
 export const CLIENT_ID = 'movieflix';
 export const CLIENT_SECRET = 'movieflix9091';
+export type Role = 'ROLE_VISITOR' | 'ROLE_MEMBER';
 
 type LoginResponse = {
     access_token: string;
@@ -13,8 +14,6 @@ type LoginResponse = {
     scope: string;
     jti: string;
 }
-
-export type Role = 'ROLE_VISITOR' | 'ROLE_MEMBER';
 
 type AccessToken = {
     exp: number;

@@ -1,6 +1,7 @@
 .card-combo-box {
     display: flex;
-    width: 1535px;
+    width: auto;
+    min-width: 90%;
     height: 60px;    
     margin: 50px 100px 0px 95px;
     background: #6C6C6C;
@@ -8,36 +9,56 @@
     border-radius: 10px;
 }
 
-@media only screen and (max-width: 1620px) {
-    .card-combo-box {        
-        width: 1425px;
+@media (min-width: 492px) {
+    .card-combo-box {
+        margin: 50px 100px 0px 110px;
+    }
+
+    .card-combo-box {
+        min-width: 35%;
     }
 }
 
-@media only screen and (max-width: 1305px) {
-    .card-combo-box {        
-        width: 1120px;
+@media (min-width: 580px) {
+    .card-combo-box {
+        width: auto;
+        max-width: 35%;
     }
 }
 
-@media only screen and (max-width: 900px) {
-    .card-combo-box {        
-        width: 565px;
+@media (min-width: 768px) {
+    .card-combo-box {
+        width: auto;
+        min-width: 30%;
     }
 }
 
-@media only screen and (max-width: 700px) {
-    .card-combo-box {        
-        width: 270px;
+@media (min-width: 960px) {
+    .card-combo-box {
+        margin: 50px 100px 0px 95px;
+    }
+
+    .card-combo-box {
+        width: auto;
+        min-width: 89%;
     }
 }
 
-.catalog-movie {    
+@media (min-width: 1440px) {
+    .card-combo-box {
+        margin: 50px 100px 0px 95px;
+    }
+
+    .card-combo-box {
+        width: auto;
+        min-width: 89%;
+    }
+}
+
+.catalog-movie {
     margin: 40px 100px 0px 95px;
     display: grid;
     grid-template-columns: repeat(auto-fill, 250px);
     grid-gap: 33px 20px;
     justify-content: space-between;
 }
-
-

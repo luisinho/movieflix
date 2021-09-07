@@ -1,5 +1,6 @@
 import Routes from './Routes';
 import Helmet from 'react-helmet';
+
 import './core/assets/styles/custom.scss';
 import './app.scss';
 
