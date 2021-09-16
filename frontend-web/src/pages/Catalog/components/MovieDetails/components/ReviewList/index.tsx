@@ -3,9 +3,10 @@ import { AxiosError } from 'axios';
 import Moment from 'react-moment';
 
 import { ReactComponent as ReviewStarImage } from 'core/assets/images/review-star.svg';
-import { Movie } from 'core/types/Movie';
-import { URL_MOVIES } from 'core/utils/ApiUrl';
+import { ReviewsResponse } from 'core/types/Review';
+import { URL_REVIEWS } from 'core/utils/ApiUrl';
 import { makePrivateRequest } from 'core/utils/request';
+import Pagination from 'core/components/Pagination';
 import './styles.scss';
 
 type Props = {
@@ -15,24 +16,32 @@ type Props = {
 
 const ReviewList = ({ reviewMoveId, newQuantityReview }: Props) => {
 
-    const [movie, setMovie] = useState<Movie>();
+    const [reviewsResponse, setReviewsResponse] = useState<ReviewsResponse>();
+
+    const [activePage, setActivePage] = useState(0);
 
     useEffect(() => {
 
-        makePrivateRequest({ url: `${URL_MOVIES}/${reviewMoveId}` })
+        const params = {
+            page: activePage,
+            linesPerPage: 4,
+            movieId: reviewMoveId
+        }
+
+        makePrivateRequest({ url: URL_REVIEWS, params: params })
             .then(response => {
-                setMovie(response.data);
+                setReviewsResponse(response.data);
             }).catch((err: AxiosError) => {
                 console.log('Ocorreu um erro: ', err);
             }).finally(() => {
             });
 
-    }, [reviewMoveId, newQuantityReview]);
+    }, [activePage, reviewMoveId, newQuantityReview]);
 
     return (
         <div className="main-review-list">
 
-            {movie?.reviews.map(review =>
+            {reviewsResponse?.content.map(review =>
                 <>
                     <div key={review.id} className="d-flex flex-column">
 
@@ -57,6 +66,13 @@ const ReviewList = ({ reviewMoveId, newQuantityReview }: Props) => {
                         {review.text}
                     </div>
                 </>
+            )}
+
+            { reviewsResponse && reviewsResponse.content.length > 0 && (
+                <Pagination
+                    totalPages={reviewsResponse.totalPages}
+                    activePage={activePage}
+                    onChange={page => setActivePage(page)} />
             )}
         </div>
     );

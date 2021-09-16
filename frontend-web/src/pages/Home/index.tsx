@@ -22,9 +22,11 @@ const Home = () => {
                 </p>
                 <HomeAuthImage className="home-image" />
             </div>
+
             <div className="home-content">
                 <Login />
             </div>
+
         </div>
     );
 }

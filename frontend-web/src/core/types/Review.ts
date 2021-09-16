@@ -3,6 +3,7 @@ import { getNewUser, User } from "./User";
 
 export type ReviewsResponse = {
     content: Review[];
+    totalPages: number;
 }
 
 export type Review = {

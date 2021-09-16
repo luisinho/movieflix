@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { AxiosError } from 'axios';
 
 import { makeLogin } from 'core/utils/request';
 import { saveSessionData } from 'core/utils/auth';
-import { URL_MOVIES } from 'core/utils/ApiUrl';
+import { URL_MOVIES, URL_USER_VISITOR } from 'core/utils/ApiUrl';
 import ButtonIcon from 'core/components/Buttonicon';
 import history from 'core/utils/history';
 import './styles.scss';
@@ -99,6 +99,12 @@ const Login = () => {
 
                 <div className="login-btn-icon">
                     <ButtonIcon />
+                    <div className="login-nao-tem-cadastro p-1">
+                        Não tem Cadastro Visitante ?
+                        <Link className="login-cadastrar p-2" to={`${URL_USER_VISITOR}/visitor`}>
+                            Cadastrar
+                        </Link>
+                    </div>
                 </div>
 
             </form>
