@@ -45,6 +45,9 @@ public class User implements UserDetails, Serializable {
 	@Column(name = "PASSWORD", columnDefinition = "TEXT")
 	private String password;
 
+	@Column(name = "ACTIVE")
+	private Boolean active;
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_user_role",
 	   joinColumns = @JoinColumn(name = "USER_ID"),
@@ -64,11 +67,12 @@ public class User implements UserDetails, Serializable {
 
 	}
 
-	public User(Long id, String name, String email, String password) {
+	public User(Long id, String name, String email, String password, Boolean active) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.active = active;
 	}
 
 	public Long getId() {
@@ -101,6 +105,14 @@ public class User implements UserDetails, Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public Set<Role> getRoles() {

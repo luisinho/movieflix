@@ -1,6 +1,12 @@
 package com.devsuperior.movieflix.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.devsuperior.movieflix.entities.User;
 
@@ -10,9 +16,17 @@ public class UserDTO implements Serializable {
 
 	private Long id;
 
+	@NotBlank(message = "Campo email requirido!")
+	@Email(message = "Favor entrar um email correto!")
 	private String email;
 
-	private String name;	
+	@NotBlank(message = "Campo nome requirido!")
+	@Size(min = 3, message = "O campo nome deve conter no minimo 3 caracteres!")
+	private String name;
+
+	private Boolean active;
+
+	private Set<RoleDTO> roles = new HashSet<RoleDTO>();
 
 	public UserDTO() {
 
@@ -22,6 +36,7 @@ public class UserDTO implements Serializable {
 		this.id = entity.getId();
 		this.email = entity.getEmail();
 		this.name = entity.getName();
+		this.active = entity.getActive();
 	}
 
 	public Long getId() {
@@ -46,5 +61,17 @@ public class UserDTO implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}	
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public Set<RoleDTO> getRoles() {
+		return roles;
+	}
 }

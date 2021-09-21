@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.devsuperior.movieflix.services.exceptions.DataBaseException;
 import com.devsuperior.movieflix.services.exceptions.ForbiddenException;
 import com.devsuperior.movieflix.services.exceptions.ResourceNotFoundException;
 
@@ -67,6 +68,36 @@ public class ResourceExceptionHandler {
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
 		err.setError("Resource Not Found Exception");
+		err.setMessage(e.getMessage());
+		err.setPath(request.getRequestURI());
+
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(DataBaseException.class)
+	public ResponseEntity<StandardError> validateDataBase(DataBaseException e, HttpServletRequest request) {
+
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+
+		StandardError err = new StandardError();
+		err.setTimestamp(Instant.now());
+		err.setStatus(status.value());
+		err.setError("Database exception");
+		err.setMessage(e.getMessage());
+		err.setPath(request.getRequestURI());
+
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(RegraNegocioException.class)
+	public ResponseEntity<StandardError> validateRule(RegraNegocioException e, HttpServletRequest request) {
+
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+
+		StandardError err = new StandardError();
+		err.setTimestamp(Instant.now());
+		err.setStatus(status.value());
+		err.setError("");
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 

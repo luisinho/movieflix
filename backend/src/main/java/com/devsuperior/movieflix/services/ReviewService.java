@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +36,24 @@ public class ReviewService {
 	
 	@Autowired
 	private MessageSource messageSource;
+
+	@Transactional(readOnly = true)
+	public Page<ReviewDTO> findAll(Long movieId, PageRequest pageRequest) throws Exception {
+
+		LOG.info("START METHOD ReviewService.findAll() - Params {} {} " + movieId + " " + pageRequest.toString());
+
+		Page<ReviewDTO> listDto = null;
+
+		Page<Review> list = this.reviewRepository.find(movieId, pageRequest);
+
+		if (list != null && list.getContent() != null) {
+			listDto = list.map(entity -> new ReviewDTO(entity));
+		}
+
+		LOG.info("END METHOD ReviewService.findAll()");
+
+		return listDto;
+	}
 
 	@Transactional
 	public ReviewDTO insert(ReviewDTO dto) throws Exception {
