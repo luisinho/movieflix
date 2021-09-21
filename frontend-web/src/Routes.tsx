@@ -7,7 +7,7 @@ import Catalog from './pages/Catalog';
 import { URL_ROOT, URL_HOME_LOGIN, URL_MOVIES, URL_MOVIE_DETAILS, URL_USER_VISITOR } from 'core/utils/ApiUrl';
 import PrivateRoute from 'core/assets/Routes/PrivateRoute';
 import MovieDetails from 'pages/Catalog/components/MovieDetails';
-import Usuario from 'pages/Usuario';
+import User from 'pages/User';
 
 const Routes = () => (
 
@@ -19,7 +19,7 @@ const Routes = () => (
                 <Home />
             </Route>
             <Route path={URL_USER_VISITOR} exact={false}>
-                <Usuario />
+                <User />
             </Route>
             <PrivateRoute path={URL_MOVIES} exact={true}>
                 <Catalog />

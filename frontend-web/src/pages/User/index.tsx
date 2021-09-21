@@ -1,6 +1,10 @@
 import ButtonBack from 'core/components/ButtonBack';
 import ButtonRegister from 'core/components/ButtonRegister';
 import { useForm } from 'react-hook-form';
+import { AxiosError } from 'axios';
+
+import { makeRequest } from 'core/utils/request';
+import { URL_USERS } from 'core/utils/ApiUrl';
 
 import './styles.scss';
 
@@ -11,11 +15,22 @@ type FormData = {
     repeatPassword: string;
 }
 
-const Usuario = () => {
+const User = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
 
     const onSubmit = (formData: FormData) => {
+
+        makeRequest({ method: 'POST', url: URL_USERS, data: formData })
+            .then(response => {
+                if (response.status === 201) {
+
+                }
+            }).catch((err: AxiosError) => {
+                console.log('Ocorreu um erro: ', err.response);
+            }).finally(() => {
+                reset();
+            });
     }
 
     return (
@@ -109,4 +124,4 @@ const Usuario = () => {
     );
 }
 
-export default Usuario;
+export default User;
