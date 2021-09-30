@@ -5,7 +5,7 @@ import { AxiosError } from 'axios';
 
 import { makeLogin } from 'core/utils/request';
 import { saveSessionData } from 'core/utils/auth';
-import { URL_MOVIES, URL_USER_VISITOR } from 'core/utils/ApiUrl';
+import { URL_MOVIES, URL_EMAIL, URL_USER_VISITOR } from 'core/utils/ApiUrl';
 import ButtonIcon from 'core/components/Buttonicon';
 import history from 'core/utils/history';
 import './styles.scss';
@@ -83,7 +83,7 @@ const Login = () => {
                     )}
                 </div>
 
-                <div className="login-input-button">
+                <div>
                     <input
                         type="password"
                         className={`form-control login-input ${errors.password ? 'is-invalid' : ''}`}
@@ -95,6 +95,12 @@ const Login = () => {
                             {errors.password.message}
                         </div>
                     )}
+                </div>
+
+                <div className="p-1">
+                    <Link className="login-forgot-password" to={`${URL_EMAIL}`}>
+                        Esqueci a senha ?
+                    </Link>
                 </div>
 
                 <div className="login-btn-icon">

@@ -1,8 +1,10 @@
-import ButtonBack from 'core/components/ButtonBack';
-import ButtonRegister from 'core/components/ButtonRegister';
 import { useForm } from 'react-hook-form';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+import ButtonBack from 'core/components/ButtonBack';
+import ButtonSubmit from 'core/components/ButtonSubmit';
 import { makeRequest } from 'core/utils/request';
 import { URL_USERS } from 'core/utils/ApiUrl';
 
@@ -23,14 +25,40 @@ const User = () => {
 
         makeRequest({ method: 'POST', url: URL_USERS, data: formData })
             .then(response => {
+
                 if (response.status === 201) {
 
+                    toast.info("Usuário cadastrado com sucesso.", {
+                        className: 'toast-notification',
+                        position: toast.POSITION.TOP_CENTER
+                    });
+
+                    reset();
                 }
+
             }).catch((err: AxiosError) => {
-                console.log('Ocorreu um erro: ', err.response);
+                err.response && showMensage(err.response);
             }).finally(() => {
-                reset();
+
             });
+    }
+
+    const showMensage = (response: AxiosResponse) => {
+
+        if (response.status === 400) {
+
+            toast.warn(response.data.message, {
+                className: 'toast-notification',
+                position: toast.POSITION.TOP_CENTER
+            });
+
+        } else if (response.status === 500) {
+
+            toast.error(response.data.message, {
+                className: 'toast-notification',
+                position: toast.POSITION.TOP_CENTER
+            });
+        }
     }
 
     return (
@@ -107,19 +135,20 @@ const User = () => {
 
                 </div>
 
-                <div className="user-btn">
+                <div className="div-btns">
 
                     <div className="p-1">
                         <ButtonBack />
                     </div>
 
                     <div className="p-1">
-                        <ButtonRegister />
+                        <ButtonSubmit label={'Cadastar'} />
                     </div>
 
                 </div>
 
             </form>
+            <ToastContainer />
         </div>
     );
 }

@@ -1,4 +1,4 @@
-.user-main {
+.email-main {
     width: 50%;
     height: auto;
     min-height: 355px;
@@ -11,7 +11,7 @@
     border-radius: 20px;
 }
 
-.user-title {
+.email-title {
     font-weight: normal;
     text-transform: uppercase;
     padding-left: 10px;
@@ -21,36 +21,10 @@
     color: #FFFFFF;
 }
 
-.user-form {
-    padding-top: 15px;
-}
-
-.margin-bottom-30 {
-    margin-bottom: 15px;
-}
-
-.user-input {
-    height: 40px;
-    background: #FEFEFE;
-    border: 1px solid #FEFEFE;
-    box-sizing: border-box;
-    border-radius: 10px;
+.email-sub-title {
+    font-weight: normal;   
+    padding-left: 6px;
     font-size: 18px;
-    line-height: 25px;
     letter-spacing: -0.015em;
-    color: #263238;
-
-    &::placeholder {
-        color: #9E9E9E;
-    }
-}
-
-.user-input-password {
-    width: 49%;
-    padding-left: 1px;
-}
-
-.toast-notification {
-    margin-top: 60px;
-    width: 500px;
+    color: #FFFFFF;
 }
