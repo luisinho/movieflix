@@ -19,3 +19,5 @@ export const URL_USER_VISITOR = '/users/:visitor';
 export const URL_USERS = '/users';
 
 export const URL_USERS_PROCESS = '/process';
+
+export const URL_USERS_RESET = '/users/reset';

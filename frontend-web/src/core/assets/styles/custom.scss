@@ -17,4 +17,14 @@ $body-bg: #525252;
     justify-content: flex-end;
 }
 
+.toast-notification {    
+    margin-top: 80px;
+    margin-right: 80px;  
+    width: 800px;
+    height: 200px;
+    padding-left: 30px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 @import "~bootstrap/scss/bootstrap.scss";

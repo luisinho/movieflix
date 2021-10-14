@@ -1,5 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { AxiosError } from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { makeRequest } from 'core/utils/request';
 import history from 'core/utils/history';
@@ -32,19 +34,30 @@ const Email = () => {
 
                 if (response.status === 202) {
 
-                    const processId = `?processId=${response.data.userId}`;
-
-                    const from = { pathname: URL_USERS_PROCESS, search: processId };
+                    const from = { pathname: URL_USERS_PROCESS };
 
                     history.replace(from);
                 }
 
             }).catch((err: AxiosError) => {
 
+                if (err.response?.data.status === 500) {
+
+                    toast.error(err.response?.data.message, {
+                        className: 'toast-notification',
+                        position: toast.POSITION.TOP_CENTER
+                    });
+
+                } else {
+
+                    toast.warn(err.response?.data.message, {
+                        className: 'toast-notification',
+                        position: toast.POSITION.TOP_CENTER
+                    });
+                }
             }).finally(() => {
 
             });
-
     }
 
     return (
@@ -91,6 +104,9 @@ const Email = () => {
                 </div>
 
             </form>
+
+            <ToastContainer />
+
         </div>
     );
 }

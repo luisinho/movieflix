@@ -31,7 +31,7 @@ const Navbar = () => {
 
                 <div className="flex-fill">
                     <Link to={URL_MOVIES} className="nav-logo-text">
-                        <h4>MovieFlix</h4>
+                        <h4>MovieFLix</h4>
                     </Link>
                 </div>
 

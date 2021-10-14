@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { AxiosError, AxiosResponse } from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
 
 import ButtonBack from 'core/components/ButtonBack';
 import ButtonSubmit from 'core/components/ButtonSubmit';
@@ -28,7 +29,7 @@ const User = () => {
 
                 if (response.status === 201) {
 
-                    toast.info("Usuário cadastrado com sucesso.", {
+                    toast.success("Usuário cadastrado com sucesso.", {
                         className: 'toast-notification',
                         position: toast.POSITION.TOP_CENTER
                     });
@@ -60,6 +61,15 @@ const User = () => {
             });
         }
     }
+
+    useEffect(() => {
+
+        toast.success("Usuário cadastrado com sucesso.", {
+            className: 'toast-notification',
+            position: toast.POSITION.TOP_CENTER
+        });
+
+    }, []);
 
     return (
         <div className="user-main">
