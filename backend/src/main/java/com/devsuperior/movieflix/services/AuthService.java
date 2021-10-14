@@ -1,5 +1,7 @@
 package com.devsuperior.movieflix.services;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +30,11 @@ public class AuthService {
 
 			String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 
-			User user = this.userRepository.findByEmail(userName);
+			Optional<User> user = this.userRepository.findByEmail(userName);
 
 			LOG.info("END METHOD AuthService.authenticated()");
 
-			return user;
+			return user.isPresent() ? user.get() : new User();
 
 		} catch (Exception e) {
 			LOG.error("An error has occurred " + e);

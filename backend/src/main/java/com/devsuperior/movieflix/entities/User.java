@@ -2,6 +2,7 @@ package com.devsuperior.movieflix.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -47,6 +48,15 @@ public class User implements UserDetails, Serializable {
 
 	@Column(name = "ACTIVE")
 	private Boolean active;
+
+	@Column(name = "DATE_REQUEST_PASSWORD", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	private LocalDateTime dateRequestPassword;
+
+	@Column(name = "CODE_REQUEST_PASSWORD", length = 15)
+	private String codeRequestPassword;
+
+	@Column(name = "NUMBER_REQUESTS_PASSWORD", length = 4)
+	private Long numberRequestsPassword;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_user_role",
@@ -113,6 +123,30 @@ public class User implements UserDetails, Serializable {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	public LocalDateTime getDateRequestPassword() {
+		return dateRequestPassword;
+	}
+
+	public void setDateRequestPassword(LocalDateTime dateRequestPassword) {
+		this.dateRequestPassword = dateRequestPassword;
+	}
+
+	public String getCodeRequestPassword() {
+		return codeRequestPassword;
+	}
+
+	public void setCodeRequestPassword(String codeRequestPassword) {
+		this.codeRequestPassword = codeRequestPassword;
+	}
+
+	public Long getNumberRequestsPassword() {
+		return numberRequestsPassword;
+	}
+
+	public void setNumberRequestsPassword(Long numberRequestsPassword) {
+		this.numberRequestsPassword = numberRequestsPassword;
 	}
 
 	public Set<Role> getRoles() {

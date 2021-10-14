@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.devsuperior.movieflix.services.exceptions.DataBaseException;
+import com.devsuperior.movieflix.services.exceptions.EmailException;
 import com.devsuperior.movieflix.services.exceptions.ForbiddenException;
 import com.devsuperior.movieflix.services.exceptions.ResourceNotFoundException;
 
@@ -77,7 +78,7 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(DataBaseException.class)
 	public ResponseEntity<StandardError> validateDataBase(DataBaseException e, HttpServletRequest request) {
 
-		HttpStatus status = HttpStatus.BAD_REQUEST;
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
@@ -93,6 +94,21 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> validateRule(RegraNegocioException e, HttpServletRequest request) {
 
 		HttpStatus status = HttpStatus.BAD_REQUEST;
+
+		StandardError err = new StandardError();
+		err.setTimestamp(Instant.now());
+		err.setStatus(status.value());
+		err.setError("");
+		err.setMessage(e.getMessage());
+		err.setPath(request.getRequestURI());
+
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(EmailException.class)
+	public ResponseEntity<StandardError> sendEmailError(EmailException e, HttpServletRequest request) {
+
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());

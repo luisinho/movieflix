@@ -26,6 +26,8 @@ public class UserDTO implements Serializable {
 
 	private Boolean active;
 
+	private String codeRequestPassword;
+
 	private Set<RoleDTO> roles = new HashSet<RoleDTO>();
 
 	public UserDTO() {
@@ -69,6 +71,14 @@ public class UserDTO implements Serializable {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	public String getCodeRequestPassword() {
+		return codeRequestPassword;
+	}
+
+	public void setCodeRequestPassword(String codeRequestPassword) {
+		this.codeRequestPassword = codeRequestPassword;
 	}
 
 	public Set<RoleDTO> getRoles() {

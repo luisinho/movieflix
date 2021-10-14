@@ -31,7 +31,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 	private static final String[] PUBLIC = { "/oauth/token", "/h2-console/**" };
 
-	private static final String SAVE_USER = "/users/**";
+	private static final String USERS = "/users/**";
+
+	private static final String EMAIL = "/emails/**";
 
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -48,7 +50,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 		http.authorizeRequests()
 		.antMatchers(PUBLIC).permitAll()
-		.antMatchers(HttpMethod.POST, SAVE_USER).permitAll()
+		.antMatchers(HttpMethod.POST, USERS).permitAll()
+		.antMatchers(HttpMethod.PUT, USERS).permitAll()
+		.antMatchers(HttpMethod.POST, EMAIL).permitAll()
 		.anyRequest()
 		.authenticated();		
 		

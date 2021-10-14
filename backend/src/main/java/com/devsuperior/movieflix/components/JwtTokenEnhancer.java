@@ -2,6 +2,7 @@ package com.devsuperior.movieflix.components;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -23,10 +24,13 @@ public class JwtTokenEnhancer implements TokenEnhancer {
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken,
 			OAuth2Authentication authentication) {
 
-		User user = this.userRepository.findByEmail(authentication.getName());
+		Optional<User> user = this.userRepository.findByEmail(authentication.getName());
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("userId", user.getId());
+
+		if (user.isPresent()) {
+			map.put("userId", user.get().getId());
+		}
 
 		DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken)accessToken;
 		token.setAdditionalInformation(map);

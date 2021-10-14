@@ -98,12 +98,12 @@ public class UserResource {
 		return ResponseEntity.ok().body(updateDto);
 	}
 
-	@PutMapping(value = "/reset/{id}")
-	public ResponseEntity<UserDTO> updatePassword(Long id, UserUpdateDTO dto) {
+	@PutMapping(value = "/reset")
+	public ResponseEntity<UserDTO> updatePassword(@RequestBody UserUpdateDTO dto) {
 
 		LOGGER.info("START METHOD UserResource.updatePassword");
 
-		UserDTO  updateDto = this.userService.updatePassword(id, dto);
+		UserDTO  updateDto = this.userService.updatePassword(dto);
 
 		LOGGER.info("END METHOD UserResource.updatePassword");
 

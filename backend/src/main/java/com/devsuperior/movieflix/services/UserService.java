@@ -1,5 +1,8 @@
 package com.devsuperior.movieflix.services;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -17,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.devsuperior.movieflix.components.UserAuthentication;
 import com.devsuperior.movieflix.dto.UserDTO;
@@ -30,6 +34,7 @@ import com.devsuperior.movieflix.resources.exceptions.RegraNegocioException;
 import com.devsuperior.movieflix.services.exceptions.DataBaseException;
 import com.devsuperior.movieflix.services.exceptions.RegisterNotFoundException;
 import com.devsuperior.movieflix.services.exceptions.ResourceNotFoundException;
+import com.devsuperior.movieflix.utils.UtilDate;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -72,7 +77,7 @@ public class UserService implements UserDetailsService {
 		}
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public UserDTO findById(Long id) {
 
 		LOGGER.info("START METHOD UserService.findById: {} " + id);
@@ -85,6 +90,8 @@ public class UserService implements UserDetailsService {
 
 			user = obj.orElseThrow(() -> new RegisterNotFoundException(this.messageSource.getMessage("user.not.found.with.the.id", null, null)));
 
+		} catch (RegisterNotFoundException e) {
+			throw new RegisterNotFoundException(e.getMessage());
 		} catch (Exception e) {
 			LOGGER.error("Ocorreu um erro no metodo UserService.findById " + e);
 			throw new DataBaseException(this.messageSource.getMessage("user.not.found.with.the.id", null, null) + " " + id);
@@ -93,6 +100,27 @@ public class UserService implements UserDetailsService {
 		LOGGER.info("END METHOD UserService.findById ");
 
 		return new UserDTO(user);
+	}
+
+	@Transactional(readOnly = true)
+	public long countByCodeRequestPassword(String codeRequestPassword) {
+
+		LOGGER.info("START METHOD UserService.countByCodeRequestPassword: ");
+
+		long count = 0;
+
+		try {
+
+			count = this.userRepository.countByCodeRequestPassword(codeRequestPassword);
+
+		} catch (Exception e) {
+			LOGGER.error("Ocorreu um erro no metodo UserService.countByCodeRequestPassword " + e);
+			throw new DataBaseException(this.messageSource.getMessage("user.error.code.request.password", null, null));
+		}
+
+		LOGGER.info("END METHOD UserService.countByCodeRequestPassword: ");
+
+		return count;
 	}
 
 	@Transactional
@@ -137,9 +165,12 @@ public class UserService implements UserDetailsService {
 
 		try {
 
-			entity = this.userRepository.getOne(id);
+			Optional<User> obj = this.userRepository.findById(id);
 
-			this.copyDtoToEntity(dto, entity);
+			entity = obj.orElseThrow(() ->
+			    new ResourceNotFoundException(this.messageSource.getMessage("user.error.updating.id.not.found", null, null)));
+
+		    this.copyDtoToEntity(dto, entity);
 
 			entity = this.userRepository.save(entity);
 
@@ -157,7 +188,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	@Transactional
-	public UserDTO updatePassword(Long id, UserUpdateDTO dto) {
+	public UserDTO updatePassword(UserUpdateDTO dto) {
 
 		LOGGER.info("START METHOD UserService.updatePassword()");
 
@@ -165,27 +196,70 @@ public class UserService implements UserDetailsService {
 
 		try {
 
+		  this.validateRequiredFieldsChangePassword(dto);
+
 		  this.validateSamePasswords(dto);
 
-		  entity = this.userRepository.getOne(id);
+		  entity = this.userRepository.findByEmailAndCodeRequestPasswordAndActive(dto.getEmail(),
+				                                                                  dto.getCodeRequestPassword(),
+				                                                                  Boolean.TRUE);
+
+		  if (entity == null) {
+			  throw new RegraNegocioException(this.messageSource.getMessage("user.error.code.request.password", null, null));
+		  }
+
+		  this.validateTimeCodeRequest(entity);
 
 		  if (!"".equals(dto.getPassword())) {
 			  entity.setPassword(this.passwordEncoder.encode(dto.getPassword()));
+			  entity.setCodeRequestPassword(null);
 		  }
 
 		  entity = this.userRepository.save(entity);
 
 		} catch (EntityNotFoundException e) {
 			LOGGER.error("Ocorreu um erro no metodo UserService.updatePassword " + e);
-			throw new ResourceNotFoundException(this.messageSource.getMessage("user.error.updating.password.id.not.found", null, null) + " " + id);
+			throw new ResourceNotFoundException(this.messageSource.getMessage("user.error.updating.password.id.not.found", null, null));
+		} catch(RegraNegocioException e) {
+			throw new RegraNegocioException(e.getMessage());
 		} catch (Exception e) {
 			LOGGER.error("Ocorreu um erro no metodo UserService.updatePassword " + e);
-			throw new DataBaseException(this.messageSource.getMessage("user.error.updating.password.with.the.id", null, null) + " " + id); 
+			throw new DataBaseException(this.messageSource.getMessage("user.error.updating.password.with.the.id", null, null)); 
 		}
 
 		LOGGER.info("END METHOD UserService.updatePassword()");
 
 		return new UserDTO(entity);
+	}
+
+	@Transactional
+	public void updateCodeRequestPassword(UserDTO userDto) {
+
+		LOGGER.info("START METHOD UserService.updateCodeRequestPassword()");
+
+		try {
+
+			long numberRequest = 0;
+
+			LocalDateTime todayDateTime = LocalDateTime.ofInstant(Instant.now(), ZoneOffset.systemDefault());
+
+			Optional<User> user = this.userRepository.findById(userDto.getId());
+
+			user.get().setCodeRequestPassword(userDto.getCodeRequestPassword());
+			user.get().setDateRequestPassword(todayDateTime);
+
+			numberRequest = user.get().getNumberRequestsPassword() == null ? 1 : user.get().getNumberRequestsPassword() +1;
+
+			user.get().setNumberRequestsPassword(numberRequest);
+
+			this.userRepository.save(user.get());
+
+		} catch (Exception e) {
+			LOGGER.error("Ocorreu um erro no metodo UserService.updateCodeRequestPassword " + e);
+			throw new DataBaseException(this.messageSource.getMessage("user.error.code.request.password", null, null)); 
+		}
+
+		LOGGER.info("END METHOD UserService.updateCodeRequestPassword()");
 	}
 
 	@Transactional
@@ -197,7 +271,10 @@ public class UserService implements UserDetailsService {
 
 		try {
 
-		  entity = this.userRepository.getOne(id);
+		  Optional<User> obj = this.userRepository.findById(id);
+
+		  entity = obj.orElseThrow(() ->
+		    new ResourceNotFoundException(this.messageSource.getMessage("user.error.disable.id.not.found", null, null)));
 
 		  entity.setActive(Boolean.FALSE);
 
@@ -239,15 +316,41 @@ public class UserService implements UserDetailsService {
 		}
 	}
 
+	@Transactional(readOnly = true)
+	public UserDTO findByEmail(String email) {
+
+		UserDTO dto = null;
+
+		try {
+
+			Optional<User> obj = this.userRepository.findByEmail(email);
+
+			User user = obj.orElseThrow(() ->
+			    new RegraNegocioException(this.messageSource.getMessage("user.email.not.exist", null, null) + " " + email
+			    +  "  " + this.messageSource.getMessage("user.email.not.exist.to.send", null, null)));
+
+			dto = new UserDTO(user);
+
+		} catch (RegraNegocioException e) {
+			LOGGER.error("Ocorreu um erro ao localizar o email " + e);
+			throw new RegraNegocioException(e.getMessage());
+		} catch (Exception e) {
+			LOGGER.error("Ocorreu um erro ao localizar o email " + e);
+			throw new DataBaseException(this.messageSource.getMessage("user.email.find.error", null, null));
+		}
+
+		return dto;
+	}
+
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		LOGGER.info("START METHOD UserService.loadUserByUsername() - Param {}: " + username);
 
-		User user = this.userRepository.findByEmail(username);
+		Optional<User> user = this.userRepository.findByEmail(username);
 
-		if (user == null) {
+		if (!user.isPresent()) {
 
 			Locale locale = new Locale("pt","BR");
 
@@ -260,7 +363,7 @@ public class UserService implements UserDetailsService {
 
 		LOGGER.info("END METHOD UserService.loadUserByUsername()");
 
-		return user;
+		return user.get();
 	}
 
 	private void validateUserEmail(UserDTO dto) {
@@ -276,6 +379,33 @@ public class UserService implements UserDetailsService {
 
 		if (!dto.getPassword().equals(dto.getRepeatPassword())) {
 			throw new RegraNegocioException(this.messageSource.getMessage("user.error.password", null, null));
+		}
+	}
+
+	private void validateRequiredFieldsChangePassword(UserUpdateDTO dto) {
+
+		if (!StringUtils.hasText(dto.getEmail())
+			|| !StringUtils.hasText(dto.getCodeRequestPassword())
+			   || !StringUtils.hasText(dto.getPassword())
+			      || !StringUtils.hasText(dto.getRepeatPassword())) {
+			throw new RegraNegocioException(this.messageSource.getMessage("user.required.fields.change.password", null, null));
+		}
+	}
+
+	private void validateTimeCodeRequest(User user) {
+
+		if (user.getDateRequestPassword() == null) {
+			throw new RegraNegocioException(this.messageSource.getMessage("user.code.request.password.expiration", null, null));
+		}
+
+		LocalDateTime dateToday = LocalDateTime.ofInstant(Instant.now(), ZoneOffset.systemDefault());
+
+		LocalDateTime expirationDate  = user.getDateRequestPassword();
+
+		boolean isExpire = new UtilDate().isExpiredOneHour(dateToday, expirationDate);
+
+		if (isExpire) {
+			throw new RegraNegocioException(this.messageSource.getMessage("user.code.request.password.expiration", null, null));
 		}
 	}
 }
