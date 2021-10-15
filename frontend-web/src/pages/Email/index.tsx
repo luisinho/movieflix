@@ -64,19 +64,19 @@ const Email = () => {
         <div className="email-main">
 
             <div className="email-title">
-                Alterar senha
+                Enviar email
             </div>
 
             <form className="user-form" onSubmit={handleSubmit(onSubmit)}>
 
                 <div className="email-sub-title">
-                    Será enviado um E-mail com um código para alterar a senha!
+                    Será enviado um E-mail, com um código para você criar uma nova senha!
                 </div>
 
                 <div className="p-1">
                     <input
                         type="email"
-                        className={`form-control login-input ${errors.to ? 'is-invalid' : ''}`}
+                        className={`form-control input-forms ${errors.to ? 'is-invalid' : ''}`}
                         placeholder="Digite o e-mail"
                         {...register("to", {
                             required: "Campo email obrigatório",

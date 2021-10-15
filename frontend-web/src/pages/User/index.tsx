@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import { AxiosError, AxiosResponse } from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect } from 'react';
 
 import ButtonBack from 'core/components/ButtonBack';
 import ButtonSubmit from 'core/components/ButtonSubmit';
@@ -62,15 +61,6 @@ const User = () => {
         }
     }
 
-    useEffect(() => {
-
-        toast.success("Usuário cadastrado com sucesso.", {
-            className: 'toast-notification',
-            position: toast.POSITION.TOP_CENTER
-        });
-
-    }, []);
-
     return (
         <div className="user-main">
 
@@ -78,12 +68,12 @@ const User = () => {
                 Cadastrar Usuário
             </div>
 
-            <form className="user-form" onSubmit={handleSubmit(onSubmit)}>
+            <form className="padding-top-form" onSubmit={handleSubmit(onSubmit)}>
 
                 <div className="margin-bottom-30">
                     <input
                         type="text"
-                        className={`form-control login-input ${errors.name ? 'is-invalid' : ''}`}
+                        className={`form-control input-forms ${errors.name ? 'is-invalid' : ''}`}
                         placeholder="Nome"
                         {...register("name", { required: "Campo nome obrigatório." })}
                     />
@@ -97,7 +87,7 @@ const User = () => {
                 <div className="margin-bottom-30">
                     <input
                         type="email"
-                        className={`form-control login-input ${errors.email ? 'is-invalid' : ''}`}
+                        className={`form-control input-forms ${errors.email ? 'is-invalid' : ''}`}
                         placeholder="Email"
                         {...register("email", {
                             required: "Campo email obrigatório",
@@ -118,9 +108,15 @@ const User = () => {
                     <div className="user-input-password">
                         <input
                             type="password"
-                            className={`form-control login-input ${errors.password ? 'is-invalid' : ''}`}
-                            placeholder="Digite aqui a Senha"
-                            {...register("password", { required: "Campo Senha obrigatório." })}
+                            className={`form-control input-forms ${errors.password ? 'is-invalid' : ''}`}
+                            placeholder="Digite aqui a Senha aaa"
+                            {...register("password", {
+                                required: "Campo Senha obrigatório.",
+                                pattern: {
+                                    value: /^[0-9a-fA-F]{4,8}$/i,
+                                    message: "A senha deve conter de 4 a 8 caracteres!"
+                                }
+                            })}
                         />
                         {errors.password && (
                             <div className="invalid-feedback d-block">
@@ -132,9 +128,15 @@ const User = () => {
                     <div className="user-input-password">
                         <input
                             type="password"
-                            className={`form-control login-input ${errors.repeatPassword ? 'is-invalid' : ''}`}
+                            className={`form-control input-forms ${errors.repeatPassword ? 'is-invalid' : ''}`}
                             placeholder="Repita aqui a Senha"
-                            {...register("repeatPassword", { required: "Campo Repita aqui a Senha obrigatório." })}
+                            {...register("repeatPassword", {
+                                required: "Campo Repita aqui a Senha obrigatório.",
+                                pattern: {
+                                    value: /^[0-9a-fA-F]{4,8}$/i,
+                                    message: "A senha deve conter de 4 a 8 caracteres!"
+                                }
+                            })}
                         />
                         {errors.repeatPassword && (
                             <div className="invalid-feedback d-block">

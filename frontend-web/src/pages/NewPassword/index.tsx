@@ -74,12 +74,12 @@ const NewPassword = () => {
                 Criar nova senha
             </div>
 
-            <form className="user-form" onSubmit={handleSubmit(onSubmit)}>
+            <form className="padding-top-form" onSubmit={handleSubmit(onSubmit)}>
 
                 <div className="p-1">
                     <input
                         type="email"
-                        className={`form-control login-input ${errors.email ? 'is-invalid' : ''}`}
+                        className={`form-control input-forms ${errors.email ? 'is-invalid' : ''}`}
                         placeholder="Digite o e-mail"
                         {...register("email", {
                             required: "Campo email obrigatório",
@@ -99,9 +99,9 @@ const NewPassword = () => {
                 <div className="p-1">
                     <input
                         type="text"
-                        className={`form-control login-input ${errors.codeRequestPassword ? 'is-invalid' : ''}`}
+                        className={`form-control input-forms ${errors.codeRequestPassword ? 'is-invalid' : ''}`}
                         placeholder="Digite aqui o código enviado no seu e-mail"
-                        {...register("codeRequestPassword", { required: "Campo Senha obrigatório." })}
+                        {...register("codeRequestPassword", { required: "Campo Senha obrigatório.", maxLength: 15 })}
                     />
                     {errors.codeRequestPassword && (
                         <div className="invalid-feedback d-block">
@@ -113,9 +113,15 @@ const NewPassword = () => {
                 <div className="p-1">
                     <input
                         type="password"
-                        className={`form-control login-input ${errors.password ? 'is-invalid' : ''}`}
+                        className={`form-control input-forms ${errors.password ? 'is-invalid' : ''}`}
                         placeholder="Digite aqui a Senha"
-                        {...register("password", { required: "Campo Senha obrigatório." })}
+                        {...register("password", {
+                            required: "Campo Senha obrigatório.",
+                            pattern: {
+                                value: /^[0-9a-fA-F]{4,8}$/i,
+                                message: "A senha deve conter de 4 a 8 caracteres!"
+                            }
+                        })}
                     />
                     {errors.password && (
                         <div className="invalid-feedback d-block">
@@ -127,9 +133,15 @@ const NewPassword = () => {
                 <div className="p-1">
                     <input
                         type="password"
-                        className={`form-control login-input ${errors.repeatPassword ? 'is-invalid' : ''}`}
+                        className={`form-control input-forms ${errors.repeatPassword ? 'is-invalid' : ''}`}
                         placeholder="Repita aqui a Senha"
-                        {...register("repeatPassword", { required: "Campo Repita aqui a Senha obrigatório." })}
+                        {...register("repeatPassword", {
+                            required: "Campo Repita aqui a Senha obrigatório.",
+                            pattern: {
+                                value: /^[0-9a-fA-F]{4,8}$/i,
+                                message: "A senha deve conter de 4 a 8 caracteres!"
+                            }
+                        })}
                     />
                     {errors.repeatPassword && (
                         <div className="invalid-feedback d-block">

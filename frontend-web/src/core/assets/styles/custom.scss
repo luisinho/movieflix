@@ -27,4 +27,24 @@ $body-bg: #525252;
     font-weight: bold;
 }
 
+.padding-top-form {
+    padding-top: 15px;
+}
+
+.input-forms {
+    height: 50px;
+    background: #FEFEFE;
+    border: 1px solid #FEFEFE;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-size: 18px;
+    line-height: 25px;
+    letter-spacing: -0.015em;
+    color: #263238;
+
+    &::placeholder {
+        color: #9E9E9E;
+    }
+}
+
 @import "~bootstrap/scss/bootstrap.scss";
