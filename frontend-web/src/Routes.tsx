@@ -4,10 +4,11 @@ import Navbar from 'core/components/Navbar';
 import history from 'core/utils/history';
 import Home from 'pages/Home';
 import Catalog from './pages/Catalog';
-import { URL_ROOT, URL_HOME_LOGIN, URL_MOVIES, URL_MOVIE_DETAILS, URL_EMAIL, URL_USER_VISITOR, URL_USERS_PROCESS } from 'core/utils/ApiUrl';
+import { URL_ROOT, URL_HOME_LOGIN, URL_MOVIES, URL_MOVIE_DETAILS, URL_EMAIL, URL_USER_VISITOR, URL_USERS_PROCESS, URL_USERS } from 'core/utils/ApiUrl';
 import PrivateRoute from 'core/assets/Routes/PrivateRoute';
 import MovieDetails from 'pages/Catalog/components/MovieDetails';
-import User from 'pages/User';
+import NewUser from 'pages/User';
+import UserList from 'pages/User/UserList';
 import Email from 'pages/Email';
 import NewPassword from 'pages/NewPassword';
 
@@ -27,7 +28,10 @@ const Routes = () => (
                 <NewPassword />
             </Route>
             <Route path={URL_USER_VISITOR} exact={false}>
-                <User />
+                <NewUser />
+            </Route>
+            <Route path={URL_USERS} exact={false}>
+                <UserList />
             </Route>
             <PrivateRoute path={URL_MOVIES} exact={true}>
                 <Catalog />

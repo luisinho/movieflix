@@ -17,7 +17,7 @@ type FormData = {
     repeatPassword: string;
 }
 
-const User = () => {
+const NewUser = () => {
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
 
@@ -165,4 +165,4 @@ const User = () => {
     );
 }
 
-export default User;
+export default NewUser;
