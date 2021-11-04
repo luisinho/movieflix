@@ -8,6 +8,7 @@ import { getNewReview, Review } from 'core/types/Review';
 import { makePrivateRequest } from 'core/utils/request';
 import { URL_REVIEWS } from 'core/utils/ApiUrl';
 import ReviewList from '../ReviewList';
+
 import './styles.scss';
 
 type Props = {

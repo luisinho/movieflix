@@ -95,7 +95,7 @@ const Email = () => {
 
                 <div className="div-btns">
                     <div className="p-1">
-                        <ButtonBack />
+                        <ButtonBack actionUrl={''} />
                     </div>
 
                     <div className="p-1">

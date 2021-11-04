@@ -8,6 +8,7 @@ import ButtonSubmit from 'core/components/ButtonSubmit';
 import { makeRequest } from 'core/utils/request';
 import { URL_USERS_RESET, URL_HOME_LOGIN } from 'core/utils/ApiUrl';
 import history from 'core/utils/history';
+
 import './styles.scss';
 
 type FormData = {
@@ -22,6 +23,8 @@ type FormData = {
 const NewPassword = () => {
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
+
+
 
     const onSubmit = (formData: FormData) => {
 
@@ -153,7 +156,7 @@ const NewPassword = () => {
                 <div className="div-btns">
 
                     <div className="p-1">
-                        <ButtonBack />
+                        <ButtonBack actionUrl={''} />
                     </div>
 
                     <div className="p-1">

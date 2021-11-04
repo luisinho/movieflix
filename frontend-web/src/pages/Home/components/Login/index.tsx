@@ -5,9 +5,10 @@ import { AxiosError } from 'axios';
 
 import { makeLogin } from 'core/utils/request';
 import { saveSessionData } from 'core/utils/auth';
-import { URL_MOVIES, URL_EMAIL, URL_USER_VISITOR } from 'core/utils/ApiUrl';
+import { URL_MOVIES, URL_EMAIL, URL_USERS } from 'core/utils/ApiUrl';
 import ButtonIcon from 'core/components/Buttonicon';
 import history from 'core/utils/history';
+
 import './styles.scss';
 
 type FormData = {
@@ -107,7 +108,7 @@ const Login = () => {
                     <ButtonIcon />
                     <div className="login-nao-tem-cadastro p-1">
                         Não tem Cadastro Visitante ?
-                        <Link className="login-cadastrar p-2" to={`${URL_USER_VISITOR}/visitor`}>
+                        <Link className="login-cadastrar p-2" to={`${URL_USERS}/create`}>
                             Cadastrar
                         </Link>
                     </div>

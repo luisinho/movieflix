@@ -3,6 +3,7 @@ import { ReactComponent as HomeAuthImage } from 'core/assets/images/home-auth.sv
 
 import { logout } from 'core/utils/auth';
 import Login from './components/Login';
+
 import './styles.scss';
 
 const Home = () => {
