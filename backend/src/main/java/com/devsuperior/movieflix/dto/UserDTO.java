@@ -1,6 +1,7 @@
 package com.devsuperior.movieflix.dto;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,6 +29,8 @@ public class UserDTO implements Serializable {
 
 	private String codeRequestPassword;
 
+	private Instant createdAt;
+
 	private Set<RoleDTO> roles = new HashSet<RoleDTO>();
 
 	public UserDTO() {
@@ -39,6 +42,7 @@ public class UserDTO implements Serializable {
 		this.email = entity.getEmail();
 		this.name = entity.getName();
 		this.active = entity.getActive();
+		this.createdAt = entity.getCreatedAt();
 	}
 
 	public Long getId() {
@@ -79,6 +83,14 @@ public class UserDTO implements Serializable {
 
 	public void setCodeRequestPassword(String codeRequestPassword) {
 		this.codeRequestPassword = codeRequestPassword;
+	}
+
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Instant createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public Set<RoleDTO> getRoles() {

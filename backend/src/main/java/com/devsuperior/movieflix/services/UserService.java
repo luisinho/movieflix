@@ -3,6 +3,7 @@ package com.devsuperior.movieflix.services;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -57,13 +59,33 @@ public class UserService implements UserDetailsService {
 	private UserAuthentication userAuthentication;
 
 	@Transactional(readOnly = true)
-	public Page<UserDTO> findAllPaged(PageRequest pageRequest) {
+	public Page<UserDTO> findAllPaged(String field, String fieldValue, PageRequest pageRequest) {
 
 		LOGGER.info("START METHOD UserService.findAllPage: {} " + pageRequest.toString());
 
 		try {
 
-			 Page<User> list = this.userRepository.findAll(pageRequest);
+			 Page<User> list = new PageImpl<User>(new ArrayList<>());
+
+			 if (!"".endsWith(field) && field.equals("email") && !"".endsWith(fieldValue)) {
+
+				 list = this.userRepository.findByEmailLike(fieldValue.trim(), pageRequest);
+
+			 } else if (!"".endsWith(field) && field.equals("name") && !"".endsWith(fieldValue)) {
+
+				 list = this.userRepository.findByNameLike(fieldValue.trim(), pageRequest);
+
+			 } else if (!"".endsWith(field) && field.equals("active") && !"".endsWith(fieldValue)) {
+
+				 if (fieldValue.trim().equals("true")) {
+					 list = this.userRepository.findByActiveTrue(pageRequest);
+				 } else {
+					 list = this.userRepository.findByActiveFalse(pageRequest);
+				 }
+
+			 } else {
+				 list = this.userRepository.findAll(pageRequest);
+			 }
 
 			 Page<UserDTO> listDto = list.map(user -> new UserDTO(user));
 
