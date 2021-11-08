@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import Moment from 'react-moment';
@@ -7,23 +7,28 @@ import { UserResponse } from 'core/types/User';
 import { makePrivateRequest } from 'core/utils/request';
 import { URL_USERS } from 'core/utils/ApiUrl';
 import history from 'core/utils/history';
+import UserSearch from '../UserSearch';
 
 import './styles.scss';
-import UserSearch from '../UserSearch';
 
 const UserList = () => {
 
     const [usersResponse, setUsersResponse] = useState<UserResponse>();
 
-    useEffect(() => {
+    const [selectedField, setSelectedField] = useState('');
 
-        /*const params = {
-            page: activePage,
+    const [fieldValue, setFieldValue] = useState('');
+
+    const getUsers = useCallback(() => {
+
+        const params = {
+            // page: activePage,
             linesPerPage: 4,
-            movieId: reviewMoveId
-        }*/
+            field: selectedField,
+            fieldValue: fieldValue
+        }
 
-        makePrivateRequest({ url: URL_USERS })
+        makePrivateRequest({ url: URL_USERS, params: params })
             .then(response => {
                 setUsersResponse(response.data);
             }).catch((err: AxiosError) => {
@@ -31,9 +36,11 @@ const UserList = () => {
             }).finally(() => {
             });
 
-        console.log('usersResponse', usersResponse);
+    }, [selectedField, fieldValue]);
 
-    }, []);
+    useEffect(() => {
+        getUsers();
+    }, [getUsers]);
 
     const newUser = () => {
         history.replace(`${URL_USERS}/create`);
@@ -41,6 +48,17 @@ const UserList = () => {
 
     const handleDisable = (id: number) => {
         console.log(id);
+    }
+
+    const handleSearch = (field: string, fieldValue: string) => {
+        setSelectedField(field);
+        setFieldValue(fieldValue);
+        getUsers();
+    }
+
+    const handleCleanFilter = () => {
+        setSelectedField('');
+        setFieldValue('');
     }
 
     return (
@@ -55,7 +73,12 @@ const UserList = () => {
                 </div>
 
                 <div className="user-search">
-                    <UserSearch />
+                    <UserSearch
+                        field={selectedField}
+                        fieldValue={fieldValue}
+                        handleSearch={handleSearch}
+                        handleCleanFilter={handleCleanFilter}
+                    />
                 </div>
 
             </div>
