@@ -1,6 +1,7 @@
 package com.devsuperior.movieflix.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -21,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.devsuperior.movieflix.dto.RoleDTO;
 import com.devsuperior.movieflix.dto.UserDTO;
 import com.devsuperior.movieflix.dto.UserInsertDTO;
 import com.devsuperior.movieflix.dto.UserUpdateDTO;
+import com.devsuperior.movieflix.services.RoleService;
 import com.devsuperior.movieflix.services.UserService;
 
 @RestController
@@ -34,6 +37,9 @@ public class UserResource {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private RoleService roleService;
 
 	@GetMapping
 	public ResponseEntity<Page<UserDTO>> findAllPaged(
@@ -122,5 +128,17 @@ public class UserResource {
 		LOGGER.info("END METHOD UserResource.disable");
 
 		return ResponseEntity.ok().body(updateDto);
+	}
+
+	@GetMapping(value = "role")
+	public ResponseEntity<List<RoleDTO>> listRole() {
+
+		LOGGER.info("START METHOD UserResource.listRole");
+
+		List<RoleDTO> list = this.roleService.list();
+
+		LOGGER.info("END METHOD roleService.listRole");
+
+		return ResponseEntity.ok().body(list);
 	}
 }

@@ -25,6 +25,9 @@ public class Role implements Serializable {
 	@Column(name = "AUTHORITY",  length = 20)
 	private String authority;
 
+	@Column(name = "DESCRIPTION",  length = 10)
+	private String description;
+
 	@Column(name = "CREATED_AT", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant createdAt;
 
@@ -54,6 +57,14 @@ public class Role implements Serializable {
 
 	public void setAuthority(String authority) {
 		this.authority = authority;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Instant getCreatedAt() {
