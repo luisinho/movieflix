@@ -8,6 +8,7 @@ import MovieCard from './components/MovieCard';
 import { makePrivateRequest } from 'core/utils/request';
 import { URL_MOVIES } from 'core/utils/ApiUrl';
 import Pagination from 'core/components/Pagination';
+
 import './styles.scss';
 
 const Catalog = () => {

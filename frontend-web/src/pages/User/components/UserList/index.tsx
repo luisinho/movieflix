@@ -8,12 +8,15 @@ import { makePrivateRequest } from 'core/utils/request';
 import { URL_USERS } from 'core/utils/ApiUrl';
 import history from 'core/utils/history';
 import UserSearch from '../UserSearch';
+import Pagination from 'core/components/Pagination';
 
 import './styles.scss';
 
 const UserList = () => {
 
     const [usersResponse, setUsersResponse] = useState<UserResponse>();
+
+    const [activePage, setActivePage] = useState(0);
 
     const [selectedField, setSelectedField] = useState('');
 
@@ -22,8 +25,8 @@ const UserList = () => {
     const getUsers = useCallback(() => {
 
         const params = {
-            // page: activePage,
-            linesPerPage: 4,
+            page: activePage,
+            linesPerPage: 6,
             field: selectedField,
             fieldValue: fieldValue
         }
@@ -36,7 +39,7 @@ const UserList = () => {
             }).finally(() => {
             });
 
-    }, [selectedField, fieldValue]);
+    }, [activePage, selectedField, fieldValue]);
 
     useEffect(() => {
         getUsers();
@@ -148,6 +151,14 @@ const UserList = () => {
                         </div>
 
                     </div>
+                )}
+
+                {usersResponse && (
+                    <Pagination
+                        totalPages={usersResponse.totalPages}
+                        activePage={activePage}
+                        onChange={page => setActivePage(page)}
+                    />
                 )}
 
             </div>

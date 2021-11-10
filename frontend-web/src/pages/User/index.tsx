@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { RoleResponse } from 'core/types/Role';
 import ButtonBack from 'core/components/ButtonBack';
 import ButtonSubmit from 'core/components/ButtonSubmit';
 import { makePrivateRequest, makeRequest } from 'core/utils/request';
-import { URL_USERS } from 'core/utils/ApiUrl';
+import { URL_USERS, URL_USERS_ROLE } from 'core/utils/ApiUrl';
 import { getAccessTokenDecoded } from 'core/utils/auth';
 
 import './styles.scss';
@@ -29,13 +30,15 @@ const NewUser = () => {
 
     const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<FormData>();
 
+    const [roleResponse, setRoleResponse] = useState<RoleResponse>();
+
     const { userId } = useParams<ParamsType>();
 
     const isEditing = userId !== 'create';
 
     const currentUserData = getAccessTokenDecoded();
 
-    const url = currentUserData ? URL_USERS : "";
+    const url = currentUserData.user_name ? URL_USERS : "";
 
     const formTitle = isEditing ? 'Editar usuário' : 'Cadastrar usuário';
 
@@ -62,7 +65,23 @@ const NewUser = () => {
                 });
         }
 
-    }, [isEditing, userId, setValue]);
+        if (currentUserData.user_name !== null && currentUserData.user_name !== undefined) {
+
+            makePrivateRequest({ url: URL_USERS_ROLE })
+                .then(response => {
+
+                    if (response.status === 200) {
+                        setRoleResponse({ content: response.data });
+                    }
+
+                }).catch((err: AxiosError) => {
+                    err.response && showMensage(err.response);
+                }).finally(() => {
+
+                });
+        }
+
+    }, [isEditing, userId, setValue, currentUserData]);
 
     const onSubmit = (formData: FormData) => {
 
@@ -198,6 +217,11 @@ const NewUser = () => {
                     <div>
                         <select className="form-select">
                             <option>Selecione o perfil</option>
+                            {roleResponse?.content.map(role =>
+                                <option key={role.id} value={role.id}>
+                                    {role.description}
+                                </option>
+                            )}
                         </select>
                     </div>
                 )}
