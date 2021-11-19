@@ -2,10 +2,13 @@ import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import Moment from 'react-moment';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { UserResponse } from 'core/types/User';
 import { makePrivateRequest } from 'core/utils/request';
-import { URL_USERS } from 'core/utils/ApiUrl';
+import { URL_USERS, URL_USERS_DISABLE } from 'core/utils/ApiUrl';
+import { STATUS_200 } from 'core/utils/HttpStatus';
 import history from 'core/utils/history';
 import UserSearch from '../UserSearch';
 import Pagination from 'core/components/Pagination';
@@ -33,9 +36,20 @@ const UserList = () => {
 
         makePrivateRequest({ url: URL_USERS, params: params })
             .then(response => {
-                setUsersResponse(response.data);
+
+                if (response.status === STATUS_200) {
+                    setUsersResponse(response.data);
+                }
+
             }).catch((err: AxiosError) => {
+
                 console.log('Ocorreu um erro: ', err);
+
+                toast.error("Ocorreu um erro ao listar os usuários!", {
+                    className: 'toast-notification',
+                    position: toast.POSITION.TOP_CENTER
+                });
+
             }).finally(() => {
             });
 
@@ -50,7 +64,31 @@ const UserList = () => {
     }
 
     const handleDisable = (id: number) => {
-        console.log(id);
+
+        makePrivateRequest({ method: 'PUT', url: `${URL_USERS_DISABLE}/${id}` })
+            .then(response => {
+
+                if (response.status === STATUS_200) {
+
+                    toast.success("Usuário desativado com sucesso.", {
+                        className: 'toast-notification',
+                        position: toast.POSITION.TOP_CENTER
+                    });
+
+                    getUsers();
+                }
+
+            }).catch((err: AxiosError) => {
+
+                console.log('Ocorreu um erro: ', err);
+
+                toast.error("Ocorreu um erro ao desativar o usuário!", {
+                    className: 'toast-notification',
+                    position: toast.POSITION.TOP_CENTER
+                });
+
+            }).finally(() => {
+            });
     }
 
     const handleSearch = (field: string, fieldValue: string) => {
@@ -163,6 +201,7 @@ const UserList = () => {
 
             </div>
 
+            <ToastContainer />
         </>
     );
 }

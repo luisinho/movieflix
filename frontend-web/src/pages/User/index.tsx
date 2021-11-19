@@ -5,12 +5,14 @@ import { useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { RoleResponse } from 'core/types/Role';
+import { Role, RoleResponse } from 'core/types/Role';
 import ButtonBack from 'core/components/ButtonBack';
 import ButtonSubmit from 'core/components/ButtonSubmit';
 import { makePrivateRequest, makeRequest } from 'core/utils/request';
 import { URL_USERS, URL_USERS_ROLE } from 'core/utils/ApiUrl';
+import { STATUS_200, STATUS_201, STATUS_400, STATUS_500 } from 'core/utils/HttpStatus';
 import { getAccessTokenDecoded } from 'core/utils/auth';
+import history from 'core/utils/history';
 
 import './styles.scss';
 
@@ -19,11 +21,14 @@ type ParamsType = {
 }
 
 type FormData = {
+    id: number;
     name: string;
     email: string;
     password: string;
     repeatPassword: string;
     active: boolean;
+    idRole: number;
+    roles: Role[];
 }
 
 const NewUser = () => {
@@ -32,9 +37,11 @@ const NewUser = () => {
 
     const [roleResponse, setRoleResponse] = useState<RoleResponse>();
 
+    const [idRoleEdit, setIdRoleEdit] = useState<number>(0);
+
     const { userId } = useParams<ParamsType>();
 
-    const isEditing = userId !== 'create';
+    const isEditing = userId !== 'create' ? true : false;
 
     const currentUserData = getAccessTokenDecoded();
 
@@ -44,6 +51,8 @@ const NewUser = () => {
 
     const labelButton = isEditing ? 'Alterar' : 'Cadastrar';
 
+    console.log('idRoleEdit', idRoleEdit);
+
     useEffect(() => {
 
         if (isEditing) {
@@ -51,11 +60,22 @@ const NewUser = () => {
             makePrivateRequest({ url: `${URL_USERS}/${userId}` })
                 .then(response => {
 
-                    if (response.status === 200) {
+                    if (response.status === STATUS_200) {
 
+                        setValue('id', response.data.id);
                         setValue('name', response.data.name);
                         setValue('email', response.data.email);
                         setValue('active', response.data.active);
+
+                        if (response.data.roles !== null && response.data.roles !== undefined) {
+
+                            let roles: Role[] = response.data.roles;
+
+                            roles.forEach(role => {
+                                setValue('idRole', role.id);
+                                setIdRoleEdit(role.id);
+                            });
+                        }
                     }
 
                 }).catch((err: AxiosError) => {
@@ -70,25 +90,44 @@ const NewUser = () => {
             makePrivateRequest({ url: URL_USERS_ROLE })
                 .then(response => {
 
-                    if (response.status === 200) {
+                    if (response.status === STATUS_200) {
                         setRoleResponse({ content: response.data });
                     }
 
                 }).catch((err: AxiosError) => {
-                    err.response && showMensage(err.response);
+
+                    console.log('Ocorreu um erro: ', err);
+
+                    toast.error("Ocorreu um erro ao listar o perfil!", {
+                        className: 'toast-notification',
+                        position: toast.POSITION.TOP_CENTER
+                    });
+
                 }).finally(() => {
 
                 });
         }
 
-    }, [isEditing, userId, setValue, currentUserData]);
+    }, [isEditing, userId, setValue, currentUserData.user_name]);
 
     const onSubmit = (formData: FormData) => {
 
-        makeRequest({ method: 'POST', url: URL_USERS, data: formData })
+        const FORM_METHOD = isEditing ? 'PUT' : 'POST';
+
+        const FORM_URL = isEditing ? `${URL_USERS}/${formData.id}` : URL_USERS;
+
+        makeRequest({ method: FORM_METHOD, url: FORM_URL, data: formData })
             .then(response => {
 
-                if (response.status === 201) {
+                if (response.status === STATUS_200) {
+
+                    toast.success("Usuário atualizado com sucesso.", {
+                        onClick: () => handleListUser(),
+                        className: 'toast-notification',
+                        position: toast.POSITION.TOP_CENTER
+                    });
+
+                } else if (response.status === STATUS_201) {
 
                     toast.success("Usuário cadastrado com sucesso.", {
                         className: 'toast-notification',
@@ -105,16 +144,21 @@ const NewUser = () => {
             });
     }
 
+    const handleListUser = () => {
+
+        history.replace(URL_USERS);
+    }
+
     const showMensage = (response: AxiosResponse) => {
 
-        if (response.status === 400) {
+        if (response.status === STATUS_400) {
 
             toast.warn(response.data.message, {
                 className: 'toast-notification',
                 position: toast.POSITION.TOP_CENTER
             });
 
-        } else if (response.status === 500) {
+        } else if (response.status === STATUS_500) {
 
             toast.error(response.data.message, {
                 className: 'toast-notification',
@@ -215,14 +259,21 @@ const NewUser = () => {
                 {(currentUserData.user_name || isEditing) && (
 
                     <div>
-                        <select className="form-select">
-                            <option>Selecione o perfil</option>
+                        <select
+                            className="form-select"
+                            {...register("idRole", { required: "Campo Perfil obrigatório." })}>
+                            {!isEditing && (<option value="">Selecione o perfil</option>)}
                             {roleResponse?.content.map(role =>
-                                <option key={role.id} value={role.id}>
+                                <option key={role.id} value={role.id} selected={role.id === idRoleEdit}>
                                     {role.description}
                                 </option>
                             )}
                         </select>
+                        {errors.idRole && (
+                            <div className="invalid-feedback d-block">
+                                {errors.idRole.message}
+                            </div>
+                        )}
                     </div>
                 )}
 

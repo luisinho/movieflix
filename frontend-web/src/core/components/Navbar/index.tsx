@@ -1,19 +1,27 @@
 import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 
-import { getAccessTokenDecoded, logout } from 'core/utils/auth';
+import { getAccessTokenDecoded, logout, isAllowedByRole } from 'core/utils/auth';
 import { URL_MOVIES, URL_USERS } from 'core/utils/ApiUrl';
+
 import './styles.scss';
 
 const Navbar = () => {
 
     const [currentUser, setCurrentUser] = useState<string>('');
 
+    const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
+
     const location = useLocation();
 
     useEffect(() => {
 
         const currentUserData = getAccessTokenDecoded();
+
+        if (currentUserData.authorities !== null && currentUserData.authorities !== undefined) {
+
+            setIsAuthorized(isAllowedByRole(currentUserData.authorities));
+        }
 
         setCurrentUser(currentUserData.user_name);
 
@@ -37,7 +45,7 @@ const Navbar = () => {
                             <h4>MovieFLix</h4>
                         </Link>
 
-                        {currentUser && (
+                        {isAuthorized && (
                             <div className="nav-users">
                                 <Link to={URL_USERS} className="nav-users">
                                     Usuários

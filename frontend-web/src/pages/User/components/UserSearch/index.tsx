@@ -52,7 +52,7 @@ const UserSearch = ({ field, fieldValue, handleSearch, handleCleanFilter }: Prop
                 <div className="d-flex flex-row">
 
                     <div className="p-1">
-                        <select id="teste1" onChange={event => handleField(event.target.value)} className="form-select">
+                        <select onChange={event => handleField(event.target.value)} className="form-select">
                             <option value="">Pesquisar por</option>
                             <option value="email">E-mail</option>
                             <option value="name">Nome</option>
@@ -68,7 +68,7 @@ const UserSearch = ({ field, fieldValue, handleSearch, handleCleanFilter }: Prop
 
                     {enableStatus && (
                         <div className="flex-fill p-1">
-                            <select id="teste2" onChange={event => handleFieldValue(event.target.value)} className="form-select">
+                            <select onChange={event => handleFieldValue(event.target.value)} className="form-select">
                                 <option value="">Selecione o status</option>
                                 <option value="true">Ativado</option>
                                 <option value="false">Desativado</option>

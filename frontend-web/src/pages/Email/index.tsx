@@ -8,6 +8,7 @@ import history from 'core/utils/history';
 import ButtonSubmit from 'core/components/ButtonSubmit';
 import ButtonBack from 'core/components/ButtonBack';
 import { URL_EMAIL, URL_USERS_PROCESS } from 'core/utils/ApiUrl';
+import { STATUS_202, STATUS_500 } from 'core/utils/HttpStatus';
 
 import './styles.scss';
 
@@ -32,7 +33,7 @@ const Email = () => {
         makeRequest({ method: 'POST', url: URL_EMAIL, data: formData })
             .then(response => {
 
-                if (response.status === 202) {
+                if (response.status === STATUS_202) {
 
                     const from = { pathname: URL_USERS_PROCESS };
 
@@ -41,7 +42,7 @@ const Email = () => {
 
             }).catch((err: AxiosError) => {
 
-                if (err.response?.data.status === 500) {
+                if (err.response?.data.status === STATUS_500) {
 
                     toast.error(err.response?.data.message, {
                         className: 'toast-notification',

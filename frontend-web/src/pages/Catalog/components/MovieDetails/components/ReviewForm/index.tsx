@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AxiosError } from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { getLoggedUser } from 'core/utils/auth';
 import { getNewReview, Review } from 'core/types/Review';
@@ -8,6 +10,7 @@ import { getNewReview, Review } from 'core/types/Review';
 import { makePrivateRequest } from 'core/utils/request';
 import { URL_REVIEWS } from 'core/utils/ApiUrl';
 import ReviewList from '../ReviewList';
+import { STATUS_201 } from 'core/utils/HttpStatus';
 
 import './styles.scss';
 
@@ -39,12 +42,26 @@ const ReviewForm = ({ moveId }: Props) => {
 
         makePrivateRequest({ method: 'POST', url: URL_REVIEWS, data: review })
             .then(response => {
-                if (response.status === 201) {
-                    console.log('Avalição criada com sucesso.');
+
+                if (response.status === STATUS_201) {
+
+                    toast.success("Avalição criada com sucesso.", {
+                        className: 'toast-notification',
+                        position: toast.POSITION.TOP_CENTER
+                    });
+
                     setNewQuantityReview(newQuantityReview + 1);
                 }
+
             }).catch((err: AxiosError) => {
-                console.log('Ocorreu um erro: ', err);
+
+                console.log('Ocorreu um erro ao criar a avaliação: ', err);
+
+                toast.error("Ocorreu um erro ao criar a avaliação!", {
+                    className: 'toast-notification',
+                    position: toast.POSITION.TOP_CENTER
+                });
+
             }).finally(() => {
                 reset();
             });
@@ -77,6 +94,8 @@ const ReviewForm = ({ moveId }: Props) => {
             <div>
                 <ReviewList reviewMoveId={reviewMoveId} newQuantityReview={newQuantityReview} />
             </div>
+
+            <ToastContainer />
         </div>
     );
 }

@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import Moment from 'react-moment';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { ReactComponent as ReviewStarImage } from 'core/assets/images/review-star.svg';
 import { ReviewsResponse } from 'core/types/Review';
 import { URL_REVIEWS } from 'core/utils/ApiUrl';
 import { makePrivateRequest } from 'core/utils/request';
 import Pagination from 'core/components/Pagination';
+import { STATUS_200 } from 'core/utils/HttpStatus';
+
 import './styles.scss';
 
 type Props = {
@@ -30,9 +34,20 @@ const ReviewList = ({ reviewMoveId, newQuantityReview }: Props) => {
 
         makePrivateRequest({ url: URL_REVIEWS, params: params })
             .then(response => {
-                setReviewsResponse(response.data);
+
+                if (response.status === STATUS_200) {
+                    setReviewsResponse(response.data);
+                }
+
             }).catch((err: AxiosError) => {
-                console.log('Ocorreu um erro: ', err);
+
+                console.log('Ocorreu um erro ao listar as avaliações: ', err);
+
+                toast.error("Ocorreu um erro ao listar as avaliações!", {
+                    className: 'toast-notification',
+                    position: toast.POSITION.TOP_CENTER
+                });
+
             }).finally(() => {
             });
 
@@ -74,6 +89,8 @@ const ReviewList = ({ reviewMoveId, newQuantityReview }: Props) => {
                     activePage={activePage}
                     onChange={page => setActivePage(page)} />
             )}
+
+            <ToastContainer />
         </div>
     );
 }

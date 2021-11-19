@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import { Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import GenreComboBox from '../Genre/components/ComboBox';
 import { MoviesResponse } from 'core/types/Movie';
@@ -8,6 +10,7 @@ import MovieCard from './components/MovieCard';
 import { makePrivateRequest } from 'core/utils/request';
 import { URL_MOVIES } from 'core/utils/ApiUrl';
 import Pagination from 'core/components/Pagination';
+import { STATUS_200 } from 'core/utils/HttpStatus';
 
 import './styles.scss';
 
@@ -29,9 +32,20 @@ const Catalog = () => {
 
         makePrivateRequest({ url: URL_MOVIES, params: params })
             .then(response => {
-                setMoviesResponse(response.data);
+
+                if (response.status === STATUS_200) {
+                    setMoviesResponse(response.data);
+                }
+
             }).catch((err: AxiosError) => {
-                console.log('err', err);
+
+                console.log('Ocorreu um erro ao listar os filmes', err);
+
+                toast.error("Ocorreu um erro ao listar os filmes!", {
+                    className: 'toast-notification',
+                    position: toast.POSITION.TOP_CENTER
+                });
+
             }).finally(() => {
             });
 
@@ -70,6 +84,8 @@ const Catalog = () => {
                     onChange={page => setActivePage(page)}
                 />
             )}
+
+            <ToastContainer />
         </div>
     );
 }

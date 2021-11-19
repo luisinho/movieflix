@@ -7,3 +7,15 @@ export type Role = {
     authority: string;
     description: string;
 }
+
+
+export const getNewRole = () => {
+
+    const user = {
+        id: 0,
+        authority: '',
+        description: ''
+    }
+
+    return user as Role;
+}

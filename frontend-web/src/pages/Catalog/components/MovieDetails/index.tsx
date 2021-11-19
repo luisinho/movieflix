@@ -11,6 +11,8 @@ import ReviewList from './components/ReviewList';
 import { getAccessTokenDecoded, isAllowedByRole } from 'core/utils/auth';
 import { makePrivateRequest } from 'core/utils/request';
 import { URL_MOVIES } from 'core/utils/ApiUrl';
+import { STATUS_200 } from 'core/utils/HttpStatus';
+
 import './styles.scss';
 
 type ParamsType = {
@@ -29,7 +31,10 @@ const MovieDetails = () => {
 
         makePrivateRequest({ url: `${URL_MOVIES}/${movieId}` })
             .then(response => {
-                setMovie(response.data);
+
+                if (response.status === STATUS_200) {
+                    setMovie(response.data);
+                }
             })
             .catch((err: AxiosError) => {
                 console.log('Ocorreu um erro: ', err);

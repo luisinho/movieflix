@@ -7,6 +7,7 @@ import ButtonBack from 'core/components/ButtonBack';
 import ButtonSubmit from 'core/components/ButtonSubmit';
 import { makeRequest } from 'core/utils/request';
 import { URL_USERS_RESET, URL_HOME_LOGIN } from 'core/utils/ApiUrl';
+import { STATUS_200 } from 'core/utils/HttpStatus';
 import history from 'core/utils/history';
 
 import './styles.scss';
@@ -31,7 +32,7 @@ const NewPassword = () => {
         makeRequest({ method: 'PUT', url: URL_USERS_RESET, data: formData })
             .then(response => {
 
-                if (response.status === 200) {
+                if (response.status === STATUS_200) {
 
                     toast.success("Senha alterada com sucesso.", {
                         className: 'toast-notification',

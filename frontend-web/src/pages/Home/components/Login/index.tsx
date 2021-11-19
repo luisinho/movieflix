@@ -8,6 +8,7 @@ import { saveSessionData } from 'core/utils/auth';
 import { URL_MOVIES, URL_EMAIL, URL_USERS } from 'core/utils/ApiUrl';
 import ButtonIcon from 'core/components/Buttonicon';
 import history from 'core/utils/history';
+import { STATUS_200 } from 'core/utils/HttpStatus';
 
 import './styles.scss';
 
@@ -36,10 +37,13 @@ const Login = () => {
 
         makeLogin(formData).then(response => {
 
-            setHasError(false);
-            setMsgError('');
-            saveSessionData(response.data);
-            history.replace(from);
+            if (response.status === STATUS_200) {
+
+                setHasError(false);
+                setMsgError('');
+                saveSessionData(response.data);
+                history.replace(from);
+            }
 
         }).catch((err: AxiosError) => {
             setHasError(true);

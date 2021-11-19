@@ -21,3 +21,5 @@ export const URL_USERS_PROCESS = '/process';
 export const URL_USERS_RESET = '/users/reset';
 
 export const URL_USERS_ROLE = '/users/role';
+
+export const URL_USERS_DISABLE = '/users/disable';

@@ -1,3 +1,5 @@
+import { Role } from "./Role";
+
 export type UserResponse = {
     content: User[];
     totalPages: number;
@@ -9,6 +11,8 @@ export type User = {
     email: string;
     active: boolean;
     createdAt: Date;
+    roles: Role[];
+    idRole: number;
 }
 
 export const getNewUser = () => {
@@ -17,7 +21,8 @@ export const getNewUser = () => {
         id: 0,
         name: '',
         email: '',
-        active: true
+        active: true,
+        idRole: 0
     }
 
     return user as User;
