@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.devsuperior.movieflix.components.UserAuthentication;
 import com.devsuperior.movieflix.dto.UserDTO;
 import com.devsuperior.movieflix.dto.UserInsertDTO;
 import com.devsuperior.movieflix.dto.UserUpdateDTO;
@@ -55,9 +54,6 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private MessageSource messageSource;
 
-	@Autowired
-	private UserAuthentication userAuthentication;
-
 	@Transactional(readOnly = true)
 	public Page<UserDTO> findAllPaged(String field, String fieldValue, PageRequest pageRequest) {
 
@@ -84,7 +80,7 @@ public class UserService implements UserDetailsService {
 				 }
 
 			 } else {
-				 list = this.userRepository.findAll(pageRequest);
+				 list = this.userRepository.listAllUser(pageRequest);
 			 }
 
 			 Page<UserDTO> listDto = list.map(user -> new UserDTO(user));
@@ -121,7 +117,7 @@ public class UserService implements UserDetailsService {
 
 		LOGGER.info("END METHOD UserService.findById ");
 
-		return new UserDTO(user);
+		return new UserDTO(user, user.getRoles());
 	}
 
 	@Transactional(readOnly = true)
@@ -192,6 +188,8 @@ public class UserService implements UserDetailsService {
 			entity = obj.orElseThrow(() ->
 			    new ResourceNotFoundException(this.messageSource.getMessage("user.error.updating.id.not.found", null, null)));
 
+			this.validateEmailToUpdate(dto);
+
 		    this.copyDtoToEntity(dto, entity);
 
 			entity = this.userRepository.save(entity);
@@ -199,9 +197,12 @@ public class UserService implements UserDetailsService {
 		} catch (EntityNotFoundException e) {
 			LOGGER.error("Ocorreu um erro no metodo UserService.update " + e);
 			throw new ResourceNotFoundException(this.messageSource.getMessage("user.error.updating.id.not.found", null, null) + " " + id);
+		} catch(RegraNegocioException e) {
+			LOGGER.error("Ocorreu um erro no metodo UserService.update " + e);
+			throw new RegraNegocioException(e.getMessage());
 		} catch (Exception e) {
 			LOGGER.error("Ocorreu um erro no metodo UserService.update " + e);
-			throw new DataBaseException(this.messageSource.getMessage("user.error.updating.with.the.id", null, null) + " " + id); 
+			throw new DataBaseException(this.messageSource.getMessage("user.error.updating.with.the.id", null, null) + " " + id);
 		}
 
 		LOGGER.info("END METHOD UserService.update()");
@@ -321,15 +322,14 @@ public class UserService implements UserDetailsService {
 
 		entity.setEmail(dto.getEmail());
 		entity.setName(dto.getName());
+		entity.setActive(dto.getActive());
 
 		entity.getRoles().clear();
 
-		if (this.userAuthentication.isLogged()) {
+		if (dto.getIdRole() != null) {
 
-			dto.getRoles().forEach(roleDto -> {
-				Role role = this.roleRepository.getOne(roleDto.getId());
+				Role role = this.roleRepository.getOne(dto.getIdRole());
 				entity.getRoles().add(role);
-			});
 
 		} else {
 
@@ -428,6 +428,20 @@ public class UserService implements UserDetailsService {
 
 		if (isExpire) {
 			throw new RegraNegocioException(this.messageSource.getMessage("user.code.request.password.expiration", null, null));
+		}
+	}
+
+	private void validateEmailToUpdate(UserDTO dto) {
+
+		Optional<User> obj = this.userRepository.findByEmail(dto.getEmail());
+
+		if (obj.isPresent()) {
+
+			User user = obj.get();
+
+			if (user.getId().longValue() != dto.getId().longValue() && user.getEmail().equals(dto.getEmail())) {
+				throw new RegraNegocioException(this.messageSource.getMessage("user.email.exist", null, null) + " " + dto.getEmail());
+			}
 		}
 	}
 }

@@ -2,13 +2,15 @@ package com.devsuperior.movieflix.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.devsuperior.movieflix.entities.Role;
 import com.devsuperior.movieflix.entities.User;
 
 public class UserDTO implements Serializable {
@@ -31,7 +33,9 @@ public class UserDTO implements Serializable {
 
 	private Instant createdAt;
 
-	private Set<RoleDTO> roles = new HashSet<RoleDTO>();
+	private Long idRole;
+
+	private List<RoleDTO> roles = new ArrayList<RoleDTO>();
 
 	public UserDTO() {
 
@@ -43,6 +47,18 @@ public class UserDTO implements Serializable {
 		this.name = entity.getName();
 		this.active = entity.getActive();
 		this.createdAt = entity.getCreatedAt();
+	}
+	
+	public UserDTO(User entity, Set<Role> listRole) {
+		this.id = entity.getId();
+		this.email = entity.getEmail();
+		this.name = entity.getName();
+		this.active = entity.getActive();
+		this.createdAt = entity.getCreatedAt();
+
+		listRole.stream().forEach(role -> {
+			roles.add(new RoleDTO(role));
+		});
 	}
 
 	public Long getId() {
@@ -93,7 +109,15 @@ public class UserDTO implements Serializable {
 		this.createdAt = createdAt;
 	}
 
-	public Set<RoleDTO> getRoles() {
+	public Long getIdRole() {
+		return idRole;
+	}
+
+	public void setIdRole(Long idRole) {
+		this.idRole = idRole;
+	}
+
+	public List<RoleDTO> getRoles() {
 		return roles;
 	}
 }
