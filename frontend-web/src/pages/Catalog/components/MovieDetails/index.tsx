@@ -8,6 +8,7 @@ import { Movie } from 'core/types/Movie';
 import ReviewForm from './components/ReviewForm';
 import ReviewList from './components/ReviewList';
 
+import MoveImgLoad from './../../components/Loaders/SinopseLoad';
 import { getAccessTokenDecoded, isAllowedByRole } from 'core/utils/auth';
 import { makePrivateRequest } from 'core/utils/request';
 import { URL_MOVIES } from 'core/utils/ApiUrl';
@@ -39,13 +40,18 @@ const MovieDetails = () => {
             .catch((err: AxiosError) => {
                 console.log('Ocorreu um erro: ', err);
             }).finally(() => {
+
             });
 
     }, [movieId]);
 
     return (
         <div>
-            { movie && (<Sinopse movie={movie} />)}
+            { movie ? (<Sinopse movie={movie} />) :
+                <div className="load-sinopse">
+                    <MoveImgLoad />
+                </div>
+            }
             { movie && isAllowedByRole(authorities) && (<ReviewForm moveId={movie.id} />)}
             { movie && !isAllowedByRole(authorities) && (<ReviewList reviewMoveId={movie.id} newQuantityReview={0} />)}
         </div>

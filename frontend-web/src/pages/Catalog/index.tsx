@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import MoveCardLoader from './components/Loaders/MoveCardLoader';
 import GenreComboBox from '../Genre/components/ComboBox';
 import { MoviesResponse } from 'core/types/Movie';
 import MovieCard from './components/MovieCard';
@@ -22,6 +23,8 @@ const Catalog = () => {
 
     const [selectedGenreId, setSelectedGenreId] = useState('0');
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const getMovies = useCallback(() => {
 
         const params = {
@@ -30,6 +33,7 @@ const Catalog = () => {
             genreId: Number(selectedGenreId)
         }
 
+        setIsLoading(true);
         makePrivateRequest({ url: URL_MOVIES, params: params })
             .then(response => {
 
@@ -47,6 +51,7 @@ const Catalog = () => {
                 });
 
             }).finally(() => {
+                setIsLoading(false);
             });
 
     }, [activePage, selectedGenreId]);
@@ -69,13 +74,13 @@ const Catalog = () => {
                 />
             </div>
             <div className="catalog-movie">
-                {
+                {isLoading ? <MoveCardLoader /> : (
                     moviesResponse?.content.map(movie =>
                         <Link to={`${URL_MOVIES}/${movie.id}`} key={movie.id}>
                             <MovieCard movie={movie} />
                         </Link>
                     )
-                }
+                )}
             </div>
             { moviesResponse && (
                 <Pagination

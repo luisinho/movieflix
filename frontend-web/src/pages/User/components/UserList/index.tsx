@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { UserResponse } from 'core/types/User';
 import { makePrivateRequest } from 'core/utils/request';
+
 import { URL_USERS, URL_USERS_DISABLE } from 'core/utils/ApiUrl';
 import { STATUS_200 } from 'core/utils/HttpStatus';
 import history from 'core/utils/history';

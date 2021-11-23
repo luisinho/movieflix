@@ -10,6 +10,7 @@ import { URL_REVIEWS } from 'core/utils/ApiUrl';
 import { makePrivateRequest } from 'core/utils/request';
 import Pagination from 'core/components/Pagination';
 import { STATUS_200 } from 'core/utils/HttpStatus';
+import ReviewListLoad from './../../../../components/Loaders/ReviewListLoad';
 
 import './styles.scss';
 
@@ -24,6 +25,8 @@ const ReviewList = ({ reviewMoveId, newQuantityReview }: Props) => {
 
     const [activePage, setActivePage] = useState(0);
 
+    const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
 
         const params = {
@@ -31,6 +34,8 @@ const ReviewList = ({ reviewMoveId, newQuantityReview }: Props) => {
             linesPerPage: 4,
             movieId: reviewMoveId
         }
+
+        setIsLoading(true);
 
         makePrivateRequest({ url: URL_REVIEWS, params: params })
             .then(response => {
@@ -49,6 +54,7 @@ const ReviewList = ({ reviewMoveId, newQuantityReview }: Props) => {
                 });
 
             }).finally(() => {
+                setIsLoading(false);
             });
 
     }, [activePage, reviewMoveId, newQuantityReview]);
@@ -56,31 +62,38 @@ const ReviewList = ({ reviewMoveId, newQuantityReview }: Props) => {
     return (
         <div className="main-review-list">
 
-            {reviewsResponse?.content.map(review =>
-                <>
-                    <div key={review.id} className="d-flex flex-column">
+            {isLoading ? <ReviewListLoad /> : (
 
-                        <div className="d-flex flex-row">
+                <div>
 
-                            <div className="d-flex flex-row flex-fill">
-                                <ReviewStarImage className="review-img-star" />
-                                <div className="review-user-name">
-                                    {review.user.name}
+                    {reviewsResponse?.content.map(review =>
+                        <>
+                            <div key={review.id} className="d-flex flex-column">
+
+                                <div className="d-flex flex-row">
+
+                                    <div className="d-flex flex-row flex-fill">
+                                        <ReviewStarImage className="review-img-star" />
+                                        <div className="review-user-name">
+                                            {review.user.name}
+                                        </div>
+                                    </div>
+
+                                    <div className="review-user-dt-create flex-fill">
+                                        Criado:<Moment className="p-1" format="DD/MM/YYYY HH:mm:ss">{review?.createdAt}</Moment>
+                                    </div>
+
                                 </div>
+
                             </div>
 
-                            <div className="review-user-dt-create flex-fill">
-                                Criado:<Moment className="p-1" format="DD/MM/YYYY HH:mm:ss">{review?.createdAt}</Moment>
+                            <div className="review-list">
+                                {review.text}
                             </div>
+                        </>
+                    )}
 
-                        </div>
-
-                    </div>
-
-                    <div className="review-list">
-                        {review.text}
-                    </div>
-                </>
+                </div>
             )}
 
             { reviewsResponse && reviewsResponse.content.length > 0 && (

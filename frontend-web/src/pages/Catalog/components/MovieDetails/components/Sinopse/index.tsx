@@ -7,7 +7,9 @@ type Props = {
 }
 
 const Sinopse = ({ movie }: Props) => {
+
     return (
+
         <div className="main-sinopse d-flex flex-row">
 
             <img src={movie.imgUrl} alt={movie.title} className="sinopse-image" />
@@ -25,7 +27,6 @@ const Sinopse = ({ movie }: Props) => {
                 </div>
 
             </div>
-
         </div>
     );
 }
