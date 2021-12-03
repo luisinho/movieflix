@@ -55,7 +55,7 @@ public class User implements UserDetails, Serializable {
 	@Column(name = "CODE_REQUEST_PASSWORD", length = 15)
 	private String codeRequestPassword;
 
-	@Column(name = "NUMBER_REQUESTS_PASSWORD", length = 4)
+	@Column(name = "NUMBER_REQUESTS_PASSWORD")
 	private Long numberRequestsPassword;
 
 	@ManyToMany(fetch = FetchType.EAGER)
