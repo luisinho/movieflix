@@ -1,4 +1,5 @@
 import { ReactComponent as ArrowIcon } from 'core/assets/images/arrow.svg';
+
 import './styles.scss';
 
 const ButtonIcon = () => (

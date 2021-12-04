@@ -51,8 +51,6 @@ const NewUser = () => {
 
     const labelButton = isEditing ? 'Alterar' : 'Cadastrar';
 
-    console.log('idRoleEdit', idRoleEdit);
-
     useEffect(() => {
 
         if (isEditing) {

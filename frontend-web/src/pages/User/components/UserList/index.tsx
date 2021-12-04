@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { UserResponse } from 'core/types/User';
 import { makePrivateRequest } from 'core/utils/request';
 
+import UserLoader from './../../components/UserLoaderList/UserLoader';
 import { URL_USERS, URL_USERS_DISABLE } from 'core/utils/ApiUrl';
 import { STATUS_200 } from 'core/utils/HttpStatus';
 import history from 'core/utils/history';
@@ -26,6 +27,8 @@ const UserList = () => {
 
     const [fieldValue, setFieldValue] = useState('');
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const getUsers = useCallback(() => {
 
         const params = {
@@ -34,6 +37,8 @@ const UserList = () => {
             field: selectedField,
             fieldValue: fieldValue
         }
+
+        setIsLoading(true);
 
         makePrivateRequest({ url: URL_USERS, params: params })
             .then(response => {
@@ -52,6 +57,7 @@ const UserList = () => {
                 });
 
             }).finally(() => {
+                setIsLoading(false);
             });
 
     }, [activePage, selectedField, fieldValue]);
@@ -155,40 +161,45 @@ const UserList = () => {
 
                 </div>
 
-                {usersResponse?.content.map(user =>
+                {isLoading ? <UserLoader /> : (
 
-                    <div key={user.id} className="d-flex flex-column">
+                    <div>
+                        {usersResponse?.content.map(user =>
 
-                        <div className="user-list d-flex flex-row">
+                            <div key={user.id} className="d-flex flex-column">
 
-                            <div className="flex-fill text-left w-25">
-                                {user.name}
-                            </div>
+                                <div className="user-list d-flex flex-row">
 
-                            <div className="flex-fill text-left w-25">
-                                {user.email}
-                            </div>
+                                    <div className="flex-fill text-left w-25">
+                                        {user.name}
+                                    </div>
 
-                            <div className="flex-fill text-center w-25">
-                                {user.active === true ? 'Ativo' : 'Desativado'}
-                            </div>
+                                    <div className="flex-fill text-left w-25">
+                                        {user.email}
+                                    </div>
 
-                            <div className="flex-fill text-center w-25">
-                                <Moment format="DD/MM/YYYY">{user?.createdAt}</Moment>
-                            </div>
+                                    <div className="flex-fill text-center w-25">
+                                        {user.active === true ? 'Ativo' : 'Desativado'}
+                                    </div>
 
-                            <div className="d-flex flex-row flex-fill w-25">
-                                <Link to={`${URL_USERS}/${user.id}`} className="user-edit">
-                                    Editar
+                                    <div className="flex-fill text-center w-25">
+                                        <Moment format="DD/MM/YYYY">{user?.createdAt}</Moment>
+                                    </div>
+
+                                    <div className="d-flex flex-row flex-fill w-25">
+                                        <Link to={`${URL_USERS}/${user.id}`} className="user-edit">
+                                            Editar
                                 </Link>
 
-                                <div className="user-disable" onClick={() => handleDisable(user.id)}>
-                                    Desativar
+                                        <div className="user-disable" onClick={() => handleDisable(user.id)}>
+                                            Desativar
                                 </div>
+                                    </div>
+
+                                </div>
+
                             </div>
-
-                        </div>
-
+                        )}
                     </div>
                 )}
 
