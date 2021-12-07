@@ -13,7 +13,7 @@ const Home = () => {
     }, []);
 
     return (
-        <div className="home-container">
+        <div className="home-container d-flex flex-row">
             <div>
                 <h1 className="home-title">
                     Avalie Filmes
@@ -24,7 +24,7 @@ const Home = () => {
                 <HomeAuthImage className="home-image" />
             </div>
 
-            <div className="home-content">
+            <div>
                 <Login />
             </div>
 
