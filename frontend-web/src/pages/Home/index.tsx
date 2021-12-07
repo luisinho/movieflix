@@ -13,19 +13,21 @@ const Home = () => {
     }, []);
 
     return (
-        <div className="home-container d-flex flex-row">
-            <div>
-                <h1 className="home-title">
-                    Avalie Filmes
+        <div className="home-container">
+            <div className="d-flex flex-row">
+                <div>
+                    <h1 className="home-title">
+                        Avalie Filmes
                 </h1>
-                <p className="home-sub-title">
-                    Diga o que você achou do seu <br /> filme favorito
+                    <p className="home-sub-title">
+                        Diga o que você achou do seu <br /> filme favorito
                 </p>
-                <HomeAuthImage className="home-image" />
-            </div>
+                    <HomeAuthImage className="home-image" />
+                </div>
 
-            <div>
-                <Login />
+                <div>
+                    <Login />
+                </div>
             </div>
 
         </div>
