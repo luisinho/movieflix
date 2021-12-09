@@ -11,6 +11,7 @@ import history from 'core/utils/history';
 import { STATUS_200 } from 'core/utils/HttpStatus';
 
 import './styles.scss';
+import LoginLoader from './Loader/LoginLoader';
 
 type FormData = {
     username: string;
@@ -33,7 +34,11 @@ const Login = () => {
 
     const { from } = location.state || { from: { pathname: URL_MOVIES } };
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const onSubmit = (formData: FormData) => {
+
+        setIsLoading(true);
 
         makeLogin(formData).then(response => {
 
@@ -49,6 +54,7 @@ const Login = () => {
             setHasError(true);
             setMsgError(err.response?.data.error_description);
         }).finally(() => {
+            setIsLoading(false);
         });
     }
 
@@ -58,6 +64,8 @@ const Login = () => {
             <h1 className="login-title">
                 Login
             </h1>
+
+            {isLoading ? <LoginLoader /> : ('')}
 
             {hasError && (
 

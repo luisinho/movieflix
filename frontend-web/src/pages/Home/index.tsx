@@ -14,8 +14,9 @@ const Home = () => {
 
     return (
         <div className="home-container">
-            <div className="d-flex flex-row">
-                <div>
+
+            <div id="divImgLogin" className="d-flex flex-row">
+                <div className="flex-fill w-30">
                     <h1 className="home-title">
                         Avalie Filmes
                 </h1>
@@ -25,7 +26,7 @@ const Home = () => {
                     <HomeAuthImage className="home-image" />
                 </div>
 
-                <div>
+                <div className="flex-fill w-30">
                     <Login />
                 </div>
             </div>
