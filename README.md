@@ -25,7 +25,17 @@ https://dashboard.heroku.com/apps/luis-movieflix
 ![List Movie](https://github.com/luisinho/assets-projects/blob/main/movieflix/mobile-list-movie.png?raw=true)![Detail Movie](https://github.com/luisinho/assets-projects/blob/main/movieflix/mobile-detail-movie.png?raw=true)
 
 ## Layout web
-![Login](https://github.com/luisinho/assets-projects/blob/main/movieflix/login.png?raw=true)
+![Login](https://github.com/luisinho/assets-projects/blob/main/movieflix/new-login.png?raw=true)
+
+![Email Password](https://github.com/luisinho/assets-projects/blob/main/movieflix/email-password.png?raw=true)
+
+![New Password](https://github.com/luisinho/assets-projects/blob/main/movieflix/create-new-password.png?raw=true)
+
+![Cad Visitor](https://github.com/luisinho/assets-projects/blob/main/movieflix/new-cad-visitor.png?raw=true)
+
+![List User](https://github.com/luisinho/assets-projects/blob/main/movieflix/list-user.png?raw=true)
+
+![Cad Member](https://github.com/luisinho/assets-projects/blob/main/movieflix/new-user-member.png?raw=true)
 
 ![List Movie](https://github.com/luisinho/assets-projects/blob/main/movieflix/list-movie.png?raw=true)
 
