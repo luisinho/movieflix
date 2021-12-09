@@ -4,7 +4,7 @@
 
 # Sobre o projeto
 
-Link front-end em desenvolvimento
+https://luis-movieflix.netlify.app/home/login
 
 MovieFlix é uma aplicação full stack web e mobile construída durante o **Bootcamp DevSuperior** (#BDS2), evento organizado pela [DevSuperior](https://devsuperior.com "Site da DevSuperior").
 
