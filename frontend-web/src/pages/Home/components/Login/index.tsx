@@ -99,9 +99,20 @@ const Login = () => {
                 <div>
                     <input
                         type="password"
+                        onKeyPress={(event) => {
+                            if (!/[0-9]/.test(event.key)) {
+                                event.preventDefault();
+                            }
+                        }}
                         className={`form-control input-forms ${errors.password ? 'is-invalid' : ''}`}
                         placeholder="Senha"
-                        {...register("password", { required: "Campo senha obrigatório." })}
+                        {...register("password", {
+                            required: "Campo senha obrigatório.",
+                            pattern: {
+                                value: /^[0-9]{4,8}$/i,
+                                message: "A senha deve conter somente número de 4 a 8 digitos!"
+                            }
+                        })}
                     />
                     {errors.password && (
                         <div className="invalid-feedback d-block">

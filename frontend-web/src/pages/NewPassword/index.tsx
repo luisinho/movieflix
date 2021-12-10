@@ -124,12 +124,17 @@ const NewPassword = () => {
                 <div className="p-1">
                     <input
                         type="password"
+                        onKeyPress={(event) => {
+                            if (!/[0-9]/.test(event.key)) {
+                                event.preventDefault();
+                            }
+                        }}
                         className={`form-control input-forms ${errors.password ? 'is-invalid' : ''}`}
                         placeholder="Digite aqui a Senha"
                         {...register("password", {
                             required: "Campo Senha obrigatório.",
                             pattern: {
-                                value: /^[0-9a-fA-F]{4,8}$/i,
+                                value: /^[0-9]{4,8}$/i,
                                 message: "A senha deve conter somente número de 4 a 8 digitos!"
                             }
                         })}
@@ -144,12 +149,17 @@ const NewPassword = () => {
                 <div className="p-1">
                     <input
                         type="password"
+                        onKeyPress={(event) => {
+                            if (!/[0-9]/.test(event.key)) {
+                                event.preventDefault();
+                            }
+                        }}
                         className={`form-control input-forms ${errors.repeatPassword ? 'is-invalid' : ''}`}
                         placeholder="Repita aqui a Senha"
                         {...register("repeatPassword", {
                             required: "Campo Repita aqui a Senha obrigatório.",
                             pattern: {
-                                value: /^[0-9a-fA-F]{4,8}$/i,
+                                value: /^[0-9]{4,8}$/i,
                                 message: "A senha deve conter somente número de 4 a 8 digitos!"
                             }
                         })}
