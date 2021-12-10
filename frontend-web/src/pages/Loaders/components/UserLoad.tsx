@@ -1,6 +1,6 @@
 import ContentLoader from "react-content-loader";
 
-const LoginLoader = () => (
+const UserLoad = () => (
 
     <ContentLoader
         width="100%"
@@ -9,11 +9,11 @@ const LoginLoader = () => (
         backgroundColor="transparent"
         foregroundColor="#d6d2d2">
 
-        <circle cx="150" cy="96" r="14" />
-        <circle cx="194" cy="96" r="14" />
-        <circle cx="238" cy="96" r="14" />
+        <circle cx="150" cy="86" r="15" width="240" />
+        <circle cx="194" cy="86" r="15" width="240" />
+        <circle cx="238" cy="86" r="15" width="240" />
 
     </ContentLoader>
 );
 
-export default LoginLoader;
+export default UserLoad;

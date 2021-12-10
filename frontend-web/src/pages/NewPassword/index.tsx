@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AxiosError } from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
@@ -11,6 +12,7 @@ import { STATUS_200 } from 'core/utils/HttpStatus';
 import history from 'core/utils/history';
 
 import './styles.scss';
+import UserLoad from 'pages/Loaders/components/UserLoad';
 
 type FormData = {
     id: number;
@@ -25,9 +27,11 @@ const NewPassword = () => {
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
 
-
+    const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = (formData: FormData) => {
+
+        setIsLoading(true);
 
         makeRequest({ method: 'PUT', url: URL_USERS_RESET, data: formData })
             .then(response => {
@@ -61,6 +65,7 @@ const NewPassword = () => {
 
             }).finally(() => {
                 reset();
+                setIsLoading(false);
             });
     }
 
@@ -77,6 +82,8 @@ const NewPassword = () => {
             <div className="new_password-title">
                 Criar nova senha
             </div>
+
+            {isLoading ? <UserLoad /> : ('')}
 
             <form className="padding-top-form" onSubmit={handleSubmit(onSubmit)}>
 
@@ -123,7 +130,7 @@ const NewPassword = () => {
                             required: "Campo Senha obrigatório.",
                             pattern: {
                                 value: /^[0-9a-fA-F]{4,8}$/i,
-                                message: "A senha deve conter de 4 a 8 caracteres!"
+                                message: "A senha deve conter somente número de 4 a 8 digitos!"
                             }
                         })}
                     />
@@ -143,7 +150,7 @@ const NewPassword = () => {
                             required: "Campo Repita aqui a Senha obrigatório.",
                             pattern: {
                                 value: /^[0-9a-fA-F]{4,8}$/i,
-                                message: "A senha deve conter de 4 a 8 caracteres!"
+                                message: "A senha deve conter somente número de 4 a 8 digitos!"
                             }
                         })}
                     />

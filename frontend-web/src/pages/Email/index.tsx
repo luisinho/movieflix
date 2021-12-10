@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AxiosError } from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
@@ -11,6 +12,7 @@ import { URL_EMAIL, URL_USERS_PROCESS } from 'core/utils/ApiUrl';
 import { STATUS_202, STATUS_500 } from 'core/utils/HttpStatus';
 
 import './styles.scss';
+import UserLoad from 'pages/Loaders/components/UserLoad';
 
 type FormData = {
     fromEmail: string;
@@ -28,7 +30,11 @@ const Email = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const onSubmit = (formData: FormData) => {
+
+        setIsLoading(true);
 
         makeRequest({ method: 'POST', url: URL_EMAIL, data: formData })
             .then(response => {
@@ -57,7 +63,7 @@ const Email = () => {
                     });
                 }
             }).finally(() => {
-
+                setIsLoading(false);
             });
     }
 
@@ -67,6 +73,8 @@ const Email = () => {
             <div className="email-title">
                 Enviar email
             </div>
+
+            {isLoading ? <UserLoad /> : ('')}
 
             <form className="user-form" onSubmit={handleSubmit(onSubmit)}>
 

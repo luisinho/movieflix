@@ -15,6 +15,7 @@ import { getAccessTokenDecoded } from 'core/utils/auth';
 import history from 'core/utils/history';
 
 import './styles.scss';
+import UserLoad from 'pages/Loaders/components/UserLoad';
 
 type ParamsType = {
     userId: string;
@@ -50,6 +51,8 @@ const NewUser = () => {
     const formTitle = isEditing ? 'Editar usuário' : 'Cadastrar usuário';
 
     const labelButton = isEditing ? 'Alterar' : 'Cadastrar';
+
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
 
@@ -114,6 +117,8 @@ const NewUser = () => {
 
         const FORM_URL = isEditing ? `${URL_USERS}/${formData.id}` : URL_USERS;
 
+        setIsLoading(true);
+
         makeRequest({ method: FORM_METHOD, url: FORM_URL, data: formData })
             .then(response => {
 
@@ -138,7 +143,7 @@ const NewUser = () => {
             }).catch((err: AxiosError) => {
                 err.response && showMensage(err.response);
             }).finally(() => {
-
+                setIsLoading(false);
             });
     }
 
@@ -171,6 +176,8 @@ const NewUser = () => {
             <div className="user-title">
                 {formTitle}
             </div>
+
+            {isLoading ? <UserLoad /> : ('')}
 
             <form className="padding-top-form" onSubmit={handleSubmit(onSubmit)}>
 
@@ -215,12 +222,12 @@ const NewUser = () => {
                             <input
                                 type="password"
                                 className={`form-control input-forms ${errors.password ? 'is-invalid' : ''}`}
-                                placeholder="Digite aqui a Senha aaa"
+                                placeholder="Digite aqui a Senha"
                                 {...register("password", {
                                     required: "Campo Senha obrigatório.",
                                     pattern: {
                                         value: /^[0-9a-fA-F]{4,8}$/i,
-                                        message: "A senha deve conter de 4 a 8 caracteres!"
+                                        message: "A senha deve conter somente número de 4 a 8 digitos!"
                                     }
                                 })}
                             />
@@ -240,7 +247,7 @@ const NewUser = () => {
                                     required: "Campo Repita aqui a Senha obrigatório.",
                                     pattern: {
                                         value: /^[0-9a-fA-F]{4,8}$/i,
-                                        message: "A senha deve conter de 4 a 8 caracteres!"
+                                        message: "A senha deve conter somente número de 4 a 8 digitos!"
                                     }
                                 })}
                             />
