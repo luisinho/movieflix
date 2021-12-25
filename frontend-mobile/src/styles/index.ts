@@ -8,9 +8,11 @@ const colors = {
 
     mediumYellow: "#FFC700",
 
-    ligthYellow: "#937d22",
+    lightYellow: "#937d22",
 
     mediumGray: "#6C6C6C",
+
+    mediumGrayP: "#525252",
 };
 
 const text = StyleSheet.create({
@@ -50,6 +52,49 @@ const text = StyleSheet.create({
         color: colors.black,
 
         marginLeft: 55,
+    },
+
+    movieTitle: {
+
+        fontSize: 20,
+
+        fontWeight: "bold",
+
+        lineHeight: 27,
+
+        marginTop: 12,
+
+        marginLeft: 16,
+
+        color: colors.white,
+    },
+
+    movieYear: {
+
+        fontSize: 16,
+
+        fontWeight: "bold",
+
+        lineHeight: 22,
+
+        marginLeft: 16,
+
+        color: colors.mediumYellow,
+    },
+
+    movieSubTitle: {
+
+        fontSize: 14,
+
+        fontWeight: "normal",
+
+        lineHeight: 19,
+
+        marginLeft: 16,
+
+        marginBottom: 50,
+
+        color: colors.white,
     }
 });
 
@@ -127,7 +172,7 @@ const theme = StyleSheet.create({
 
         height: 50,
 
-        backgroundColor: colors.ligthYellow,
+        backgroundColor: colors.lightYellow,
 
         borderTopRightRadius: 10,
 
@@ -137,6 +182,46 @@ const theme = StyleSheet.create({
 
         justifyContent: "center",
     },
+
+    // Catalog Movie Card
+    scrollCatalogContainer: {
+
+        padding: 0,
+    },
+
+    movieContainer: {
+
+        flex: 1,
+
+        justifyContent: "center",
+
+        alignItems: "center",
+
+        padding: 12,
+
+        backgroundColor: colors.mediumGrayP,
+    },
+
+    movieCard: {
+
+        width: 300,
+
+        backgroundColor: colors.mediumGray,
+
+        borderRadius: 10,
+
+        shadowRadius: 3.84,
+    },
+
+    imgCatalog: {
+        marginTop: 26,
+        width: 300,
+        height: 164,
+    },
+
+    movieTitle: {
+
+    }
 });
 
 export { colors, text, theme };
