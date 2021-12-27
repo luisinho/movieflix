@@ -8,11 +8,11 @@ const colors = {
 
     mediumYellow: "#FFC700",
 
-    lightYellow: "#937d22",
+    lighYellow: "#937d22",
 
-    mediumGray: "#6C6C6C",
+    lighGray: "#6C6C6C",
 
-    mediumGrayP: "#525252",
+    mediumGray: "#525252",
 };
 
 const text = StyleSheet.create({
@@ -117,7 +117,7 @@ const theme = StyleSheet.create({
 
         height: "100%",
 
-        backgroundColor: colors.mediumGray,
+        backgroundColor: colors.lighGray,
 
         borderRadius: 20,
 
@@ -172,7 +172,7 @@ const theme = StyleSheet.create({
 
         height: 50,
 
-        backgroundColor: colors.lightYellow,
+        backgroundColor: colors.lighYellow,
 
         borderTopRightRadius: 10,
 
@@ -189,7 +189,7 @@ const theme = StyleSheet.create({
         padding: 0,
     },
 
-    movieContainer: {
+    catalogContainer: {
 
         flex: 1,
 
@@ -197,20 +197,20 @@ const theme = StyleSheet.create({
 
         alignItems: "center",
 
-        padding: 12,
-
-        backgroundColor: colors.mediumGrayP,
+        backgroundColor: colors.mediumGray,
     },
 
     movieCard: {
 
         width: 300,
 
-        backgroundColor: colors.mediumGray,
+        backgroundColor: colors.lighGray,
 
         borderRadius: 10,
 
         shadowRadius: 3.84,
+
+        marginBottom: 20,
     },
 
     imgCatalog: {
@@ -219,9 +219,63 @@ const theme = StyleSheet.create({
         height: 164,
     },
 
-    movieTitle: {
+    // Search Combo
+    searchComboContainer: {
 
+        width: 300,
+
+        height: 80,
+
+        marginTop: 20,
+
+        marginBottom: 20,
+
+        borderRadius: 10,
+
+        flex: 1,
+
+        justifyContent: "center",
+
+        alignItems: "center",
+
+        backgroundColor: colors.lighGray,
+
+    },
+
+    searchCombo: {
+
+        width: 275,
+
+        flex: 1,
+
+        justifyContent: "center",
+
+        marginTop: 5,
+
+        marginBottom: 5,
+
+        borderWidth: 0.9,
+
+        borderRadius: 10,
+
+        borderColor: colors.white,
+    },
+
+    itemPicker: {
+
+        color: colors.white,
+
+        backgroundColor: colors.lighGray,
+    },
+
+    // Movie Details
+    movieDetailsContainer: {
+
+        flex: 1,
+
+        backgroundColor: colors.mediumGray,
     }
+
 });
 
 export { colors, text, theme };
