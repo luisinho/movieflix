@@ -3,6 +3,7 @@ import { View, Text, Image } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
 import { theme } from '../../../styles';
+import Sinopse from './Sinopse';
 
 const MovieDetails = () => {
 
@@ -10,7 +11,7 @@ const MovieDetails = () => {
 
     return (
         <View style={theme.movieDetailsContainer}>
-            <Text>Details</Text>
+            <Sinopse />
         </View>
     );
 

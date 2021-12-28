@@ -13,6 +13,8 @@ const colors = {
     lighGray: "#6C6C6C",
 
     mediumGray: "#525252",
+
+    veryLightGray: "#9E9E9E",
 };
 
 const text = StyleSheet.create({
@@ -82,7 +84,7 @@ const text = StyleSheet.create({
         color: colors.mediumYellow,
     },
 
-    movieSubTitle: {
+    subTitle: {
 
         fontSize: 14,
 
@@ -92,10 +94,33 @@ const text = StyleSheet.create({
 
         marginLeft: 16,
 
-        marginBottom: 50,
-
         color: colors.white,
-    }
+    },
+
+    movieMargin: {
+
+        marginBottom: 50,
+    },
+
+    synopsisDescription: {
+
+        fontStyle: "normal",
+
+        fontWeight: "normal",
+
+        fontSize: 16,
+
+        lineHeight: 22,
+
+        textAlign: "justify",
+
+        color: colors.veryLightGray,
+    },
+
+    synopsisMargin: {
+
+        marginTop: 20,
+    },
 });
 
 const theme = StyleSheet.create({
@@ -271,9 +296,56 @@ const theme = StyleSheet.create({
     // Movie Details
     movieDetailsContainer: {
 
-        flex: 1,
+        justifyContent: "center",
+
+        alignItems: "center",
 
         backgroundColor: colors.mediumGray,
+    },
+
+    // Sinopse
+    synopsisCard: {
+
+        width: 340,
+
+        height: "auto",
+
+        backgroundColor: colors.lighGray,
+
+        borderRadius: 10,
+
+        shadowRadius: 3.84,
+
+        marginTop: 20,
+    },
+
+    synopsisImg: {
+        marginTop: 26,
+        width: 340,
+        height: 164,
+    },
+
+    synopsisContent: {
+
+        width: "90%",
+
+        height: "auto",
+
+        // justifyContent: "center",
+
+        // alignItems: "center",
+
+        borderWidth: 0.9,
+
+        borderRadius: 10,
+
+        marginTop: 0,
+
+        marginLeft: 16,
+
+        padding: 10,
+
+        borderColor: colors.white,
     }
 
 });

@@ -37,7 +37,7 @@ const MovieCard: React.FC<MovieProps> = ({ id, imgUrl, title, year, subTitle }) 
                     <Text style={text.movieYear}>{year}</Text>
 
                     <View>
-                        <Text style={text.movieSubTitle}>{subTitle}</Text>
+                        <Text style={[text.subTitle, text.movieMargin]}>{subTitle}</Text>
                     </View>
 
                 </View>
