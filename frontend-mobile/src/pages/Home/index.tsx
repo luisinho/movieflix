@@ -1,16 +1,22 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+import { RootStackParamList } from '../../Routes';
 
 import drawHome from '../../assets/draw-home.png';
 import arrow from '../../assets/arrow.png';
+
 import { theme, text } from '../../styles';
+
+type loginScreenProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
 const Home: React.FC = () => {
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<loginScreenProp>();
 
-    const catalog = 'Catalog';
+    const login = 'Login';
 
     return (
 
@@ -31,7 +37,7 @@ const Home: React.FC = () => {
                 <TouchableOpacity
                     style={theme.primaryButton}
                     activeOpacity={0.8}
-                    onPress={() => navigation.navigate(catalog as never, {} as never)}
+                    onPress={() => navigation.navigate(login)}
                 >
 
                     <Text style={text.primaryText}>FAZER LOGIN</Text>

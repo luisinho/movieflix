@@ -134,6 +134,8 @@ const theme = StyleSheet.create({
         alignItems: "center",
 
         padding: 20,
+
+        // color: colors.mediumGray,
     },
 
     card: {
@@ -346,8 +348,120 @@ const theme = StyleSheet.create({
         padding: 10,
 
         borderColor: colors.white,
-    }
+    },
 
+    // LoginPage
+    loginContainer: {
+
+        width: "100%",
+
+        flex: 1,
+
+        justifyContent: "center",
+
+        alignItems: "center",
+
+        backgroundColor: colors.mediumGray,
+    },
+
+    loginTitle: {
+
+        width: 176,
+
+        height: 68,
+
+        fontSize: 36,
+
+        fontWeight: "normal",
+
+        lineHeight: 50,
+
+        textAlign: "center",
+
+        letterSpacing: -0.015,
+
+        marginTop: 50,
+
+        textTransform: "uppercase",
+
+        color: colors.white,
+    },
+
+    loginCard: {
+
+        width: 300,
+
+        height: 464,
+
+        borderRadius: 10,
+
+        alignItems: "center",
+
+        backgroundColor: colors.lighGray,
+    },
+
+    passwordGroup: {
+
+        flexDirection: "row",
+
+        alignItems: "stretch",
+    },
+
+    toggle: {
+
+        marginTop: 10,
+
+        marginLeft: -30,
+    },
+
+    imgEyes: {
+
+        width: 25,
+
+        height: 25,
+    },
+
+    textInput: {
+
+        width: 265,
+
+        height: 45,
+
+        borderWidth: 1,
+
+        borderRadius: 10,
+
+        borderColor: colors.mediumGray,
+
+        borderStyle: "solid",
+
+        backgroundColor: "#FEFEFE",
+
+        marginBottom: 20,
+
+        padding: 10,
+    },
+
+    loginButton: {
+
+        width: 250,
+
+        height: 50,
+
+        backgroundColor: colors.mediumYellow,
+
+        borderRadius: 10,
+
+        padding: 10,
+
+        marginTop: 50,
+
+        marginLeft: "auto",
+
+        marginRight: "auto",
+
+        justifyContent: "center",
+    },
 });
 
 const nav = StyleSheet.create({
