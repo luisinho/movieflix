@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
+import { AxiosError } from 'axios';
 import { Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
+
+import { STATUS_200 } from '../../utils/HttpStatus';
+
+import { makeLogin, } from '../../services/request';
+// import history from '../../utils/history';
 
 import eyesOpened from '../../assets/eyes-opened.png';
 import eyesClosed from '../../assets/eyes-closed.png';
@@ -11,6 +17,10 @@ const Login: React.FC = () => {
     const [hidePassword, setHidePassword] = useState(true);
 
     const [userInfo, setUserInfo] = useState({ username: '', password: '' });
+
+    const [hasError, setHasError] = useState(false);
+
+    const [msgError, setMsgError] = useState('');
 
     const onChangeTextUserName = (text: string) => {
 
@@ -31,6 +41,27 @@ const Login: React.FC = () => {
     }
 
     const handleLogin = async () => {
+
+        // setIsLoading(true);        
+
+        makeLogin(userInfo).then(response => {
+
+            if (response.status === STATUS_200) {
+
+                setHasError(false);
+                setMsgError('');
+                // saveSessionData(response.data);
+                // history.replace(from);
+            }
+
+        }).catch((err) => {
+            console.log('err', JSON.stringify(err.response));
+            setHasError(true);
+            // setMsgError(err.response?.data.error_description);
+        }).finally(() => {
+            // setIsLoading(false);
+        });
+
 
     }
 

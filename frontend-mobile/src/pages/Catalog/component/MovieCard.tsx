@@ -3,8 +3,8 @@ import { View, Text, ImageSourcePropType, TouchableOpacity, Image } from 'react-
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { theme, text } from '../../../styles';
 import { RootStackParamList } from '../../../Routes';
+import { theme, text } from '../../../styles';
 
 interface MovieProps {
     id: Number;
