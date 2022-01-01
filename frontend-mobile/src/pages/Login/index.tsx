@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
 import { AxiosError } from 'axios';
 import { Image, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
+
+import { RootStackParamList } from '../../Routes';
 
 import { STATUS_200 } from '../../utils/HttpStatus';
+import { CATALOG } from '../../utils/RouteUrlName';
 
+import { saveSessionData } from '../../services/auth';
 import { makeLogin, } from '../../services/request';
-// import history from '../../utils/history';
 
 import eyesOpened from '../../assets/eyes-opened.png';
 import eyesClosed from '../../assets/eyes-closed.png';
 
 import { theme, text } from '../../styles';
 
+type catalogScreenProp = StackNavigationProp<RootStackParamList, 'Catalog'>;
+
 const Login: React.FC = () => {
+
+    const navigation = useNavigation<catalogScreenProp>();
 
     const [hidePassword, setHidePassword] = useState(true);
 
@@ -50,19 +59,35 @@ const Login: React.FC = () => {
 
                 setHasError(false);
                 setMsgError('');
-                // saveSessionData(response.data);
-                // history.replace(from);
+                saveSessionData(response.data);
+                navigation.navigate(CATALOG);
             }
 
-        }).catch((err) => {
-            console.log('err', JSON.stringify(err.response));
+        }).catch((err: AxiosError) => {
+
+            validateErrorMessage(err);
             setHasError(true);
-            // setMsgError(err.response?.data.error_description);
+
         }).finally(() => {
             // setIsLoading(false);
         });
+    }
 
+    const validateErrorMessage = (err: AxiosError) => {
 
+        if (err !== null
+            && err !== undefined
+            && err.response !== null
+            && err.response !== undefined) {
+
+            setMsgError(err.response?.data.error_description);
+            console.log('err', JSON.stringify(err.response));
+
+        } else {
+
+            setMsgError('Ocorreu um erro no login.');
+            console.log('err', JSON.stringify(err));
+        }
     }
 
     return (
@@ -70,6 +95,12 @@ const Login: React.FC = () => {
         <View style={theme.loginContainer}>
 
             <View style={theme.loginCard}>
+
+                {hasError && (
+                    <View style={theme.loginMsgErro}>
+                        <Text style={theme.loginMsgErroText}>{msgError}</Text>
+                    </View>
+                )}
 
                 <Text style={theme.loginTitle}> Login </Text>
 

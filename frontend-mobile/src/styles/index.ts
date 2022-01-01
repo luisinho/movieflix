@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { STATUS_500 } from '../utils/HttpStatus';
 
 const colors = {
 
@@ -295,6 +296,23 @@ const theme = StyleSheet.create({
         backgroundColor: colors.lighGray,
     },
 
+    modalLoadingBackground: {
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+    },
+
+    activityIndicatorLoading: {
+        backgroundColor: '#FFFFFF',
+        height: 100,
+        width: 200,
+        borderRadius: 10,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around'
+    },
+
     // Movie Details
     movieDetailsContainer: {
 
@@ -462,6 +480,29 @@ const theme = StyleSheet.create({
 
         justifyContent: "center",
     },
+
+    loginMsgErro: {
+
+        width: "100%",
+
+        marginTop: 25,
+
+        alignContent: "center",
+
+        alignItems: "center",
+    },
+
+    loginMsgErroText: {
+
+        fontSize: 18,
+
+        fontWeight: "bold",
+
+        lineHeight: 35,
+
+        backgroundColor: "#fff4cc",
+
+    }
 });
 
 const nav = StyleSheet.create({
