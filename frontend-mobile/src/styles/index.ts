@@ -296,21 +296,28 @@ const theme = StyleSheet.create({
         backgroundColor: colors.lighGray,
     },
 
-    modalLoadingBackground: {
+    loadingModalBackground: {
         flex: 1,
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'space-around',
     },
 
-    activityIndicatorLoading: {
+    loadingActivityIndicator: {
         backgroundColor: '#FFFFFF',
         height: 100,
-        width: 200,
+        width: 230,
         borderRadius: 10,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around'
+    },
+
+    loadingText: {
+
+        fontSize: 18,
+
+        color: colors.mediumGray,
     },
 
     // Movie Details
@@ -398,7 +405,7 @@ const theme = StyleSheet.create({
 
         letterSpacing: -0.015,
 
-        marginTop: 50,
+        marginTop: 40,
 
         textTransform: "uppercase",
 
@@ -409,7 +416,7 @@ const theme = StyleSheet.create({
 
         width: 300,
 
-        height: 464,
+        height: 480,
 
         borderRadius: 10,
 

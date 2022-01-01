@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { AxiosError } from 'axios';
 
+import Loading from '../Loading';
+
 import { MovieCard, SearchCombo } from '../Catalog/component';
 
 import { makePrivateRequest } from '../../services/request';
@@ -61,12 +63,7 @@ const Catalog: React.FC = () => {
                 </View>
 
                 {isLoading ? (
-                    <View style={theme.modalLoadingBackground}>
-                        <View style={theme.activityIndicatorLoading}>
-                            <ActivityIndicator size="large" color={colors.veryLightGray} />
-                            <Text>Carregando...</Text>
-                        </View>
-                    </View>
+                    <Loading msg='Carregando o catalogo' />
                 ) :
                     (moviesResponse?.content.map((movie) => (
                         <MovieCard key={movie.id} movie={movie} />

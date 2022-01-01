@@ -9,6 +9,8 @@ import { RootStackParamList } from '../../Routes';
 import { STATUS_200 } from '../../utils/HttpStatus';
 import { CATALOG } from '../../utils/RouteUrlName';
 
+import Loading from '../Loading';
+
 import { saveSessionData } from '../../services/auth';
 import { makeLogin, } from '../../services/request';
 
@@ -31,6 +33,8 @@ const Login: React.FC = () => {
 
     const [msgError, setMsgError] = useState('');
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const onChangeTextUserName = (text: string) => {
 
         const newUserInfo = { ...userInfo };
@@ -51,7 +55,7 @@ const Login: React.FC = () => {
 
     const handleLogin = async () => {
 
-        // setIsLoading(true);        
+        setIsLoading(true);
 
         makeLogin(userInfo).then(response => {
 
@@ -69,7 +73,7 @@ const Login: React.FC = () => {
             setHasError(true);
 
         }).finally(() => {
-            // setIsLoading(false);
+            setIsLoading(false);
         });
     }
 
@@ -96,6 +100,8 @@ const Login: React.FC = () => {
 
             <View style={theme.loginCard}>
 
+                {isLoading && (<Loading msg='Logando' />)}
+
                 {hasError && (
                     <View style={theme.loginMsgErro}>
                         <Text style={theme.loginMsgErroText}>{msgError}</Text>
@@ -103,6 +109,8 @@ const Login: React.FC = () => {
                 )}
 
                 <Text style={theme.loginTitle}> Login </Text>
+
+
 
                 <View>
 
