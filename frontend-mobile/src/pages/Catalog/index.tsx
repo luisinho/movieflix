@@ -1,58 +1,52 @@
-import React, { useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
+import { AxiosError } from 'axios';
 
 import { MovieCard, SearchCombo } from '../Catalog/component';
-import movieImg from '../../assets/img-teste.jpg';
 
-import { theme } from '../../styles';
+import { makePrivateRequest } from '../../services/request';
+import { MoviesResponse } from '../../entities/Movie';
 
-const movies = [
-    {
-        id: 1,
-        imgUrl: movieImg,
-        title: 'O Retorno do Rei 1',
-        year: 2021,
-        subTitle: 'O olho do inimigo está se movendo.'
-    },
+import { URL_MOVIES } from '../../utils/ApiUrl';
+import { STATUS_200 } from '../../utils/HttpStatus';
 
-    {
-        id: 2,
-        imgUrl: movieImg,
-        title: 'O Retorno do Rei 2',
-        year: 2021,
-        subTitle: 'O olho do inimigo está se movendo.'
-    },
+import { colors, theme } from '../../styles';
 
-    {
-        id: 3,
-        imgUrl: movieImg,
-        title: 'O Retorno do Rei 3',
-        year: 2021,
-        subTitle: 'O olho do inimigo está se movendo.'
-    },
-
-    {
-        id: 4,
-        imgUrl: movieImg,
-        title: 'O Retorno do Rei 4',
-        year: 2021,
-        subTitle: 'O olho do inimigo está se movendo.'
-    },
-
-    {
-        id: 5,
-        imgUrl: movieImg,
-        title: 'O Retorno do Rei 5',
-        year: 2021,
-        subTitle: 'O olho do inimigo está se movendo.'
-    },
-]
 const Catalog: React.FC = () => {
+
+    const [moviesResponse, setMoviesResponse] = useState<MoviesResponse>();
+
+    const [activePage, setActivePage] = useState(0);
 
     const [search, setSearch] = useState('0');
 
-    const data = search !== '0' ?
-        movies.filter(movie => movie.id === Number(search.toString())) : movies;
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+
+        const params = {
+            genreId: Number(search.toString()),
+            page: activePage,
+            linesPerPage: 10
+        }
+
+        setIsLoading(true);
+
+        makePrivateRequest({ url: URL_MOVIES, params: params })
+            .then(response => {
+
+                if (response.status === STATUS_200) {
+                    setMoviesResponse(response.data);
+                }
+
+            }).catch((err: AxiosError) => {
+
+                console.log('Ocorreu um erro ao listar os filmes', err);
+
+            }).finally(() => {
+                setIsLoading(false);
+            });
+    }, []);
 
     return (
 
@@ -66,10 +60,17 @@ const Catalog: React.FC = () => {
 
                 </View>
 
-                {
-                    data.map((movie) => (
-                        <MovieCard key={movie.id} {...movie} />
-                    ))
+                {isLoading ? (
+                    <View style={theme.modalLoadingBackground}>
+                        <View style={theme.activityIndicatorLoading}>
+                            <ActivityIndicator size="large" color={colors.veryLightGray} />
+                            <Text>Carregando...</Text>
+                        </View>
+                    </View>
+                ) :
+                    (moviesResponse?.content.map((movie) => (
+                        <MovieCard key={movie.id} movie={movie} />
+                    )))
                 }
 
             </ScrollView>

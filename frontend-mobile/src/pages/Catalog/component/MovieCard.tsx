@@ -1,22 +1,20 @@
 import React from 'react';
-import { View, Text, ImageSourcePropType, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+import { Movie } from '../../../entities/Movie';
 import { RootStackParamList } from '../../../Routes';
+
 import { theme, text } from '../../../styles';
 
-interface MovieProps {
-    id: Number;
-    imgUrl: ImageSourcePropType;
-    title: String;
-    year: Number;
-    subTitle: String;
+type Props = {
+    movie: Movie;
 }
 
 type movieDetailScreenProp = StackNavigationProp<RootStackParamList, 'MovieDetails'>;
 
-const MovieCard: React.FC<MovieProps> = ({ id, imgUrl, title, year, subTitle }) => {
+const MovieCard: React.FC<Props> = ({ movie }) => {
 
     const navigation = useNavigation<movieDetailScreenProp>();
 
@@ -24,20 +22,20 @@ const MovieCard: React.FC<MovieProps> = ({ id, imgUrl, title, year, subTitle }) 
 
     return (
 
-        <TouchableOpacity style={theme.movieCard} onPress={() => navigation.navigate(movieDetails, { movieId: id })}>
+        <TouchableOpacity style={theme.movieCard} onPress={() => navigation.navigate(movieDetails, { movieId: movie.id })}>
 
-            <Image source={imgUrl} style={theme.imgCatalog} />
+            <Image source={{ uri: movie.imgUrl }} style={theme.imgCatalog} />
 
             <View>
 
-                <Text style={text.movieTitle}>{title}</Text>
+                <Text style={text.movieTitle}>{movie.title}</Text>
 
                 <View>
 
-                    <Text style={text.movieYear}>{year}</Text>
+                    <Text style={text.movieYear}>{movie.year}</Text>
 
                     <View>
-                        <Text style={[text.subTitle, text.movieMargin]}>{subTitle}</Text>
+                        <Text style={[text.subTitle, text.movieMargin]}>{movie.subTitle}</Text>
                     </View>
 
                 </View>
