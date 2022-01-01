@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react';
+import { ScrollView, View } from 'react-native';
 import { AxiosError } from 'axios';
 
 import Loading from '../Loading';
@@ -12,7 +12,7 @@ import { MoviesResponse } from '../../entities/Movie';
 import { URL_MOVIES } from '../../utils/ApiUrl';
 import { STATUS_200 } from '../../utils/HttpStatus';
 
-import { colors, theme } from '../../styles';
+import { theme } from '../../styles';
 
 const Catalog: React.FC = () => {
 
@@ -24,7 +24,7 @@ const Catalog: React.FC = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
+    const getMovies = useCallback(() => {
 
         const params = {
             genreId: Number(search.toString()),
@@ -48,7 +48,12 @@ const Catalog: React.FC = () => {
             }).finally(() => {
                 setIsLoading(false);
             });
-    }, []);
+
+    }, [Number(search.toString())]);
+
+    useEffect(() => {
+        getMovies();
+    }, [getMovies]);
 
     return (
 

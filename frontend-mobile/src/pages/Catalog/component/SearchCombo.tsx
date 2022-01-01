@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
+import { AxiosError } from 'axios';
 import { Picker } from "@react-native-picker/picker";
 
-import { theme, text } from '../../../styles';
+import { makePrivateRequest } from '../../../services/request';
+import { GenresResponse } from '../../../entities/Genre';
+
+import { URL_GENRES } from '../../../utils/ApiUrl';
+import { STATUS_200 } from '../../../utils/HttpStatus';
+
+import { theme } from '../../../styles';
 
 interface SearchProps {
     search: string;
@@ -12,11 +19,22 @@ interface SearchProps {
 
 const SearchCombo: React.FC<SearchProps> = ({ search, setSearch, genre }) => {
 
-    const data = [
-        { text: 'O Retorno do Rei 1', value: 1 },
-        { text: 'O Retorno do Rei 2', value: 2 },
-        { text: 'O Retorno do Rei 3', value: 3 },
-    ];
+    const [genresResponse, setGenresResponse] = useState<GenresResponse>();
+
+    useEffect(() => {
+
+        makePrivateRequest({ url: URL_GENRES })
+            .then(response => {
+
+                if (response.status === STATUS_200) {
+                    setGenresResponse({ content: response.data });
+                }
+
+            }).catch((err: AxiosError) => {
+                console.log('Ocorreu um erro ao listar os generos:', err);
+            }).finally(() => {
+            });
+    }, []);
 
     return (
 
@@ -30,8 +48,8 @@ const SearchCombo: React.FC<SearchProps> = ({ search, setSearch, genre }) => {
                 <Picker.Item style={theme.itemPicker} label="Selecione o genero" value="0" />
 
                 {
-                    data.map((genre) => (
-                        <Picker.Item style={theme.itemPicker} key={genre.value} label={genre.text} value={genre.value} />
+                    genresResponse?.content.map((genre) => (
+                        <Picker.Item style={theme.itemPicker} key={genre.id} label={genre.name} value={genre.id} />
 
                     ))
                 }
