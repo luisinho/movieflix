@@ -5,6 +5,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList } from '../../Routes';
 
+import { LOGIN } from '../../utils/RouteUrlName';
+
 import drawHome from '../../assets/draw-home.png';
 import arrow from '../../assets/arrow.png';
 
@@ -15,8 +17,6 @@ type loginScreenProp = StackNavigationProp<RootStackParamList, 'Login'>;
 const Home: React.FC = () => {
 
     const navigation = useNavigation<loginScreenProp>();
-
-    const login = 'Login';
 
     return (
 
@@ -37,7 +37,7 @@ const Home: React.FC = () => {
                 <TouchableOpacity
                     style={theme.primaryButton}
                     activeOpacity={0.8}
-                    onPress={() => navigation.navigate(login)}
+                    onPress={() => navigation.navigate(LOGIN)}
                 >
 
                     <Text style={text.primaryText}>FAZER LOGIN</Text>

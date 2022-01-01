@@ -1,17 +1,18 @@
-import axios, { Method } from 'axios';
+import { Method } from 'axios';
 import queryString from 'query-string';
 import { encode } from 'base-64';
 
 import { Api } from './api';
+import { DELETE, GET, POST } from '../utils/ApiMethod';
 import { URL_LOGIN } from '../utils/ApiUrl';
-import { CLIENT_ID, CLIENT_SECRET, getSessionData, logout } from './auth';
+import { CLIENT_ID, CLIENT_SECRET, getSessionData } from './auth';
 
 type RequestParams = {
     method?: Method,
     url: string,
     data?: object | string,
-    params?: object,
-    header?: { aut?: string, content?: string },
+    params?: { genreId?: number, page?: number, linesPerPage?: number },
+    header?: { auth?: string, content?: string },
 }
 
 type LoginData = {
@@ -19,51 +20,56 @@ type LoginData = {
     password: string;
 }
 
-export const makePrivateRequest = async ({ method = 'GET', url, data, params }: RequestParams) => {
+export const makePrivateRequest = async ({ method = GET, url, data, params }: RequestParams) => {
 
     const sessionData = await getSessionData();
 
-    const headers = {
-        aut: `Bearer ${sessionData.access_token}`
+    const header = {
+        auth: `Bearer ${sessionData.access_token}`
     }
 
-    return makeRequest({ method, url, data, params, header: headers });
+    return makeRequest({ method, url, data, params, header: header });
 }
 
 export const makeLogin = async (loginData: LoginData) => {
 
     const token = `${CLIENT_ID}:${CLIENT_SECRET}`;
 
-    console.log('token', encode(token));
+    const header = {
 
-    const headers = {
-
-        aut: `Basic ${encode(token)}`,
+        auth: `Basic ${encode(token)}`,
         content: 'application/x-www-form-urlencoded'
     }
 
     const payload = queryString.stringify({ ...loginData, grant_type: 'password' });
 
-    console.log('headers', headers);
-
-    return makeRequest({ method: 'POST', url: URL_LOGIN, data: payload, header: headers });
+    return makeRequest({ method: POST, url: URL_LOGIN, data: payload, header: header });
 }
 
-export const makeRequest = async ({ method = 'GET', url, data, params, header }: RequestParams) => {
+export const makeRequest = async ({ method = GET, url, data, params, header }: RequestParams) => {
 
-    if (method === 'DELETE') {
+    if (method === DELETE) {
 
         return await Api.delete('');
 
-    } else if (method === 'GET') {
+    } else if (method === GET) {
 
-        return await Api.get(url, params);
+        return await Api.get(url, {
+            headers: {
+                'Authorization': Object(header?.auth)
+            },
+            params: {
+                genreId: params?.genreId,
+                page: params?.page,
+                linesPerPage: params?.linesPerPage
+            }
+        });
 
-    } else if (method === 'POST') {
+    } else if (method === POST) {
 
         return await Api.post(url, data, {
             headers: {
-                'Authorization': Object(header?.aut),
+                'Authorization': Object(header?.auth),
                 'Content-Type': Object(header?.content)
             }
         });

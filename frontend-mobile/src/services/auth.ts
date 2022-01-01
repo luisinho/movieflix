@@ -1,9 +1,6 @@
 import jwtDecode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { URL_HOME_LOGIN } from '../utils/ApiUrl';
-// import history from '../utils/history';
-
 export const CLIENT_ID = process.env.REACT_APP_CLIENT_ID ?? 'movieflix';
 export const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET ?? 'movieflix9091';
 export type Role = 'ROLE_VISITOR' | 'ROLE_MEMBER';
@@ -76,7 +73,7 @@ export const isAllowedByRole = (routeRoles: Role[] = []) => {
     return routeRoles.some(role => role === 'ROLE_MEMBER');
 }
 
-export const logout = () => {
+export const logoutItem = () => {
+
     AsyncStorage.removeItem('authData');
-    // history.replace(URL_HOME_LOGIN);
 }
