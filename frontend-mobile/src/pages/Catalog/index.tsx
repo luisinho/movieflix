@@ -29,7 +29,7 @@ const Catalog: React.FC = () => {
         const params = {
             genreId: Number(search.toString()),
             page: activePage,
-            linesPerPage: 10
+            linesPerPage: 4
         }
 
         setIsLoading(true);

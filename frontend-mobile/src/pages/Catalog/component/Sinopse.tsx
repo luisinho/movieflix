@@ -1,42 +1,73 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
+import { AxiosError } from 'axios';
 
-import movieImg from '../../../assets/img-teste.jpg';
+import { makePrivateRequest } from '../../../services/request';
+
+import { Movie } from '../../../entities/Movie';
+
+import { URL_MOVIES } from '../../../utils/ApiUrl';
+import { STATUS_200 } from '../../../utils/HttpStatus';
+
 import { theme, text } from '../../../styles';
 
-const Sinopse = () => {
+type Props = {
+
+    movieId: number;
+}
+
+const Sinopse: React.FC<Props> = ({ movieId }) => {
+
+    const [movie, setMovie] = useState<Movie>();
+
+    useEffect(() => {
+
+        makePrivateRequest({ url: `${URL_MOVIES}/${movieId}` })
+            .then(response => {
+
+                if (response.status === STATUS_200) {
+
+                    setMovie(response.data);
+                }
+
+            }).catch((err: AxiosError) => {
+
+                console.log('Ocorreu um erro ao obter o detalhe do filme.', err);
+
+            }).finally(() => {
+            });
+
+    }, [movieId]);
 
     return (
 
-        <ScrollView style={theme.synopsisCard}>
+        <View style={theme.synopsisCard}>
 
-            <Image source={movieImg} style={theme.synopsisImg} />
+            <Image source={{ uri: movie?.imgUrl }} style={theme.synopsisImg} />
 
             <View>
 
-                <Text style={text.movieTitle}>O Retorno do Rei</Text>
+                <Text style={text.movieTitle}>{movie?.title}</Text>
 
                 <View>
 
-                    <Text style={text.movieYear}>2013</Text>
+                    <Text style={text.movieYear}>{movie?.year}</Text>
 
                     <View>
-                        <Text style={text.subTitle}>O olho do inimigo está se movendo.</Text>
+                        <Text style={text.subTitle}>{movie?.subTitle}</Text>
                     </View>
 
                 </View>
 
                 <ScrollView style={[theme.synopsisContent, text.synopsisMargin]}>
                     <Text style={text.synopsisDescription}>
-                        O confronto final entre as forças do bem e do mal que lutam pelo controle do futuro da Terra Média se aproxima. Sauron planeja um grande ataque a Minas Tirith, capital de Gondor, o que faz com que Gandalf e Pippin partam para o local na intenção de ajudar a resistência. Um exército é reunido por Theoden em Rohan, em mais uma tentativa de deter as forças de Sauron. Enquanto isso, Frodo, Sam e Gollum seguem sua viagem rumo à Montanha da Perdição para destruir o anel.
+                        {movie?.synopsis}
                     </Text>
                 </ScrollView>
 
             </View>
 
-        </ScrollView>
-
-
+        </View>
     );
 }
 
