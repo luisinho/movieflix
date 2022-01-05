@@ -18,6 +18,7 @@ import eyesOpened from '../../assets/eyes-opened.png';
 import eyesClosed from '../../assets/eyes-closed.png';
 
 import { theme, text } from '../../styles';
+import { loginTheme } from './styles';
 
 type catalogScreenProp = StackNavigationProp<RootStackParamList, 'Catalog'>;
 
@@ -96,19 +97,19 @@ const Login: React.FC = () => {
 
     return (
 
-        <View style={theme.loginContainer}>
+        <View style={theme.appContainer}>
 
-            <View style={theme.loginCard}>
+            <View style={loginTheme.loginCard}>
 
                 {isLoading && (<Loading msg='Logando' />)}
 
                 {hasError && (
-                    <View style={theme.loginMsgErro}>
-                        <Text style={theme.loginMsgErroText}>{msgError}</Text>
+                    <View style={loginTheme.loginMsgErro}>
+                        <Text style={loginTheme.loginMsgErroText}>{msgError}</Text>
                     </View>
                 )}
 
-                <Text style={theme.loginTitle}> Login </Text>
+                <Text style={loginTheme.loginTitle}> Login </Text>
 
 
 
@@ -118,28 +119,28 @@ const Login: React.FC = () => {
                         placeholder="Email"
                         autoCapitalize="none"
                         keyboardType="email-address"
-                        style={theme.textInput}
+                        style={loginTheme.loginTextInput}
                         value={userInfo.username}
                         onChangeText={(event) => onChangeTextUserName(event)}
                     />
 
-                    <View style={theme.passwordGroup}>
+                    <View style={loginTheme.loginPasswordGroup}>
 
                         <TextInput
                             placeholder="Senha"
                             autoCapitalize="none"
-                            style={theme.textInput}
+                            style={loginTheme.loginTextInput}
                             value={userInfo.password}
                             secureTextEntry={hidePassword}
                             onChangeText={(event) => onChangeTextPassword(event)}
                         />
 
                         <TouchableOpacity
-                            style={theme.toggle}
+                            style={loginTheme.loginToggle}
                             onPress={() => setHidePassword(!hidePassword)}
                         >
                             <Image
-                                style={theme.imgEyes}
+                                style={loginTheme.loginImgEyes}
                                 source={hidePassword ? eyesOpened : eyesClosed}
                             />
 
@@ -148,7 +149,7 @@ const Login: React.FC = () => {
                     </View>
 
                     <TouchableOpacity
-                        style={theme.loginButton}
+                        style={loginTheme.loginButton}
                         activeOpacity={0.8}
                         onPress={() => handleLogin()}
                     >
