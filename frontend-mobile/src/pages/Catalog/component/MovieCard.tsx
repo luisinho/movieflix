@@ -3,10 +3,13 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { Movie } from '../../../entities/Movie';
 import { RootStackParamList } from '../../../Routes';
+import { Movie } from '../../../entities/Movie';
 
-import { theme, text } from '../../../styles';
+import { MOVIE_DETAILS } from '../../../utils/RouteUrlName';
+
+import { text } from '../../../styles';
+import { movieTheme } from '../styles';
 
 type Props = {
     movie: Movie;
@@ -18,13 +21,11 @@ const MovieCard: React.FC<Props> = ({ movie }) => {
 
     const navigation = useNavigation<movieDetailScreenProp>();
 
-    const movieDetails = 'MovieDetails';
-
     return (
 
-        <TouchableOpacity style={theme.movieCard} onPress={() => navigation.navigate(movieDetails, { movieId: movie.id })}>
+        <TouchableOpacity style={movieTheme.movieCard} onPress={() => navigation.navigate(MOVIE_DETAILS, { movieId: movie.id })}>
 
-            <Image source={{ uri: movie.imgUrl }} style={theme.imgCatalog} />
+            <Image source={{ uri: movie.imgUrl }} style={movieTheme.movieImgCatalog} />
 
             <View>
 

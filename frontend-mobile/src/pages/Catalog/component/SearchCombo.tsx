@@ -9,7 +9,7 @@ import { GenresResponse } from '../../../entities/Genre';
 import { URL_GENRES } from '../../../utils/ApiUrl';
 import { STATUS_200 } from '../../../utils/HttpStatus';
 
-import { theme } from '../../../styles';
+import { catalogTheme } from '../styles';
 
 interface SearchProps {
     search: string;
@@ -38,18 +38,18 @@ const SearchCombo: React.FC<SearchProps> = ({ search, setSearch, genre }) => {
 
     return (
 
-        <View style={theme.searchCombo}>
+        <View style={catalogTheme.searchCombo}>
 
             <Picker
                 selectedValue={search}
                 onValueChange={(value, index) => setSearch(value)}
                 mode="dropdown" // Android only
             >
-                <Picker.Item style={theme.itemPicker} label="Selecione o genero" value="0" />
+                <Picker.Item style={catalogTheme.itemPicker} label="Selecione o genero" value="0" />
 
                 {
                     genresResponse?.content.map((genre) => (
-                        <Picker.Item style={theme.itemPicker} key={genre.id} label={genre.name} value={genre.id} />
+                        <Picker.Item style={catalogTheme.itemPicker} key={genre.id} label={genre.name} value={genre.id} />
 
                     ))
                 }

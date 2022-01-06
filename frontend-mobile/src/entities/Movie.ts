@@ -1,5 +1,5 @@
-import { Genre } from "./Genre"
-import { Review } from "./Review";
+import { Genre } from './Genre';
+import { Review } from './Review';
 
 export type MoviesResponse = {
     content: Movie[];

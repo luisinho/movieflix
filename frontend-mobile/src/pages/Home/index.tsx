@@ -11,6 +11,7 @@ import drawHome from '../../assets/draw-home.png';
 import arrow from '../../assets/arrow.png';
 
 import { theme, text } from '../../styles';
+import { homeTheme } from './styles';
 
 type loginScreenProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
@@ -20,13 +21,13 @@ const Home: React.FC = () => {
 
     return (
 
-        <View style={theme.container}>
+        <View style={theme.appContainer}>
 
-            <View style={theme.card}>
+            <View style={homeTheme.homeCard}>
 
-                <Image source={drawHome} style={theme.draw} />
+                <Image source={drawHome} style={homeTheme.homeDraw} />
 
-                <View style={theme.textContainer}>
+                <View style={homeTheme.homeTextContainer}>
 
                     <Text style={text.bold}>Avalie filmes</Text>
 
@@ -42,7 +43,7 @@ const Home: React.FC = () => {
 
                     <Text style={text.primaryText}>FAZER LOGIN</Text>
 
-                    <View style={theme.arrowContainer}>
+                    <View style={homeTheme.homeArrowContainer}>
                         <Image source={arrow} />
                     </View>
 

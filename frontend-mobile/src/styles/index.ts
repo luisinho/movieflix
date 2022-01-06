@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { STATUS_500 } from '../utils/HttpStatus';
 
 const colors = {
 
@@ -35,26 +34,26 @@ const text = StyleSheet.create({
 
         fontSize: 26,
 
+        marginBottom: 25,
+
         fontWeight: "bold",
 
         textAlign: "center",
 
         color: colors.white,
-
-        marginBottom: 25,
     },
 
     primaryText: {
 
         fontSize: 16,
 
+        marginLeft: 55,
+
         fontWeight: "bold",
 
         textTransform: "uppercase",
 
         color: colors.black,
-
-        marginLeft: 55,
     },
 
     movieTitle: {
@@ -105,76 +104,33 @@ const text = StyleSheet.create({
 
     synopsisDescription: {
 
-        fontStyle: "normal",
-
-        fontWeight: "normal",
-
         fontSize: 16,
 
         lineHeight: 22,
+
+        fontStyle: "normal",
+
+        fontWeight: "normal",
 
         textAlign: "justify",
 
         color: colors.veryLightGray,
     },
-
-    synopsisMargin: {
-
-        marginTop: 20,
-    },
 });
 
 const theme = StyleSheet.create({
 
-    container: {
+    appContainer: {
 
         flex: 1,
+
+        width: "100%",
 
         justifyContent: "center",
 
         alignItems: "center",
 
-        padding: 20,
-
-        // color: colors.mediumGray,
-    },
-
-    card: {
-
-        width: "100%",
-
-        height: "100%",
-
-        backgroundColor: colors.lighGray,
-
-        borderRadius: 20,
-
-        shadowColor: colors.black,
-
-        shadowOffset: {
-
-            width: 0,
-
-            height: 2,
-        },
-
-        shadowOpacity: 0.25,
-
-        shadowRadius: 3.84,
-
-        alignItems: "center",
-
-        justifyContent: "space-around",
-    },
-
-    draw: {
-        width: 313,
-        height: 225,
-    },
-
-    textContainer: {
-
-        paddingHorizontal: 20,
+        backgroundColor: colors.mediumGray,
     },
 
     primaryButton: {
@@ -183,333 +139,16 @@ const theme = StyleSheet.create({
 
         height: 50,
 
-        backgroundColor: colors.mediumYellow,
-
         borderRadius: 10,
 
         flexDirection: "row",
 
         justifyContent: "space-between",
 
-        alignItems: "center"
-    },
-
-    arrowContainer: {
-
-        width: 50,
-
-        height: 50,
-
-        backgroundColor: colors.lighYellow,
-
-        borderTopRightRadius: 10,
-
-        borderBottomRightRadius: 10,
-
         alignItems: "center",
-
-        justifyContent: "center",
-    },
-
-    // Catalog Movie Card
-    scrollCatalogContainer: {
-
-        padding: 0,
-    },
-
-    catalogContainer: {
-
-        flex: 1,
-
-        justifyContent: "center",
-
-        alignItems: "center",
-
-        backgroundColor: colors.mediumGray,
-    },
-
-    movieCard: {
-
-        width: 300,
-
-        backgroundColor: colors.lighGray,
-
-        borderRadius: 10,
-
-        shadowRadius: 3.84,
-
-        marginBottom: 20,
-    },
-
-    imgCatalog: {
-        marginTop: 26,
-        width: 300,
-        height: 164,
-    },
-
-    // Search Combo
-    searchComboContainer: {
-
-        width: 300,
-
-        height: 80,
-
-        marginTop: 20,
-
-        marginBottom: 20,
-
-        borderRadius: 10,
-
-        flex: 1,
-
-        justifyContent: "center",
-
-        alignItems: "center",
-
-        backgroundColor: colors.lighGray,
-
-    },
-
-    searchCombo: {
-
-        width: 275,
-
-        flex: 1,
-
-        justifyContent: "center",
-
-        marginTop: 5,
-
-        marginBottom: 5,
-
-        borderWidth: 0.9,
-
-        borderRadius: 10,
-
-        borderColor: colors.white,
-    },
-
-    itemPicker: {
-
-        color: colors.white,
-
-        backgroundColor: colors.lighGray,
-    },
-
-    loadingModalBackground: {
-        flex: 1,
-        alignItems: 'center',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-    },
-
-    loadingActivityIndicator: {
-        backgroundColor: '#FFFFFF',
-        height: 100,
-        width: 230,
-        borderRadius: 10,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-around'
-    },
-
-    loadingText: {
-
-        fontSize: 18,
-
-        color: colors.mediumGray,
-    },
-
-    // Movie Details
-    movieDetailsContainer: {
-
-        justifyContent: "center",
-
-        alignItems: "center",
-
-        backgroundColor: colors.mediumGray,
-    },
-
-    // Sinopse
-    synopsisCard: {
-
-        width: 340,
-
-        height: "auto",
-
-        backgroundColor: colors.lighGray,
-
-        borderRadius: 10,
-
-        shadowRadius: 3.84,
-
-        marginTop: 20,
-    },
-
-    synopsisImg: {
-        marginTop: 26,
-        width: 340,
-        height: 164,
-    },
-
-    synopsisContent: {
-
-        width: "90%",
-
-        height: "auto",
-
-        // justifyContent: "center",
-
-        // alignItems: "center",
-
-        borderWidth: 0.9,
-
-        borderRadius: 10,
-
-        marginTop: 0,
-
-        marginLeft: 16,
-
-        padding: 10,
-
-        borderColor: colors.white,
-    },
-
-    // LoginPage
-    loginContainer: {
-
-        width: "100%",
-
-        flex: 1,
-
-        justifyContent: "center",
-
-        alignItems: "center",
-
-        backgroundColor: colors.mediumGray,
-    },
-
-    loginTitle: {
-
-        width: 176,
-
-        height: 68,
-
-        fontSize: 36,
-
-        fontWeight: "normal",
-
-        lineHeight: 50,
-
-        textAlign: "center",
-
-        letterSpacing: -0.015,
-
-        marginTop: 40,
-
-        textTransform: "uppercase",
-
-        color: colors.white,
-    },
-
-    loginCard: {
-
-        width: 300,
-
-        height: 480,
-
-        borderRadius: 10,
-
-        alignItems: "center",
-
-        backgroundColor: colors.lighGray,
-    },
-
-    passwordGroup: {
-
-        flexDirection: "row",
-
-        alignItems: "stretch",
-    },
-
-    toggle: {
-
-        marginTop: 10,
-
-        marginLeft: -30,
-    },
-
-    imgEyes: {
-
-        width: 25,
-
-        height: 25,
-    },
-
-    textInput: {
-
-        width: 265,
-
-        height: 45,
-
-        borderWidth: 1,
-
-        borderRadius: 10,
-
-        borderColor: colors.mediumGray,
-
-        borderStyle: "solid",
-
-        backgroundColor: "#FEFEFE",
-
-        marginBottom: 20,
-
-        padding: 10,
-    },
-
-    loginButton: {
-
-        width: 250,
-
-        height: 50,
 
         backgroundColor: colors.mediumYellow,
-
-        borderRadius: 10,
-
-        padding: 10,
-
-        marginTop: 50,
-
-        marginLeft: "auto",
-
-        marginRight: "auto",
-
-        justifyContent: "center",
     },
-
-    loginMsgErro: {
-
-        width: "100%",
-
-        marginTop: 25,
-
-        alignContent: "center",
-
-        alignItems: "center",
-    },
-
-    loginMsgErroText: {
-
-        fontSize: 18,
-
-        fontWeight: "bold",
-
-        lineHeight: 35,
-
-        backgroundColor: "#fff4cc",
-
-    }
 });
 
 const nav = StyleSheet.create({

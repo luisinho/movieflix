@@ -9,7 +9,8 @@ import { Movie } from '../../../entities/Movie';
 import { URL_MOVIES } from '../../../utils/ApiUrl';
 import { STATUS_200 } from '../../../utils/HttpStatus';
 
-import { theme, text } from '../../../styles';
+import { text } from '../../../styles';
+import { synopsisTheme } from '../styles';
 
 type Props = {
 
@@ -41,9 +42,9 @@ const Sinopse: React.FC<Props> = ({ movieId }) => {
 
     return (
 
-        <View style={theme.synopsisCard}>
+        <View style={synopsisTheme.synopsisCard}>
 
-            <Image source={{ uri: movie?.imgUrl }} style={theme.synopsisImg} />
+            <Image source={{ uri: movie?.imgUrl }} style={synopsisTheme.synopsisImg} />
 
             <View>
 
@@ -59,7 +60,7 @@ const Sinopse: React.FC<Props> = ({ movieId }) => {
 
                 </View>
 
-                <ScrollView style={[theme.synopsisContent, text.synopsisMargin]}>
+                <ScrollView style={[synopsisTheme.synopsisContent, synopsisTheme.synopsisMargin]}>
                     <Text style={text.synopsisDescription}>
                         {movie?.synopsis}
                     </Text>

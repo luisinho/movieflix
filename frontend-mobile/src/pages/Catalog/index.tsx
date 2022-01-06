@@ -13,6 +13,8 @@ import { URL_MOVIES } from '../../utils/ApiUrl';
 import { STATUS_200 } from '../../utils/HttpStatus';
 
 import { theme } from '../../styles';
+import { catalogTheme } from './styles';
+
 
 const Catalog: React.FC = () => {
 
@@ -57,11 +59,11 @@ const Catalog: React.FC = () => {
 
     return (
 
-        <View style={theme.catalogContainer}>
+        <View style={theme.appContainer}>
 
-            <ScrollView contentContainerStyle={theme.scrollCatalogContainer}>
+            <ScrollView contentContainerStyle={catalogTheme.scrollCatalogContainer}>
 
-                <View style={theme.searchComboContainer}>
+                <View style={catalogTheme.searchComboContainer}>
 
                     <SearchCombo genre="" search={search} setSearch={setSearch} />
 

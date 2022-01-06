@@ -7,7 +7,7 @@ import ReviewForm from './ReviewForm';
 
 import { theme } from '../../../styles';
 
-const MovieDetails = () => {
+const MovieDetails: React.FC = () => {
 
     const route = useRoute();
 
@@ -18,8 +18,8 @@ const MovieDetails = () => {
     const { movieId } = JSON.parse(objJson);
 
     return (
-        <View>
-            <ScrollView style={theme.movieDetailsContainer}>
+        <View style={theme.appContainer}>
+            <ScrollView>
                 <Sinopse movieId={movieId} />
                 <ReviewForm />
             </ScrollView>

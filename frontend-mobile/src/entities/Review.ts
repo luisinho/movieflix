@@ -1,5 +1,5 @@
-import { getNewMovie, Movie } from "./Movie";
-import { getNewUser, User } from "./User";
+import { getNewMovie, Movie } from './Movie';
+import { getNewUser, User } from './User';
 
 export type ReviewsResponse = {
     content: Review[];
