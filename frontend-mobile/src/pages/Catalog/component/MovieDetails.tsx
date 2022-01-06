@@ -4,6 +4,7 @@ import { useRoute } from '@react-navigation/native';
 
 import Sinopse from './Sinopse';
 import ReviewForm from './ReviewForm';
+import ListReview from './ListReview';
 
 import { theme } from '../../../styles';
 
@@ -22,6 +23,7 @@ const MovieDetails: React.FC = () => {
             <ScrollView>
                 <Sinopse movieId={movieId} />
                 <ReviewForm />
+                <ListReview />
             </ScrollView>
         </View>
     );

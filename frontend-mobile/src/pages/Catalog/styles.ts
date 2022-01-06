@@ -109,16 +109,20 @@ const synopsisTheme = StyleSheet.create({
 
     synopsisImg: {
 
-        width: 340,
+        width: 310,
 
         height: 164,
 
         marginTop: 26,
+
+        marginLeft: "auto",
+
+        marginRight: "auto",
     },
 
     synopsisContent: {
 
-        width: "90%",
+        width: "95%",
 
         height: 310,
 
@@ -126,11 +130,11 @@ const synopsisTheme = StyleSheet.create({
 
         borderRadius: 10,
 
-        marginTop: 0,
-
-        marginLeft: 16,
-
         padding: 10,
+
+        marginLeft: "auto",
+
+        marginRight: "auto",
 
         borderColor: colors.white,
     },
@@ -170,7 +174,7 @@ const reviewTheme = StyleSheet.create({
     // ReviewForm
     reviewTextInput: {
 
-        width: 310,
+        width: 320,
 
         height: 80,
 
@@ -195,7 +199,7 @@ const reviewTheme = StyleSheet.create({
 
     widthTouchable: {
 
-        width: 310,
+        width: 320,
     },
 
     textMarginTouchable: {
@@ -203,7 +207,112 @@ const reviewTheme = StyleSheet.create({
         marginLeft: "auto",
 
         marginRight: "auto",
+    },
+});
+
+const listReviewTheme = StyleSheet.create({
+
+    listCard: {
+
+        width: 340,
+
+        height: 185,
+
+        marginTop: 20,
+
+        borderRadius: 10,
+
+        shadowRadius: 3.84,
+
+        marginLeft: "auto",
+
+        marginRight: "auto",
+
+        alignContent: "center",
+
+        alignItems: "center",
+
+        backgroundColor: colors.lighGray,
+    },
+
+    reviewImgContainer: {
+
+        flexDirection: "row",
+
+        alignSelf: "stretch",
+
+        marginTop: 12,
+    },
+
+    reviewImg: {
+
+        width: 14,
+
+        height: 14,
+
+        marginLeft: 15,
+    },
+
+    reviewNameUser: {
+
+        width: 130,
+
+        height: 15,
+
+        marginLeft: 5,
+
+        fontSize: 12.5,
+
+        lineHeight: 17,
+
+        letterSpacing: -0.015,
+
+        fontStyle: "normal",
+
+        fontWeight: "bold",
+
+        color: colors.white,
+    },
+
+    reviewDate: {
+
+        width: 160,
+
+        height: 15,
+
+        fontSize: 12.5,
+
+        lineHeight: 17,
+
+        letterSpacing: -0.015,
+
+        fontStyle: "normal",
+
+        fontWeight: "bold",
+
+        color: colors.white,
+    },
+
+    reviewContent: {
+
+        width: "95%",
+
+        height: "auto",
+
+        marginTop: 10,
+
+        borderWidth: 0.9,
+
+        borderRadius: 10,
+
+        padding: 10,
+
+        marginLeft: "auto",
+
+        marginRight: "auto",
+
+        borderColor: colors.white,
     }
 });
 
-export { catalogTheme, movieTheme, synopsisTheme, reviewTheme };
+export { catalogTheme, movieTheme, synopsisTheme, reviewTheme, listReviewTheme };
