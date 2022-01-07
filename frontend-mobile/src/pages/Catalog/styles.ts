@@ -250,7 +250,7 @@ const listReviewTheme = StyleSheet.create({
 
         height: 14,
 
-        marginLeft: 15,
+        marginLeft: 8,
     },
 
     reviewNameUser: {
@@ -295,7 +295,7 @@ const listReviewTheme = StyleSheet.create({
 
     reviewContent: {
 
-        width: "95%",
+        width: 320,
 
         height: "auto",
 

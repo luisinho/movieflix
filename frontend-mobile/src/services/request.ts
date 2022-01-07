@@ -11,7 +11,7 @@ type RequestParams = {
     method?: Method,
     url: string,
     data?: object | string,
-    params?: { genreId?: number, page?: number, linesPerPage?: number },
+    params?: { genreId?: number, movieId?: number, page?: number, linesPerPage?: number },
     header?: { auth?: string, content?: string },
 }
 
@@ -60,6 +60,7 @@ export const makeRequest = async ({ method = GET, url, data, params, header }: R
             },
             params: {
                 genreId: params?.genreId,
+                movieId: params?.movieId,
                 page: params?.page,
                 linesPerPage: params?.linesPerPage
             }

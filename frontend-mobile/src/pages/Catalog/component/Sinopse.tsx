@@ -14,16 +14,16 @@ import { synopsisTheme } from '../styles';
 
 type Props = {
 
-    movieId: number;
+    movieIdSinopse: number;
 }
 
-const Sinopse: React.FC<Props> = ({ movieId }) => {
+const Sinopse: React.FC<Props> = ({ movieIdSinopse }) => {
 
     const [movie, setMovie] = useState<Movie>();
 
     useEffect(() => {
 
-        makePrivateRequest({ url: `${URL_MOVIES}/${movieId}` })
+        makePrivateRequest({ url: `${URL_MOVIES}/${movieIdSinopse}` })
             .then(response => {
 
                 if (response.status === STATUS_200) {
@@ -38,7 +38,7 @@ const Sinopse: React.FC<Props> = ({ movieId }) => {
             }).finally(() => {
             });
 
-    }, [movieId]);
+    }, [movieIdSinopse]);
 
     return (
 

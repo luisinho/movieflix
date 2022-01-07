@@ -21,9 +21,9 @@ const MovieDetails: React.FC = () => {
     return (
         <View style={theme.appContainer}>
             <ScrollView>
-                <Sinopse movieId={movieId} />
-                <ReviewForm />
-                <ListReview />
+                <Sinopse movieIdSinopse={movieId} />
+                <ReviewForm movieIdReviewForm={movieId} />
+                <ListReview movieIdReview={movieId} />
             </ScrollView>
         </View>
     );
