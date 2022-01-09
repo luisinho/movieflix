@@ -48,6 +48,40 @@ const ListReview: React.FC<Props> = ({ movieIdReview, newQuantityReview }) => {
 
     }, [movieIdReview, newQuantityReview]);
 
+    const getCreatedDate = (dateParam: string): String => {
+
+        let dateFormat: string = '';
+
+        let creationDate: string = '';
+
+        let creationTime: string = '';
+
+        let dayMonthYear: string[] = [];
+
+        const SPACE: string = ' ';
+
+        if (dateParam.length >= 27) {
+
+            creationDate = dateParam.substring(0, 10);
+
+            creationTime = dateParam.substring(11, 19);
+
+            dayMonthYear = creationDate.split('-');
+
+            dateFormat = `${dayMonthYear[2]}/`;
+
+            dateFormat += `${dayMonthYear[1]}/`;
+
+            dateFormat += `${dayMonthYear[0]}`;
+
+            dateFormat += SPACE;
+
+            dateFormat += creationTime;
+        }
+
+        return dateFormat;
+    }
+
     return (
 
         <View style={listReviewTheme.listCard}>
@@ -64,7 +98,9 @@ const ListReview: React.FC<Props> = ({ movieIdReview, newQuantityReview }) => {
 
                             <Text style={listReviewTheme.reviewNameUser}>{review.user.name}</Text>
 
-                            <Text style={listReviewTheme.reviewDate}>Criado: 03/12/2021 23:31:59</Text>
+                            <Text style={listReviewTheme.reviewDate}>
+                                Criado: {getCreatedDate(review?.createdAt.toString())}
+                            </Text>
 
                         </View>
 
