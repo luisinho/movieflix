@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, ScrollView } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { AxiosError } from 'axios';
 
-import { makePrivateRequest } from '../../../services/request';
-
 import { Movie } from '../../../entities/Movie';
+import { makePrivateRequest } from '../../../services/request';
 
 import { URL_MOVIES } from '../../../utils/ApiUrl';
 import { STATUS_200 } from '../../../utils/HttpStatus';
+
+import Loading from '../../Loading';
 
 import { text } from '../../../styles';
 import { synopsisTheme } from '../styles';
@@ -21,7 +22,11 @@ const Sinopse: React.FC<Props> = ({ movieIdSinopse }) => {
 
     const [movie, setMovie] = useState<Movie>();
 
+    const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
+
+        setIsLoading(true);
 
         makePrivateRequest({ url: `${URL_MOVIES}/${movieIdSinopse}` })
             .then(response => {
@@ -36,6 +41,7 @@ const Sinopse: React.FC<Props> = ({ movieIdSinopse }) => {
                 console.log('Ocorreu um erro ao obter o detalhe do filme.', err);
 
             }).finally(() => {
+                setIsLoading(false);
             });
 
     }, [movieIdSinopse]);
@@ -44,29 +50,36 @@ const Sinopse: React.FC<Props> = ({ movieIdSinopse }) => {
 
         <View style={synopsisTheme.synopsisCard}>
 
-            <Image source={{ uri: movie?.imgUrl }} style={synopsisTheme.synopsisImg} />
+            {isLoading ? (
+                <Loading msg='Carregando a Sinopse.' />
+            ) :
+                (<Image source={{ uri: movie?.imgUrl }} style={synopsisTheme.synopsisImg} />)
+            }
 
-            <View>
-
-                <Text style={text.movieTitle}>{movie?.title}</Text>
+            {!isLoading && (
 
                 <View>
 
-                    <Text style={text.movieYear}>{movie?.year}</Text>
+                    <Text style={text.movieTitle}>{movie?.title}</Text>
 
                     <View>
-                        <Text style={text.subTitle}>{movie?.subTitle}</Text>
+
+                        <Text style={text.movieYear}>{movie?.year}</Text>
+
+                        <View>
+                            <Text style={text.subTitle}>{movie?.subTitle}</Text>
+                        </View>
+
                     </View>
 
-                </View>
+                    <View style={[synopsisTheme.synopsisContent]}>
+                        <Text style={text.synopsisDescription}>
+                            {movie?.synopsis}
+                        </Text>
+                    </View>
 
-                <ScrollView style={[synopsisTheme.synopsisContent, synopsisTheme.synopsisMargin]}>
-                    <Text style={text.synopsisDescription}>
-                        {movie?.synopsis}
-                    </Text>
-                </ScrollView>
-
-            </View>
+                </View>)
+            }
 
         </View>
     );

@@ -92,7 +92,7 @@ const synopsisTheme = StyleSheet.create({
 
         width: 340,
 
-        height: 650,
+        height: "auto",
 
         borderRadius: 10,
 
@@ -124,7 +124,7 @@ const synopsisTheme = StyleSheet.create({
 
         width: "95%",
 
-        height: 310,
+        height: "auto",
 
         borderWidth: 0.9,
 
@@ -136,13 +136,11 @@ const synopsisTheme = StyleSheet.create({
 
         marginRight: "auto",
 
-        borderColor: colors.white,
-    },
-
-    synopsisMargin: {
-
         marginTop: 20,
 
+        marginBottom: 20,
+
+        borderColor: colors.white,
     },
 });
 
@@ -152,13 +150,15 @@ const reviewTheme = StyleSheet.create({
 
         width: 340,
 
-        height: 185,
-
-        marginTop: 20,
+        height: 200,
 
         borderRadius: 10,
 
         shadowRadius: 3.84,
+
+        marginTop: 20,
+
+        marginBottom: 20,
 
         marginLeft: "auto",
 
@@ -172,7 +172,7 @@ const reviewTheme = StyleSheet.create({
     },
 
     // ReviewForm
-    reviewTextInput: {
+    textInput: {
 
         width: 320,
 
@@ -180,7 +180,7 @@ const reviewTheme = StyleSheet.create({
 
         marginTop: 20,
 
-        marginBottom: 20,
+        marginBottom: 10,
 
         padding: 10,
 
@@ -195,6 +195,25 @@ const reviewTheme = StyleSheet.create({
         backgroundColor: "#FEFEFE",
 
         shadowColor: colors.mediumGray,
+    },
+
+    textInputError: {
+
+        width: 312,
+
+        height: 25,
+
+        padding: 5,
+
+        marginBottom: 12,
+
+        borderRadius: 10,
+
+        alignItems: "center",
+
+        alignContent: "center",
+
+        backgroundColor: colors.white,
     },
 
     widthTouchable: {
@@ -214,9 +233,11 @@ const listReviewTheme = StyleSheet.create({
 
     listCard: {
 
+        flex: 1,
+
         width: 340,
 
-        height: 185,
+        height: "auto",
 
         marginTop: 20,
 
@@ -312,6 +333,13 @@ const listReviewTheme = StyleSheet.create({
         marginRight: "auto",
 
         borderColor: colors.white,
+    },
+
+    reviewPagination: {
+
+        marginTop: 10,
+
+        marginBottom: 20,
     }
 });
 

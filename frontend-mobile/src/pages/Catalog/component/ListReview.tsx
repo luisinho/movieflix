@@ -14,9 +14,10 @@ import { listReviewTheme } from '../styles';
 
 type Props = {
     movieIdReview: number;
+    newQuantityReview: number;
 }
 
-const ListReview: React.FC<Props> = ({ movieIdReview }) => {
+const ListReview: React.FC<Props> = ({ movieIdReview, newQuantityReview }) => {
 
     const [reviewsResponse, setReviewsResponse] = useState<ReviewsResponse>();
 
@@ -26,7 +27,7 @@ const ListReview: React.FC<Props> = ({ movieIdReview }) => {
 
         const params = {
             page: activePage,
-            linesPerPage: 4,
+            linesPerPage: 3,
             movieId: movieIdReview
         }
 
@@ -45,7 +46,7 @@ const ListReview: React.FC<Props> = ({ movieIdReview }) => {
 
             });
 
-    }, [movieIdReview]);
+    }, [movieIdReview, newQuantityReview]);
 
     return (
 
@@ -70,7 +71,7 @@ const ListReview: React.FC<Props> = ({ movieIdReview }) => {
                         <View style={listReviewTheme.reviewContent}>
 
                             <Text style={text.synopsisDescription}>
-                                {review.text}-{review.id}
+                                {review.text}
                             </Text>
 
                         </View>
@@ -79,6 +80,10 @@ const ListReview: React.FC<Props> = ({ movieIdReview }) => {
 
                 </View>
             )}
+
+            <View style={listReviewTheme.reviewPagination}>
+                <Text>Paginação</Text>
+            </View>
 
         </View>
     );

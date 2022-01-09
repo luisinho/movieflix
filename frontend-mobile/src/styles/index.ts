@@ -15,6 +15,8 @@ const colors = {
     mediumGray: "#525252",
 
     veryLightGray: "#9E9E9E",
+
+    redMsgError: "#dc3545",
 };
 
 const text = StyleSheet.create({
@@ -116,6 +118,15 @@ const text = StyleSheet.create({
 
         color: colors.veryLightGray,
     },
+
+    fieldsErrors: {
+
+        fontSize: 12,
+
+        fontWeight: "bold",
+
+        color: colors.redMsgError,
+    }
 });
 
 const theme = StyleSheet.create({

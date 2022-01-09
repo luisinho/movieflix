@@ -2,19 +2,17 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
 import { AxiosError } from 'axios';
 
-import Loading from '../Loading';
-
 import { MovieCard, SearchCombo } from '../Catalog/component';
-
 import { makePrivateRequest } from '../../services/request';
 import { MoviesResponse } from '../../entities/Movie';
 
 import { URL_MOVIES } from '../../utils/ApiUrl';
 import { STATUS_200 } from '../../utils/HttpStatus';
 
+import Loading from '../Loading';
+
 import { theme } from '../../styles';
 import { catalogTheme } from './styles';
-
 
 const Catalog: React.FC = () => {
 
@@ -70,7 +68,7 @@ const Catalog: React.FC = () => {
                 </View>
 
                 {isLoading ? (
-                    <Loading msg='Carregando o catalogo' />
+                    <Loading msg='Carregando o catalogo.' />
                 ) :
                     (moviesResponse?.content.map((movie) => (
                         <MovieCard key={movie.id} movie={movie} />

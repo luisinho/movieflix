@@ -43,7 +43,17 @@ export const makeLogin = async (loginData: LoginData) => {
 
     const payload = queryString.stringify({ ...loginData, grant_type: 'password' });
 
-    return makeRequest({ method: POST, url: URL_LOGIN, data: payload, header: header });
+    return makeRequestLogin({ url: URL_LOGIN, data: payload, header: header });
+}
+
+export const makeRequestLogin = async ({ url, data, params, header }: RequestParams) => {
+
+    return await Api.post(url, data, {
+        headers: {
+            'Authorization': Object(header?.auth),
+            'Content-Type': Object(header?.content)
+        }
+    });
 }
 
 export const makeRequest = async ({ method = GET, url, data, params, header }: RequestParams) => {
@@ -70,8 +80,7 @@ export const makeRequest = async ({ method = GET, url, data, params, header }: R
 
         return await Api.post(url, data, {
             headers: {
-                'Authorization': Object(header?.auth),
-                'Content-Type': Object(header?.content)
+                'Authorization': Object(header?.auth)
             }
         });
 
