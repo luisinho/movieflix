@@ -36,6 +36,14 @@ const Login: React.FC = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    const [hasFieldEmailError, setHasFieldEmailError] = useState(false);
+
+    const [msgFieldEmailError, setMsgFieldEmailError] = useState('');
+
+    const [hasFieldPasswordError, setHasFieldPasswordError] = useState(false);
+
+    const [msgFieldPasswordError, setMsgFieldPasswordError] = useState('');
+
     const onChangeTextUserName = (text: string) => {
 
         const newUserInfo = { ...userInfo };
@@ -43,6 +51,12 @@ const Login: React.FC = () => {
         newUserInfo.username = text;
 
         setUserInfo(newUserInfo);
+
+        if (hasFieldEmailError) {
+
+            setHasFieldEmailError(false);
+            setMsgFieldEmailError('');
+        }
     }
 
     const onChangeTextPassword = (text: string) => {
@@ -52,30 +66,75 @@ const Login: React.FC = () => {
         newUserInfo.password = text;
 
         setUserInfo(newUserInfo);
+
+        if (hasFieldPasswordError) {
+
+            setHasFieldPasswordError(false);
+            setMsgFieldPasswordError('');
+        }
     }
 
     const handleLogin = async () => {
 
-        setIsLoading(true);
+        const isValidate: Boolean = validateField();
 
-        makeLogin(userInfo).then(response => {
+        if (isValidate) {
 
-            if (response.status === STATUS_200) {
+            setIsLoading(true);
 
-                setHasError(false);
-                setMsgError('');
-                saveSessionData(response.data);
-                navigation.navigate(CATALOG);
-            }
+            makeLogin(userInfo).then(response => {
 
-        }).catch((err: AxiosError) => {
+                if (response.status === STATUS_200) {
 
-            validateErrorMessage(err);
-            setHasError(true);
+                    setHasError(false);
+                    setMsgError('');
+                    saveSessionData(response.data);
+                    navigation.navigate(CATALOG);
+                }
 
-        }).finally(() => {
-            setIsLoading(false);
-        });
+            }).catch((err: AxiosError) => {
+
+                validateErrorMessage(err);
+                setHasError(true);
+
+            }).finally(() => {
+
+                setIsLoading(false);
+
+                setHasFieldEmailError(false);
+                setMsgFieldEmailError('');
+
+                setHasFieldPasswordError(false);
+                setMsgFieldPasswordError('');
+            });
+        }
+    }
+
+    const validateField = (): Boolean => {
+
+        let result: boolean = true;
+
+        if (userInfo.username === undefined
+            || userInfo.username === 'undefined'
+            || userInfo.username === null
+            || userInfo.username === '') {
+
+            result = false;
+            setHasFieldEmailError(true);
+            setMsgFieldEmailError('Campo Email é obrigatório!');
+        }
+
+        if (userInfo.password === undefined
+            || userInfo.password === 'undefined'
+            || userInfo.password === null
+            || userInfo.password === '') {
+
+            result = false;
+            setHasFieldPasswordError(true);
+            setMsgFieldPasswordError('Campo Senha é obrigatório!');
+        }
+
+        return result;
     }
 
     const validateErrorMessage = (err: AxiosError) => {
@@ -111,18 +170,27 @@ const Login: React.FC = () => {
 
                 <Text style={loginTheme.loginTitle}> Login </Text>
 
-
-
                 <View>
 
-                    <TextInput
-                        placeholder="Email"
-                        autoCapitalize="none"
-                        keyboardType="email-address"
-                        style={loginTheme.loginTextInput}
-                        value={userInfo.username}
-                        onChangeText={(event) => onChangeTextUserName(event)}
-                    />
+                    <View>
+
+                        <TextInput
+                            placeholder="Email"
+                            autoCapitalize="none"
+                            keyboardType="email-address"
+                            style={loginTheme.loginTextInput}
+                            value={userInfo.username}
+                            onChangeText={(event) => onChangeTextUserName(event)}
+                        />
+
+                        {hasFieldEmailError && (
+
+                            <View style={loginTheme.textInputEmailError}>
+                                <Text style={text.fieldsErrors}>{msgFieldEmailError}</Text>
+                            </View>)
+                        }
+
+                    </View>
 
                     <View style={loginTheme.loginPasswordGroup}>
 
@@ -147,6 +215,13 @@ const Login: React.FC = () => {
                         </TouchableOpacity>
 
                     </View>
+
+                    {hasFieldPasswordError && (
+
+                        <View style={loginTheme.textInputEmailError}>
+                            <Text style={text.fieldsErrors}>{msgFieldPasswordError}</Text>
+                        </View>)
+                    }
 
                     <TouchableOpacity
                         style={loginTheme.loginButton}

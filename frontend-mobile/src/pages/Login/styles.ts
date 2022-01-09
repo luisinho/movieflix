@@ -6,9 +6,9 @@ const loginTheme = StyleSheet.create({
 
     loginCard: {
 
-        width: 300,
+        width: 335,
 
-        height: 480,
+        height: 590,
 
         borderRadius: 10,
 
@@ -47,7 +47,9 @@ const loginTheme = StyleSheet.create({
 
         fontSize: 36,
 
-        marginTop: 40,
+        marginTop: 80,
+
+        marginBottom: 25,
 
         lineHeight: 50,
 
@@ -64,11 +66,11 @@ const loginTheme = StyleSheet.create({
 
     loginTextInput: {
 
-        width: 265,
+        width: 285,
 
         height: 45,
 
-        marginBottom: 20,
+        // marginBottom: 10,
 
         padding: 10,
 
@@ -83,7 +85,34 @@ const loginTheme = StyleSheet.create({
         backgroundColor: "#FEFEFE",
     },
 
+    textInputEmailError: {
+
+        width: 280,
+
+        height: 25,
+
+        padding: 5,
+
+        marginTop: 5,
+
+        marginBottom: 10,
+
+        borderRadius: 10,
+
+        marginLeft: "auto",
+
+        marginRight: "auto",
+
+        alignItems: "center",
+
+        alignContent: "center",
+
+        backgroundColor: colors.white,
+    },
+
     loginPasswordGroup: {
+
+        marginTop: 15,
 
         flexDirection: "row",
 
