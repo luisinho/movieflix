@@ -345,9 +345,17 @@ const listReviewTheme = StyleSheet.create({
 
     reviewPagination: {
 
-        marginTop: 10,
+        width: 315,
+
+        height: 50,
+
+        marginTop: 20,
 
         marginBottom: 20,
+
+        padding: 5,
+
+        backgroundColor: colors.mediumGray,
     }
 });
 

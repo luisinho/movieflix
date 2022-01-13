@@ -14,10 +14,10 @@ import { catalogTheme } from '../styles';
 interface SearchProps {
     search: string;
     setSearch: Function;
-    genre: string;
+    handleActivePage: Function;
 }
 
-const SearchCombo: React.FC<SearchProps> = ({ search, setSearch, genre }) => {
+const SearchCombo: React.FC<SearchProps> = ({ search, setSearch, handleActivePage }) => {
 
     const [genresResponse, setGenresResponse] = useState<GenresResponse>();
 
@@ -42,7 +42,7 @@ const SearchCombo: React.FC<SearchProps> = ({ search, setSearch, genre }) => {
 
             <Picker
                 selectedValue={search}
-                onValueChange={(value, index) => setSearch(value)}
+                onValueChange={(value, index) => { setSearch(value), handleActivePage() }}
                 mode="dropdown" // Android only
             >
                 <Picker.Item style={catalogTheme.itemPicker} label="Selecione o genero" value="0" />

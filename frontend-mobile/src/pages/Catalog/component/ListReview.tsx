@@ -8,6 +8,8 @@ import { makePrivateRequest } from '../../../services/request';
 
 import { ReviewsResponse } from '../../../entities/Review';
 
+import Pagination from '../../Pagination';
+
 import reviewStar from '../../../assets/review-star.png';
 import { text } from '../../../styles';
 import { listReviewTheme } from '../styles';
@@ -46,7 +48,7 @@ const ListReview: React.FC<Props> = ({ movieIdReview, newQuantityReview }) => {
 
             });
 
-    }, [movieIdReview, newQuantityReview]);
+    }, [movieIdReview, newQuantityReview, activePage]);
 
     const getCreatedDate = (dateParam: string): String => {
 
@@ -118,7 +120,12 @@ const ListReview: React.FC<Props> = ({ movieIdReview, newQuantityReview }) => {
             )}
 
             <View style={listReviewTheme.reviewPagination}>
-                <Text>Paginação</Text>
+                {reviewsResponse && (
+                    <Pagination
+                        totalPages={reviewsResponse?.totalPages}
+                        activePage={activePage}
+                        onChange={page => setActivePage(page)} />
+                )}
             </View>
 
         </View>

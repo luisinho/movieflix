@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { ScrollView, View, Text, SafeAreaView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { AxiosError } from 'axios';
 
 import { MovieCard, SearchCombo } from '../Catalog/component';
@@ -56,6 +56,11 @@ const Catalog: React.FC = () => {
         getMovies();
     }, [getMovies]);
 
+    const handleActivePage = () => {
+
+        setActivePage(0);
+    }
+
     return (
 
         <View style={theme.appContainer}>
@@ -64,7 +69,7 @@ const Catalog: React.FC = () => {
 
                 <View style={catalogTheme.searchComboContainer}>
 
-                    <SearchCombo genre="" search={search} setSearch={setSearch} />
+                    <SearchCombo search={search} setSearch={setSearch} handleActivePage={handleActivePage} />
 
                 </View>
 
