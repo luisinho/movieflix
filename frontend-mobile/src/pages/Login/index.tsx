@@ -114,6 +114,8 @@ const Login: React.FC = () => {
 
         let result: boolean = true;
 
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
         if (userInfo.username === undefined
             || userInfo.username === 'undefined'
             || userInfo.username === null
@@ -132,6 +134,13 @@ const Login: React.FC = () => {
             result = false;
             setHasFieldPasswordError(true);
             setMsgFieldPasswordError('Campo Senha é obrigatório!');
+        }
+
+        if (result && reg.test(userInfo.username) === false) {
+
+            result = false;
+            setHasFieldEmailError(true);
+            setMsgFieldEmailError('Email inválido, digite novamente!');
         }
 
         return result;
@@ -200,6 +209,8 @@ const Login: React.FC = () => {
                             style={loginTheme.loginTextInput}
                             value={userInfo.password}
                             secureTextEntry={hidePassword}
+                            keyboardType='number-pad'
+                            maxLength={8}
                             onChangeText={(event) => onChangeTextPassword(event)}
                         />
 

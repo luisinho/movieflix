@@ -56,6 +56,14 @@ const catalogTheme = StyleSheet.create({
 
         backgroundColor: colors.lighGray,
     },
+
+    pagination: {
+
+        marginTop: 20,
+
+        marginBottom: 25,
+    },
+
 });
 
 // Movie Card

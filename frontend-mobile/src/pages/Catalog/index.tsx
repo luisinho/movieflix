@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, Text, SafeAreaView } from 'react-native';
 import { AxiosError } from 'axios';
 
 import { MovieCard, SearchCombo } from '../Catalog/component';
 import { makePrivateRequest } from '../../services/request';
 import { MoviesResponse } from '../../entities/Movie';
+import Pagination from '../Pagination';
 
 import { URL_MOVIES } from '../../utils/ApiUrl';
 import { STATUS_200 } from '../../utils/HttpStatus';
@@ -29,7 +30,7 @@ const Catalog: React.FC = () => {
         const params = {
             genreId: Number(search.toString()),
             page: activePage,
-            linesPerPage: 4
+            linesPerPage: 10
         }
 
         setIsLoading(true);
@@ -49,7 +50,7 @@ const Catalog: React.FC = () => {
                 setIsLoading(false);
             });
 
-    }, [Number(search.toString())]);
+    }, [Number(search.toString()), activePage]);
 
     useEffect(() => {
         getMovies();
@@ -76,6 +77,15 @@ const Catalog: React.FC = () => {
                 }
 
             </ScrollView>
+
+            <View style={catalogTheme.pagination}>
+                {moviesResponse && (
+                    <Pagination
+                        totalPages={moviesResponse?.totalPages}
+                        activePage={activePage}
+                        onChange={page => setActivePage(page)} />
+                )}
+            </View>
 
         </View>
     );

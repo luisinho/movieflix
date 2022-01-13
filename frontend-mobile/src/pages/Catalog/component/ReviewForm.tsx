@@ -53,7 +53,7 @@ const ReviewForm: React.FC<Props> = ({ movieIdReviewForm, setIdNewReview }) => {
         setFormData(newFormData);
     }
 
-    const handleReview = async () => {
+    const handleSaveReview = async () => {
 
         const review: Review = getNewReview();
 
@@ -67,10 +67,10 @@ const ReviewForm: React.FC<Props> = ({ movieIdReviewForm, setIdNewReview }) => {
 
         if (isValidate) {
 
+            setIsLoading(true);
+
             makePrivateRequest({ method: POST, url: URL_REVIEWS, data: review })
                 .then(response => {
-
-                    setIsLoading(true);
 
                     if (response.status === STATUS_201) {
 
@@ -162,7 +162,7 @@ const ReviewForm: React.FC<Props> = ({ movieIdReviewForm, setIdNewReview }) => {
                 ) : (
                         <TouchableOpacity
                             style={[theme.primaryButton, reviewTheme.widthTouchable]}
-                            activeOpacity={0.9} onPress={() => handleReview()} >
+                            activeOpacity={0.9} onPress={() => handleSaveReview()} >
 
                             <Text style={[text.primaryText, reviewTheme.textMarginTouchable]}>SALVAR AVALIAÇÃO</Text>
 

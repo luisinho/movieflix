@@ -25,7 +25,9 @@ const MovieCard: React.FC<Props> = ({ movie }) => {
 
         <TouchableOpacity style={movieTheme.movieCard} onPress={() => navigation.navigate(MOVIE_DETAILS, { movieId: movie.id })}>
 
-            <Image source={{ uri: movie.imgUrl }} style={movieTheme.movieImgCatalog} />
+            <Image
+                source={{ uri: movie.imgUrl }}
+                style={movieTheme.movieImgCatalog} />
 
             <View>
 
