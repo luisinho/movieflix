@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { AxiosError } from 'axios';
 import { Picker } from "@react-native-picker/picker";
+import Toast from 'react-native-tiny-toast';
 
 import { makePrivateRequest } from '../../../services/request';
 import { GenresResponse } from '../../../entities/Genre';
@@ -9,6 +10,7 @@ import { GenresResponse } from '../../../entities/Genre';
 import { URL_GENRES } from '../../../utils/ApiUrl';
 import { STATUS_200 } from '../../../utils/HttpStatus';
 
+import { theme, text } from '../../../styles';
 import { catalogTheme } from '../styles';
 
 interface SearchProps {
@@ -31,7 +33,14 @@ const SearchCombo: React.FC<SearchProps> = ({ search, setSearch, handleActivePag
                 }
 
             }).catch((err: AxiosError) => {
+
                 console.log('Ocorreu um erro ao listar os generos:', err);
+
+                Toast.show('Ocorreu um erro ao listar os generos', {
+                    containerStyle: theme.toastContainer,
+                    textStyle: text.toastTextError
+                });
+
             }).finally(() => {
             });
     }, []);

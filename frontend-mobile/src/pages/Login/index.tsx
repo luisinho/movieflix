@@ -169,7 +169,11 @@ const Login: React.FC = () => {
 
             <View style={loginTheme.loginCard}>
 
-                {isLoading && (<Loading msg='Logando' />)}
+                {isLoading && (
+                    <View style={loginTheme.loginLoading}>
+                        <Loading msg='Logando' />
+                    </View>
+                )}
 
                 {hasError && (
                     <View style={loginTheme.loginMsgErro}>

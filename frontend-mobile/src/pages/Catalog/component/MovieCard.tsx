@@ -27,7 +27,7 @@ const MovieCard: React.FC<Props> = ({ movie }) => {
 
             <Image
                 source={{ uri: movie.imgUrl }}
-                style={movieTheme.movieImgCatalog} />
+                style={movieTheme.movieImgCatalog} resizeMode='contain' />
 
             <View>
 

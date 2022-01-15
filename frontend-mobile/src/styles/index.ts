@@ -17,6 +17,8 @@ const colors = {
     veryLightGray: "#9E9E9E",
 
     redMsgError: "#dc3545",
+
+    greenSuccess: "#4BB543",
 };
 
 const text = StyleSheet.create({
@@ -126,7 +128,25 @@ const text = StyleSheet.create({
         fontWeight: "bold",
 
         color: colors.redMsgError,
-    }
+    },
+
+    toastText: {
+
+        fontSize: 16,
+
+        fontWeight: "bold",
+
+        color: colors.greenSuccess,
+    },
+
+    toastTextError: {
+
+        fontSize: 16,
+
+        fontWeight: "bold",
+
+        color: colors.redMsgError,
+    },
 });
 
 const theme = StyleSheet.create({
@@ -159,6 +179,14 @@ const theme = StyleSheet.create({
         alignItems: "center",
 
         backgroundColor: colors.mediumYellow,
+    },
+
+    toastContainer: {
+
+        alignContent: "center",
+
+        backgroundColor: colors.white,
+
     },
 });
 

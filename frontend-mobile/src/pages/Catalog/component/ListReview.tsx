@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { AxiosError } from 'axios';
+import Toast from 'react-native-tiny-toast';
 
 import { URL_REVIEWS } from '../../../utils/ApiUrl';
 import { STATUS_200 } from '../../../utils/HttpStatus';
@@ -11,7 +12,7 @@ import { ReviewsResponse } from '../../../entities/Review';
 import Pagination from '../../Pagination';
 
 import reviewStar from '../../../assets/review-star.png';
-import { text } from '../../../styles';
+import { text, theme } from '../../../styles';
 import { listReviewTheme } from '../styles';
 
 type Props = {
@@ -43,6 +44,11 @@ const ListReview: React.FC<Props> = ({ movieIdReview, newQuantityReview }) => {
             }).catch((err: AxiosError) => {
 
                 console.log('Ocorreu um erro ao listar as avaliações: ', err);
+
+                Toast.show('Ocorreu um erro ao listar as avaliações', {
+                    containerStyle: theme.toastContainer,
+                    textStyle: text.toastTextError
+                });
 
             }).finally(() => {
 
@@ -119,14 +125,17 @@ const ListReview: React.FC<Props> = ({ movieIdReview, newQuantityReview }) => {
                 </View>
             )}
 
-            <View style={listReviewTheme.reviewPagination}>
-                {reviewsResponse && (
+            {(reviewsResponse && reviewsResponse?.content.length > 0) && (
+
+                <View style={listReviewTheme.reviewPagination}>
+
                     <Pagination
                         totalPages={reviewsResponse?.totalPages}
                         activePage={activePage}
                         onChange={page => setActivePage(page)} />
-                )}
-            </View>
+
+                </View>
+            )}
 
         </View>
     );

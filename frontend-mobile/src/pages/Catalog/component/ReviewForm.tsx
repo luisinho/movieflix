@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { AxiosError } from 'axios';
+import Toast from 'react-native-tiny-toast';
 
 import { URL_REVIEWS } from '../../../utils/ApiUrl';
 import { POST } from '../../../utils/ApiMethod';
@@ -75,11 +76,21 @@ const ReviewForm: React.FC<Props> = ({ movieIdReviewForm, setIdNewReview }) => {
                     if (response.status === STATUS_201) {
 
                         setIdNewReview(response.data.id);
+
+                        Toast.showSuccess('Avaliação salva com sucesso.', {
+                            containerStyle: theme.toastContainer,
+                            textStyle: text.toastText
+                        });
                     }
 
                 }).catch((err: AxiosError) => {
 
-                    console.log('Ocorreu um erro ao criar a avaliação: ', err);
+                    console.log('Ocorreu um erro ao salvar a avaliação: ', err);
+
+                    Toast.show('Ocorreu um erro ao salvar a avaliação', {
+                        containerStyle: theme.toastContainer,
+                        textStyle: text.toastTextError
+                    });
 
                 }).finally(() => {
                     setIsLoading(false);

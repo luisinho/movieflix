@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image } from 'react-native';
 import { AxiosError } from 'axios';
+import Toast from 'react-native-tiny-toast';
 
 import { Movie } from '../../../entities/Movie';
 import { makePrivateRequest } from '../../../services/request';
@@ -10,7 +11,7 @@ import { STATUS_200 } from '../../../utils/HttpStatus';
 
 import Loading from '../../Loading';
 
-import { text } from '../../../styles';
+import { theme, text } from '../../../styles';
 import { synopsisTheme } from '../styles';
 
 type Props = {
@@ -39,6 +40,11 @@ const Sinopse: React.FC<Props> = ({ movieIdSinopse }) => {
             }).catch((err: AxiosError) => {
 
                 console.log('Ocorreu um erro ao obter o detalhe do filme.', err);
+
+                Toast.show('Ocorreu um erro ao obter o detalhe do filme.', {
+                    containerStyle: theme.toastContainer,
+                    textStyle: text.toastTextError
+                });
 
             }).finally(() => {
                 setIsLoading(false);

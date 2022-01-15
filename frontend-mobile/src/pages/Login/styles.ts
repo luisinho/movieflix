@@ -17,6 +17,11 @@ const loginTheme = StyleSheet.create({
         backgroundColor: colors.lighGray,
     },
 
+    loginLoading: {
+
+        marginTop: 25,
+    },
+
     loginMsgErro: {
 
         width: "100%",

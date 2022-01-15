@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
 import { AxiosError } from 'axios';
+import Toast from 'react-native-tiny-toast';
 
 import { MovieCard, SearchCombo } from '../Catalog/component';
 import { makePrivateRequest } from '../../services/request';
@@ -12,7 +13,7 @@ import { STATUS_200 } from '../../utils/HttpStatus';
 
 import Loading from '../Loading';
 
-import { theme } from '../../styles';
+import { text, theme } from '../../styles';
 import { catalogTheme } from './styles';
 
 const Catalog: React.FC = () => {
@@ -45,6 +46,11 @@ const Catalog: React.FC = () => {
             }).catch((err: AxiosError) => {
 
                 console.log('Ocorreu um erro ao listar os filmes', err);
+
+                Toast.show('Ocorreu um erro ao listar os filmes', {
+                    containerStyle: theme.toastContainer,
+                    textStyle: text.toastTextError
+                });
 
             }).finally(() => {
                 setIsLoading(false);
