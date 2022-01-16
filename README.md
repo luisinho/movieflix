@@ -19,6 +19,9 @@ Um usuário possui nome, email e senha, sendo que o email é seu nome de usuári
 # Link Heroku
 https://dashboard.heroku.com/apps/luis-movieflix
 
+# Link Mobile Expo (APK para instalação no dispositivo fisíco e emulador)
+https://expo.dev/artifacts/501160fa-9450-460f-8887-f52ce634c2ca
+
 ## Layout mobile
 ![Enter Login](https://github.com/luisinho/assets-projects/blob/main/movieflix/enter-login.png?raw=true)![Mobile Login](https://github.com/luisinho/assets-projects/blob/main/movieflix/mobile-login.png?raw=true)
 
@@ -83,7 +86,28 @@ Pré-requisitos: npm / yarn
 git clone https://github.com/luisinho/movieflix.git
 
 # entrar na pasta do projeto front end web
-cd front-web
+cd frontend-web
+
+# instalar dependências
+npm install
+
+# executar o projeto
+npm start
+```
+
+## Mobile Expo 
+Pré-requisitos: npm / yarn
+
+```bash
+# clonar repositório
+git clone https://github.com/luisinho/movieflix.git
+
+# No diretório "movieflix/frontend-mobile/src/services/api.tsx" da aplicação configurar a URL localhost ou heroku:
+    - Para executar localhost -> http://localhost:8080
+    - Para executar utilizando api no heroku -> https://luis-movieflix.herokuapp.com
+
+# entrar na pasta do projeto front end mobile
+cd frontend-mobile
 
 # instalar dependências
 npm install
